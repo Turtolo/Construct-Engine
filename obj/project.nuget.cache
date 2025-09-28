@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a0d/p60Aa+A=",
+  "dgSpecHash": "os55QVjmxPE=",
   "success": true,
-  "projectFilePath": "/home/nils/Documents/Project/Libraries/Construct/Construct.csproj",
+  "projectFilePath": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
   "expectedPackageFiles": [
     "/home/nils/.nuget/packages/monogame.framework.desktopgl/3.8.4/monogame.framework.desktopgl.3.8.4.nupkg.sha512",
     "/home/nils/.nuget/packages/monogame.library.openal/1.23.1.10/monogame.library.openal.1.23.1.10.nupkg.sha512",

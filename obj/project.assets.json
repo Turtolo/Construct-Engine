@@ -273,11 +273,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nils/Documents/Project/Libraries/Construct/Construct.csproj",
+      "projectUniqueName": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
       "projectName": "Construct",
-      "projectPath": "/home/nils/Documents/Project/Libraries/Construct/Construct.csproj",
+      "projectPath": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
       "packagesPath": "/home/nils/.nuget/packages/",
-      "outputPath": "/home/nils/Documents/Project/Libraries/Construct/obj/",
+      "outputPath": "/home/nils/Documents/Project/Libraries/Construct-Engine/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/nils/.nuget/NuGet/NuGet.Config"
