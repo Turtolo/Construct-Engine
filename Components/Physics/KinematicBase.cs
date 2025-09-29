@@ -12,11 +12,11 @@ namespace ConstructEngine.Components.Physics
         private float remainderX = 0;
         private float remainderY = 0;
 
-        public List<ColliderObject> Colliders;
+        public List<Collider> Colliders;
 
         public KinematicBase()
         {
-            Colliders = ColliderObject.ColliderList;
+            Colliders = Collider.ColliderList;
         }
 
         public void UpdateCollider(GameTime gameTime)
@@ -136,7 +136,11 @@ namespace ConstructEngine.Components.Physics
         {
             foreach (var collider in Colliders)
             {
-                if (!collider.IsSolid) continue;
+                if (!collider.IsSolid)
+                {
+                    Console.WriteLine("iSNotSolid");
+                    continue;
+                }
                 if (rect.Intersects(collider.Rect))
                     return true;
             }

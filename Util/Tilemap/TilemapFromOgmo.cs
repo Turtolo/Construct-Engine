@@ -7,8 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using ConstructEngine.Components.Entity;
-using ConstructEngine.Components.Object;
 using ConstructEngine.Graphics;
+using ConstructEngine.Object;
 using ConstructEngine.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -71,7 +71,7 @@ public class TilemapFromOgmo
                 int worldY = row * tileHeight + tileLayer.offsetY;
                 
                 
-                new ColliderObject(new Rectangle(worldX, worldY, tileWidth, tileHeight), true);
+                new Collider(new Rectangle(worldX, worldY, tileWidth, tileHeight), true);
             }
         }
         
@@ -310,7 +310,7 @@ public class TilemapFromOgmo
                     int width = entity.width;
                     int height = entity.height;
 
-                    new ColliderObject(new Rectangle(entity.x, entity.y, width, height), true);
+                    new Collider(new Rectangle(entity.x, entity.y, width, height), true);
                 }
                 
             }

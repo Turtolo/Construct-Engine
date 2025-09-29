@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using ConstructEngine.Components.Object;
+using ConstructEngine.Object;
+using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace ConstructEngine.Util;
+namespace ConstructEngine.Object;
 
 public class SceneAreaTransition : ConstructObject, ConstructObject.IObject
 {

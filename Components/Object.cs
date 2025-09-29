@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using ConstructEngine.Components.Entity;
 using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Components.Object;
+namespace ConstructEngine.Object;
 
 public class ConstructObject : ConstructObject.IObject
 {
@@ -19,7 +20,7 @@ public class ConstructObject : ConstructObject.IObject
     
     public string Name { get; set; }
     
-    public Entity.Entity Player { get; set; }
+    public Entity Player { get; set; }
     
     public Dictionary<string, object> Values { get; set; }
     

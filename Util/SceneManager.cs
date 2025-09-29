@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Construct.Graphics;
 using ConstructEngine.Components.Entity;
-using ConstructEngine.Components.Object;
+using ConstructEngine.Object;
 using ConstructEngine.Graphics;
 using ConstructEngine.Physics;
 using Microsoft.Xna.Framework.Content;
@@ -25,7 +25,7 @@ public class SceneManager : Scene
         ParallaxBackground.BackgroundList.Clear();
         Tilemap.Tilemaps.Clear();
         Entity.EntityList.Clear();
-        ColliderObject.ColliderList.Clear();
+        Collider.ColliderList.Clear();
         ConstructObject.ObjectList.Clear();
         
         scene.Initialize();

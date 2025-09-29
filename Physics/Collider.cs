@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using ConstructEngine.Components.Object;
+using ConstructEngine.Object;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ConstructEngine.Physics
 {
-    public class ColliderObject
+    public class Collider
     {
-        public static List<ColliderObject> ColliderList = new List<ColliderObject>();
+        public static List<Collider> ColliderList = new List<Collider>();
         
         public Rectangle Rect;
         public bool IsSolid;
@@ -15,11 +15,12 @@ namespace ConstructEngine.Physics
         public Vector2 Velocity = Vector2.Zero;
         protected Texture2D pixel;
 
-        public ColliderObject(Rectangle rect, bool isSolid)
+        public Collider(Rectangle rect, bool isSolid, bool oneWay = false)
         {
             Rect = rect;
             IsSolid = isSolid;
-
+            OneWay = oneWay;
+            
             ColliderList.Add(this);
         }
 
@@ -28,7 +29,10 @@ namespace ConstructEngine.Physics
             IsSolid = state;
         }
 
-        public virtual void Update() { }
+        public virtual void Update(GameTime gameTime)
+        {
+ 
+        }
 
         public virtual void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
         {
