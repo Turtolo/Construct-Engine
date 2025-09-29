@@ -268,19 +268,19 @@
     ]
   },
   "packageFolders": {
-    "/home/nils/.nuget/packages/": {}
+    "/Users/nilslauvstad/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
+      "projectUniqueName": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
       "projectName": "Construct",
-      "projectPath": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
-      "packagesPath": "/home/nils/.nuget/packages/",
-      "outputPath": "/home/nils/Documents/Project/Libraries/Construct-Engine/obj/",
+      "projectPath": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
+      "packagesPath": "/Users/nilslauvstad/.nuget/packages/",
+      "outputPath": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/nils/.nuget/NuGet/NuGet.Config"
+        "/Users/nilslauvstad/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -327,22 +327,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.17, 8.0.17]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.17, 8.0.17]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/nils/.dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

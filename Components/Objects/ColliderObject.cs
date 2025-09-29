@@ -44,12 +44,6 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
 
     public override void Update(GameTime gameTime)
     {
-        
-        
-        
-        
-        Console.WriteLine("Oneway: " + OneWay + " Is solid: " + Collider.IsSolid);
-
 
         if (OneWay)
         {
@@ -65,8 +59,5 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
                 Collider.IsSolid = false;
             }
         }
-
-
-        
     }
 }
