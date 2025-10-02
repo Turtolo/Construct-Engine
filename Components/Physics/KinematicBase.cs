@@ -138,7 +138,6 @@ namespace ConstructEngine.Components.Physics
             {
                 if (!collider.IsSolid)
                 {
-                    Console.WriteLine("iSNotSolid");
                     continue;
                 }
                 if (rect.Intersects(collider.Rect))
