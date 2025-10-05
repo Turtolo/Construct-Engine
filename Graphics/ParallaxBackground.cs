@@ -11,7 +11,7 @@ public class ParallaxBackground
     public Texture2D Texture {get; set;}
     public float ParallaxFactor {get; set;}
     
-    public FollowCamera FollowCamera {get; set;}
+    public Camera Camera {get; set;}
 
     public static List<ParallaxBackground> BackgroundList = new();
     
@@ -41,10 +41,10 @@ public class ParallaxBackground
     public SamplerState SamplerState { get; set; }
     
     
-    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, FollowCamera camera, SamplerState sampler)
+    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, Camera camera, SamplerState sampler)
     {
         ParallaxFactor = parallaxFactor;
-        FollowCamera = camera;
+        Camera = camera;
         
         Texture = contentManager.Load<Texture2D>(texturePath);
         
@@ -70,8 +70,8 @@ public class ParallaxBackground
             Texture,
             new Rectangle(0, 0, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height),
             new Rectangle(
-                (int)(FollowCamera.cameraPosition.X * ParallaxFactor),
-                (int)(FollowCamera.cameraPosition.Y * ParallaxFactor),
+                (int)(Camera.cameraPosition.X * ParallaxFactor),
+                (int)(Camera.cameraPosition.Y * ParallaxFactor),
                 graphicsDevice.Viewport.Width,
                 graphicsDevice.Viewport.Height
             ),

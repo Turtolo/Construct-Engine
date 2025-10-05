@@ -17,6 +17,8 @@ namespace ConstructEngine.Components.Entity
         public Sprite Sprite { get; set; } = null;
         public AnimatedSprite AnimatedSprite { get; set; } = null;
         public AnimatedSprite AnimatedSpriteFeet { get; set; } = null;
+        
+        public bool Visible { get; set; } = true;
 
         public string String;
         
@@ -50,6 +52,15 @@ namespace ConstructEngine.Components.Entity
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+        }
+
+        public void DrawSprites(SpriteBatch spriteBatch, Vector2 position, int textureOffset)
+        {
+            if (Visible)
+            {
+                AnimatedSprite.Draw(spriteBatch, new Vector2(position.X + textureOffset, position.Y));
+                AnimatedSpriteFeet.Draw(spriteBatch, new Vector2(position.X + textureOffset, position.Y));
+            }
         }
 
         public static void AddEntities(params Entity[] entities)

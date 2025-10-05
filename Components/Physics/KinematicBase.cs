@@ -12,6 +12,8 @@ namespace ConstructEngine.Components.Physics
         private float remainderX = 0;
         private float remainderY = 0;
 
+        public bool Locked;
+
         public List<Collider> Colliders;
 
         public KinematicBase()
@@ -21,26 +23,33 @@ namespace ConstructEngine.Components.Physics
 
         public void UpdateCollider(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            Move(Velocity.X * deltaTime, Velocity.Y * deltaTime);
-
-            foreach (var collider in Colliders)
+            if (!Locked)
             {
-                if (!collider.IsSolid || collider.Velocity == Vector2.Zero)
-                    continue;
+                float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                Rectangle feetCheck = Hitbox;
-                feetCheck.Y += 1;
+                Move(Velocity.X * deltaTime, Velocity.Y * deltaTime);
 
-                if (feetCheck.Intersects(collider.Rect))
+                foreach (var collider in Colliders)
                 {
-                    Hitbox.X += (int)collider.Velocity.X;
-                    Hitbox.Y += (int)collider.Velocity.Y;
+                    if (!collider.IsSolid || collider.Velocity == Vector2.Zero)
+                        continue;
+
+                    Rectangle feetCheck = Hitbox;
+                    feetCheck.Y += 1;
+
+                    if (feetCheck.Intersects(collider.Rect))
+                    {
+                        Hitbox.X += (int)collider.Velocity.X;
+                        Hitbox.Y += (int)collider.Velocity.Y;
+                    }
                 }
             }
-            
 
+            else
+            {
+                Velocity.X = 0;
+                Velocity.Y = 0;
+            }
         }
 
 

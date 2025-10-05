@@ -5,14 +5,13 @@ using ConstructEngine.Util.Tween;
 
 namespace ConstructEngine.Graphics;
 
-public class FollowCamera
+public class FollowCamera : Camera
 {
     public bool XEnabled = true;
     public bool YEnabled = true;
     public Matrix Transform { get; private set; }
     public float Zoom { get; set; } = 1f;
-
-    public Vector2 cameraPosition = Vector2.Zero;
+    
 
     public float LerpFactor { get; set; } = 0.1f;
     
@@ -25,10 +24,14 @@ public class FollowCamera
 
     public bool Locked { get; private set; } = false;
     private Vector2 lockedPosition;
+    
+    public Rectangle CameraRectangle { get; set; }
 
 
     public FollowCamera(float Zoom, bool XEnabled = true, bool YEnabled = true)
     {
+        cameraPosition = Vector2.Zero;
+        CameraRectangle = new Rectangle(0, 0, Core.VirutalWidth, Core.VirtualHeight);
         this.Zoom = Zoom;
         this.XEnabled = XEnabled;
         this.YEnabled = YEnabled;
@@ -50,6 +53,7 @@ public class FollowCamera
 
     public void Follow(Rectangle target)
     {
+        
         if (!Locked)
         {
 
@@ -85,8 +89,14 @@ public class FollowCamera
         var position = Matrix.CreateTranslation(-cameraPosition.X, -cameraPosition.Y, 0f);
         var offset = Matrix.CreateTranslation(Core.VirutalWidth / 2f, Core.VirtualHeight / 2f, 0f);
         var scale = Matrix.CreateScale(Zoom, Zoom, 1f);
+        
+        
+        
+        
 
         Transform = position * scale * offset;
+        
+        Console.WriteLine((Core.VirutalWidth / 2f, Core.VirtualHeight / 2f));
     }
 
 

@@ -69,7 +69,6 @@ public class Scene
     
     public interface IScene
     {
-        public FollowCamera _camera { get; set; }
 
         public void Initialize();
         public void Load();

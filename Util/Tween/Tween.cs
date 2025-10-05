@@ -96,13 +96,27 @@ public class Tween
     {
         float totalCycleDuration = Duration * 2f;
         int cyclesDone = (int)(_elapsedTime / totalCycleDuration);
-        if (loopTimes != -1 && cyclesDone >= loopTimes) { return StartValue; }
+        if (loopTimes != -1 && cyclesDone >= loopTimes) 
+        {
+            return EndValue;
+        }
+
         float cycleTime = _elapsedTime % totalCycleDuration;
         float progress;  
-        if (cycleTime <= Duration) { progress = cycleTime / Duration; } else { progress = (totalCycleDuration - cycleTime) / Duration; }
-        
-        return progress;
+
+        if (cycleTime <= Duration)
+        {
+            progress = cycleTime / Duration;          // going forward
+        }
+        else
+        {
+            progress = (totalCycleDuration - cycleTime) / Duration; // going backward
+        }
+
+        float eased = EasingFunction(progress);
+        return StartValue + (EndValue - StartValue) * eased;
     }
+
 
 
 

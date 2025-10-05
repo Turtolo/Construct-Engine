@@ -7,6 +7,7 @@ using System.Text.Json;
 using Microsoft.Xna.Framework;
 using ConstructEngine.Components;
 using ConstructEngine.Components.Entity;
+using ConstructEngine.Object;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -78,7 +79,15 @@ public class EntityLoader
 
             foreach (var entity in layer.entities)
             {
-                if (entity.name != "collision" && entity.name != "SceneTransitionArea")
+                
+                string className = entity.name;
+                
+                Assembly assembly = Assembly.GetExecutingAssembly();
+
+                
+                Type type = assembly.GetTypes().FirstOrDefault(t => t.Name == className);
+
+                if (type == null)
                 {
                     positionList.Add(new Vector2(entity.x, entity.y));
                     
