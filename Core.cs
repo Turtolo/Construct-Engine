@@ -72,14 +72,14 @@ public class Core : Game
 
     public static int ResolutionWidth { get; set; }
     public static int ResolutionHeight { get; set; }
-    public static int VirutalWidth { get; set; }
+    public static int VirtualWidth { get; set; }
     public static int VirtualHeight { get; set; }
     
 
 
     private bool _isResizing;
     bool isFullscreen = false;
-    private RenderTarget2D _renderTarget;
+    public static RenderTarget2D RenderTarget;
 
     /// <summary>
     /// Creates a new Core instance.
@@ -88,10 +88,10 @@ public class Core : Game
     /// <param name="width">The initial width, in pixels, of the game window.</param>
     /// <param name="height">The initial height, in pixels, of the game window.</param>
     /// <param name="fullScreen">Indicates if the game should start in fullscreen mode.</param>
-    public Core(string title, int virutalWidth, int virtualHeight, bool fullScreen, int resolutionWidth = 320, int resolutionHeight = 180)
+    public Core(string title, int virtualWidth, int virtualHeight, bool fullScreen, int resolutionWidth = 320, int resolutionHeight = 180)
     {
         VirtualHeight = virtualHeight;
-        VirutalWidth = virutalWidth;
+        VirtualWidth = virtualWidth;
         ResolutionWidth = resolutionWidth;
         ResolutionHeight = resolutionHeight;
 
@@ -193,7 +193,7 @@ public class Core : Game
 
     public void SetRenderTarget()
     {
-        GraphicsDevice.SetRenderTarget(_renderTarget);
+        GraphicsDevice.SetRenderTarget(RenderTarget);
     }
 
     public void ToggleFullscreen()
@@ -205,9 +205,9 @@ public class Core : Game
 
     public void LoadRenderTarget()
     {
-        _renderTarget = new RenderTarget2D(
+        RenderTarget = new RenderTarget2D(
             GraphicsDevice,
-            VirutalWidth,
+            VirtualWidth,
             VirtualHeight,
             false,
             SurfaceFormat.Color,
@@ -223,11 +223,11 @@ public class Core : Game
         GraphicsDevice.Clear(Color.Black);
 
         int scale = Math.Min(
-            GraphicsDevice.PresentationParameters.BackBufferWidth / VirutalWidth,
+            GraphicsDevice.PresentationParameters.BackBufferWidth / VirtualWidth,
             GraphicsDevice.PresentationParameters.BackBufferHeight / VirtualHeight
         );
 
-        int scaledWidth = VirutalWidth * scale;
+        int scaledWidth = VirtualWidth * scale;
         int scaledHeight = VirtualHeight * scale;
         int offsetX = (GraphicsDevice.PresentationParameters.BackBufferWidth - scaledWidth) / 2;
         int offsetY = (GraphicsDevice.PresentationParameters.BackBufferHeight - scaledHeight) / 2;
@@ -235,7 +235,7 @@ public class Core : Game
         Rectangle destinationRectangle = new Rectangle(offsetX, offsetY, scaledWidth, scaledHeight);
 
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        SpriteBatch.Draw(_renderTarget, destinationRectangle, Color.White);
+        SpriteBatch.Draw(RenderTarget, destinationRectangle, Color.White);
         SpriteBatch.End();
     }
 

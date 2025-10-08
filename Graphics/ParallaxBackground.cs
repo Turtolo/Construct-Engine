@@ -10,8 +10,10 @@ public class ParallaxBackground
 {
     public Texture2D Texture {get; set;}
     public float ParallaxFactor {get; set;}
-    
-    public Camera Camera {get; set;}
+
+    public Vector2 Position = Vector2.Zero;
+
+    public Camera Camera { get; set; } = null;
 
     public static List<ParallaxBackground> BackgroundList = new();
     
@@ -39,13 +41,23 @@ public class ParallaxBackground
     
     
     public SamplerState SamplerState { get; set; }
-    
-    
-    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, Camera camera, SamplerState sampler)
+
+
+    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, SamplerState sampler, Camera camera)
     {
         ParallaxFactor = parallaxFactor;
         Camera = camera;
+        Texture = contentManager.Load<Texture2D>(texturePath);
         
+        SamplerState = sampler;
+        
+        BackgroundList.Add(this);
+    }
+
+    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, SamplerState sampler, Vector2 position)
+    {
+        ParallaxFactor = parallaxFactor;
+        Position = position;
         Texture = contentManager.Load<Texture2D>(texturePath);
         
         SamplerState = sampler;
@@ -56,8 +68,12 @@ public class ParallaxBackground
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
-        
-        
+        if (Camera != null)
+        {
+            Position.X = Camera.cameraPosition.X;
+        }
+
+
         spriteBatch.Begin(
             SpriteSortMode.Deferred,
             BlendState.AlphaBlend,
@@ -65,13 +81,13 @@ public class ParallaxBackground
             DepthStencilState.None,
             RasterizerState.CullNone
         );
-        
+
         spriteBatch.Draw(
             Texture,
             new Rectangle(0, 0, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height),
             new Rectangle(
-                (int)(Camera.cameraPosition.X * ParallaxFactor),
-                (int)(Camera.cameraPosition.Y * ParallaxFactor),
+                (int)(Position.X * ParallaxFactor),
+                (int)(Position.Y * ParallaxFactor),
                 graphicsDevice.Viewport.Width,
                 graphicsDevice.Viewport.Height
             ),

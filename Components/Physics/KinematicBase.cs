@@ -27,7 +27,7 @@ namespace ConstructEngine.Components.Physics
             {
                 float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                Move(Velocity.X, Velocity.Y);
+                Move(Velocity.X * deltaTime, Velocity.Y * deltaTime);
 
                 foreach (var collider in Colliders)
                 {

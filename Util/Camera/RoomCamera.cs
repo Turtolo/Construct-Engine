@@ -14,8 +14,6 @@ public class RoomCamera : Camera
 
     private Tween cameraXTween;
     private Tween cameraYTween;
-    
-    public Vector2 cameraPosition = Vector2.Zero;
     Vector2 cameraTargetPosition = Vector2.Zero;
 
     public float LerpFactor { get; set; } = 0.1f;
@@ -35,12 +33,12 @@ public class RoomCamera : Camera
         CameraRectangle = new Rectangle(
             0, 
             0, 
-            Core.VirutalWidth, 
+            Core.VirtualWidth, 
             Core.VirtualHeight
         );
 
         
-        cameraPosition = new Vector2(Core.VirutalWidth / 2, Core.VirtualHeight / 2);
+        cameraPosition = new Vector2(Core.VirtualWidth / 2, Core.VirtualHeight / 2);
     }
     
     
@@ -60,7 +58,7 @@ public class RoomCamera : Camera
                 
                 targetEntity.KinematicBase.Locked = true;
                 
-                targetEntity.KinematicBase.Hitbox.X -= 20;
+                targetEntity.KinematicBase.Hitbox.X -= 10;
                 
                 cameraXTween = new Tween(
                     cameraPosition.X,
@@ -79,7 +77,7 @@ public class RoomCamera : Camera
                 
                 targetEntity.KinematicBase.Locked = true;
 
-                targetEntity.KinematicBase.Hitbox.X += 20;
+                targetEntity.KinematicBase.Hitbox.X += 10;
                 
                 
                 cameraXTween = new Tween(
@@ -161,7 +159,7 @@ public class RoomCamera : Camera
         }
 
         var position = Matrix.CreateTranslation(-cameraPosition.X, -cameraPosition.Y, 0f);
-        var offset = Matrix.CreateTranslation(Core.VirutalWidth / 2f, Core.VirtualHeight / 2f, 0f);
+        var offset = Matrix.CreateTranslation(Core.VirtualWidth / 2f, Core.VirtualHeight / 2f, 0f);
         var scale = Matrix.CreateScale(Zoom, Zoom, 1f);
 
         Transform = position * scale * offset;
