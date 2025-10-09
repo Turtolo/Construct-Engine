@@ -43,6 +43,16 @@ public class SceneManager : Scene
         return sceneStack.Peek();
     }
 
+    public bool IsStackEmpty()
+    {
+        if (sceneStack.Count == 0)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
     public void ReloadCurrentScene()
     {
         AddScene(sceneStack.Peek());
