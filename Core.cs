@@ -10,6 +10,7 @@ using ConstructEngine.Graphics;
 using System.Collections.Generic;
 
 using ConstructEngine.Components.Entity;
+using ConstructEngine.Util;
 using Timer = ConstructEngine.Util.Timer;
 
 namespace ConstructEngine;
@@ -64,6 +65,8 @@ public class Core : Game
     /// Gets a reference to the input management system.
     /// </summary>
     public static InputManager Input { get; private set; }
+    
+    public static SceneManager SceneManager { get; private set; }
 
     /// <summary>
     /// Gets or Sets a value that indicates if the game should exit when the esc key on the keyboard is pressed.
@@ -141,11 +144,13 @@ public class Core : Game
         // Set the core's graphics device to a reference of the base Game's
         // graphics device.
 
-
+        
 
         GraphicsDevice = base.GraphicsDevice;
         
-
+        
+        SceneManager = new SceneManager();
+        
         CircleDraw = new CircleDraw();
 
         // Create the sprite batch instance.
