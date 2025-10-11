@@ -136,20 +136,22 @@ public class Core : Game
         IsMouseVisible = true;
     }
 
+    public static void Exit()
+    {
+        Exit();
+    }
+
     protected override void Initialize()
     {
+        SceneManager = new SceneManager();
 
         base.Initialize();
-
-        // Set the core's graphics device to a reference of the base Game's
-        // graphics device.
-
+        
         
 
         GraphicsDevice = base.GraphicsDevice;
         
         
-        SceneManager = new SceneManager();
         
         CircleDraw = new CircleDraw();
 
