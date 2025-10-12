@@ -44,6 +44,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Gum.MonoGame": {
+              "target": "Package",
+              "version": "[2025.9.27.1, )"
+            },
             "MonoGame.Framework.DesktopGL": {
               "suppressParent": "All",
               "target": "Package",
