@@ -250,5 +250,6 @@ public class Core : Game
 
     public void Draw()
     {
+        
     }
 }
