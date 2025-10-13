@@ -72,6 +72,8 @@ public class Core : Game
     /// Gets or Sets a value that indicates if the game should exit when the esc key on the keyboard is pressed.
     /// </summary>
     public static bool ExitOnEscape { get; set; }
+    
+    public static bool Exit { get; set; }
 
     public static int ResolutionWidth { get; set; }
     public static int ResolutionHeight { get; set; }
@@ -136,10 +138,7 @@ public class Core : Game
         IsMouseVisible = true;
     }
 
-    public static void Exit()
-    {
-        Exit();
-    }
+    
 
     protected override void Initialize()
     {
@@ -179,7 +178,7 @@ public class Core : Game
         
 
 
-        if (ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape))
+        if (ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape) || Exit)
         {
             Exit();
         }

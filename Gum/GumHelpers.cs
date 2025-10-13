@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Encodings.Web;
 using MonoGameGum;
@@ -12,14 +14,27 @@ public class GumHelper
 {
     
     public static Dictionary<string, FrameworkElement> ScreenDictionary = new();
-    
-    
-    public static void AddScreenToRoot(FrameworkElement Screen)
+
+    public static void AddScreenToRoot(FrameworkElement newScreen)
     {
-        Screen.AddToRoot();
+        string key = newScreen.ToString();
         
-        ScreenDictionary.Add(Screen.ToString(), Screen);
+        if (ScreenDictionary.ContainsKey(key))
+        {
+            FrameworkElement oldScreen = ScreenDictionary[key];
+            
+            oldScreen.RemoveFromRoot(); 
+            
+            ScreenDictionary[key] = newScreen;
+        }
+        else
+        {
+            ScreenDictionary.Add(key, newScreen);
+        }
+
+        newScreen.AddToRoot();
     }
+
     
     
     
