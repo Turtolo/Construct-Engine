@@ -5,6 +5,7 @@ using ConstructEngine.Object;
 using ConstructEngine.Graphics;
 using ConstructEngine.Physics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework;
 
 namespace ConstructEngine.Util;
 
@@ -41,6 +42,14 @@ public class SceneManager : Scene
     public IScene GetCurrentScene()
     {
         return sceneStack.Peek();
+    }
+
+    public void UpdateCurrentScene(GameTime gameTime)
+    {
+        if (!IsStackEmpty())
+        {
+            GetCurrentScene().Update(gameTime);
+        }
     }
 
     public bool IsStackEmpty()

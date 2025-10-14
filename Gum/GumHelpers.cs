@@ -7,6 +7,7 @@ using MonoGameGum;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameGum.Forms.Controls;
+using System.Runtime.InteropServices;
 
 namespace ConstructEngine.Gum;
 
@@ -35,7 +36,20 @@ public class GumHelper
         newScreen.AddToRoot();
     }
 
-    
+    public static GumService GumInitialize(Game game, string path)
+    {
+        GumService.Default.Initialize(game, path);
+
+        FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
+        FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);
+        FrameworkElement.TabReverseKeyCombos.Add(
+            new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Up });
+        FrameworkElement.TabKeyCombos.Add(
+            new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Down });
+
+        return GumService.Default;
+    }
+
     
     
     public static void RemoveScreenOfType<T>() where T : FrameworkElement
