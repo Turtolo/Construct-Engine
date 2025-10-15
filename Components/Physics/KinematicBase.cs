@@ -8,9 +8,13 @@ namespace ConstructEngine.Components.Physics
     public class KinematicBase
     {
         public Rectangle Hitbox;
+
+
         public Vector2 Velocity;
         private float remainderX = 0;
         private float remainderY = 0;
+
+    
 
         public bool Locked;
 

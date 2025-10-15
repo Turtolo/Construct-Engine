@@ -8,8 +8,10 @@ namespace ConstructEngine.Physics
     public class Collider
     {
         public static List<Collider> ColliderList = new List<Collider>();
-        
+
         public Rectangle Rect;
+
+        public Circle Circ;
         public bool IsSolid;
         public bool OneWay;
         public Vector2 Velocity = Vector2.Zero;
@@ -18,6 +20,15 @@ namespace ConstructEngine.Physics
         public Collider(Rectangle rect, bool isSolid, bool oneWay = false)
         {
             Rect = rect;
+            IsSolid = isSolid;
+            OneWay = oneWay;
+
+            ColliderList.Add(this);
+        }
+        
+        public Collider(Circle circle, bool isSolid, bool oneWay = false)
+        {
+            Circ = circle;
             IsSolid = isSolid;
             OneWay = oneWay;
             

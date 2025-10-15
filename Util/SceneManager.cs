@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Construct.Graphics;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Object;
 using ConstructEngine.Graphics;

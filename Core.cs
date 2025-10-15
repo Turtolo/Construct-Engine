@@ -22,13 +22,9 @@ public class Core : Game
 {
     internal static Core s_instance;
 
-    /// <summary>
-    /// Gets a reference to the Core instance.
-    /// </summary>
     public static Core Instance => s_instance;
-    public static GraphicsDeviceManager Graphics { get; private set; }
     
-    public static CircleDraw CircleDraw { get; private set; }
+    public static GraphicsDeviceManager Graphics { get; private set; }
 
     public static List<Rectangle> CollisionList { get; private set; } = new List<Rectangle>();
 
@@ -113,8 +109,6 @@ public class Core : Game
         base.Initialize();
 
         GraphicsDevice = base.GraphicsDevice;
-        
-        CircleDraw = new CircleDraw();
 
         SpriteBatch = new SpriteBatch(GraphicsDevice);
 

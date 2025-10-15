@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Construct.Graphics;
+namespace ConstructEngine.Graphics;
 
 public class ParallaxBackground
 {

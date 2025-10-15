@@ -1,30 +1,20 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace ConstructEngine
+namespace ConstructEngine.Physics
 {
     public class Circle : IEquatable<Circle>
     {
         private static readonly Circle s_empty = new Circle(0, 0, 0);
 
-        /// <summary>
-        /// The x-coordinate of the center of this circle.
-        /// </summary>
         public int X { get; set; }
 
-        /// <summary>
-        /// The y-coordinate of the center of this circle.
-        /// </summary>
         public int Y { get; set; }
 
-        /// <summary>
-        /// The length, in pixels, from the center of this circle to the edge.
-        /// </summary>
         public int Radius { get; set; }
 
-        /// <summary>
-        /// Gets or sets the location of the center of this circle.
-        /// </summary>
+        private bool Enabled { get; set; }
+
         public Point Location
         {
             get => new Point(X, Y);
@@ -35,14 +25,8 @@ namespace ConstructEngine
             }
         }
 
-        /// <summary>
-        /// Gets a circle with X=0, Y=0, and Radius=0.
-        /// </summary>
         public static Circle Empty => s_empty;
 
-        /// <summary>
-        /// Gets a value that indicates whether this circle has a radius of 0 and a location of (0, 0).
-        /// </summary>
         public bool IsEmpty => X == 0 && Y == 0 && Radius == 0;
 
         public int Top => Y - Radius;
@@ -50,15 +34,17 @@ namespace ConstructEngine
         public int Left => X - Radius;
         public int Right => X + Radius;
 
-        public Circle(int x, int y, int radius)
+        public Circle(int x, int y, int radius, bool enabled = true)
         {
+            Enabled = enabled;
             X = x;
             Y = y;
             Radius = radius;
         }
 
-        public Circle(Point location, int radius)
+        public Circle(Point location, int radius, bool enabled = true)
         {
+            Enabled = enabled;
             X = location.X;
             Y = location.Y;
             Radius = radius;
