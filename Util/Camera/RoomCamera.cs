@@ -30,19 +30,11 @@ public class RoomCamera : Camera
 
     public RoomCamera(Rectangle target)
     {
-        float scale = Math.Max(
-            (float)Core.GraphicsDevice.PresentationParameters.BackBufferWidth / Core.VirtualWidth,
-            (float)Core.GraphicsDevice.PresentationParameters.BackBufferHeight / Core.VirtualHeight
-        );
 
-        float visibleWidth = Core.GraphicsDevice.PresentationParameters.BackBufferWidth / scale;
-        float visibleHeight = Core.GraphicsDevice.PresentationParameters.BackBufferHeight / scale;
 
         CameraRectangle = new Rectangle(
-            (int)((Core.VirtualWidth - visibleWidth) / 2),
-            (int)((Core.VirtualHeight - visibleHeight) / 2),
-            (int)visibleWidth,
-            (int)visibleHeight
+
+
         );
 
 

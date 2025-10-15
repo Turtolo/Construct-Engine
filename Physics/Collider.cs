@@ -10,10 +10,11 @@ namespace ConstructEngine.Physics
         public static List<Collider> ColliderList = new List<Collider>();
 
         public Rectangle Rect;
-
         public Circle Circ;
+
         public bool IsSolid;
         public bool OneWay;
+        
         public Vector2 Velocity = Vector2.Zero;
         protected Texture2D pixel;
 
