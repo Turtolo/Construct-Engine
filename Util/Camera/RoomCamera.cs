@@ -32,10 +32,7 @@ public class RoomCamera : Camera
     {
 
 
-        CameraRectangle = new Rectangle(
-
-
-        );
+        CameraRectangle = new Rectangle(0, 0, Core.VirtualWidth, Core.VirtualHeight);
 
 
         
