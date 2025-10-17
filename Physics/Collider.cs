@@ -12,25 +12,25 @@ namespace ConstructEngine.Physics
         public Rectangle Rect;
         public Circle Circ;
 
-        public bool IsSolid;
+        public bool Enabled;
         public bool OneWay;
         
         public Vector2 Velocity = Vector2.Zero;
         protected Texture2D pixel;
 
-        public Collider(Rectangle rect, bool isSolid, bool oneWay = false)
+        public Collider(Rectangle rect, bool enabled, bool oneWay = false)
         {
             Rect = rect;
-            IsSolid = isSolid;
+            Enabled = enabled;
             OneWay = oneWay;
 
             ColliderList.Add(this);
         }
         
-        public Collider(Circle circle, bool isSolid, bool oneWay = false)
+        public Collider(Circle circle, bool enabled, bool oneWay = false)
         {
             Circ = circle;
-            IsSolid = isSolid;
+            Enabled = enabled;
             OneWay = oneWay;
             
             ColliderList.Add(this);
@@ -38,7 +38,7 @@ namespace ConstructEngine.Physics
 
         public void ChangeCollisionState(bool state)
         {
-            IsSolid = state;
+            Enabled = state;
         }
 
         public virtual void Update(GameTime gameTime)

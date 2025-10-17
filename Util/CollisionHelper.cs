@@ -15,16 +15,15 @@ public enum CollisionSide
 
 public static class CollisionHelper
 {
-    public static bool IsRectangleCollidingCircle(Circle circ, Rectangle rect)
+    public static bool CircleIntersectsRectangle(Circle circle, Rectangle rect)
     {
-                Vector2 closestPoint = new Vector2(
-            MathHelper.Clamp(circ.Location.X, rect.Left, rect.Right),
-            MathHelper.Clamp(circ.Location.Y, rect.Top, rect.Bottom)
-        );
+        int closestX = Math.Clamp(circle.X, rect.Left, rect.Right);
+        int closestY = Math.Clamp(circle.Y, rect.Top, rect.Bottom);
 
-        float distance = Vector2.Distance(circ.Location.ToVector2(), closestPoint);
+        int deltaX = circle.X - closestX;
+        int deltaY = circle.Y - closestY;
 
-        return distance <= circ.Radius;
+        return (deltaX * deltaX + deltaY * deltaY) <= (circle.Radius * circle.Radius);
     }
     public static CollisionSide GetCameraEdge(Rectangle target, Rectangle camera)
     {

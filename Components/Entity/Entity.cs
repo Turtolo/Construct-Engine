@@ -58,9 +58,21 @@ namespace ConstructEngine.Components.Entity
         {
             if (Visible)
             {
-                AnimatedSprite.Draw(spriteBatch, new Vector2(position.X + textureOffset, position.Y));
-                AnimatedSpriteFeet.Draw(spriteBatch, new Vector2(position.X + textureOffset, position.Y));
+                if (AnimatedSprite != null)
+                {
+                    AnimatedSprite.Draw(spriteBatch, new Vector2(position.X + textureOffset, position.Y));
+                }
+
+                if (AnimatedSpriteFeet != null)
+                {
+                    AnimatedSpriteFeet.Draw(spriteBatch, new Vector2(position.X + textureOffset, position.Y));
+                }
             }
+        }
+
+        public void Free()
+        {
+            EntityList.Remove(this);
         }
 
         public static void AddEntities(params Entity[] entities)

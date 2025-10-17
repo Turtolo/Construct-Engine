@@ -35,7 +35,7 @@ namespace ConstructEngine.Components.Physics
 
                 foreach (var collider in Colliders)
                 {
-                    if (!collider.IsSolid || collider.Velocity == Vector2.Zero)
+                    if (!collider.Enabled || collider.Velocity == Vector2.Zero)
                         continue;
 
                     Rectangle feetCheck = Hitbox;
@@ -135,7 +135,7 @@ namespace ConstructEngine.Components.Physics
 
             foreach (var collider in Colliders)
             {
-                if (!collider.IsSolid)
+                if (!collider.Enabled)
                     continue;
 
                 if (leftCheck.Intersects(collider.Rect) || rightCheck.Intersects(collider.Rect))
@@ -149,7 +149,7 @@ namespace ConstructEngine.Components.Physics
         {
             foreach (var collider in Colliders)
             {
-                if (!collider.IsSolid)
+                if (!collider.Enabled)
                 {
                     continue;
                 }

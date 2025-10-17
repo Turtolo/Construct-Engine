@@ -52,11 +52,11 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
 
             if (playerAbove && movingDown)
             {
-                Collider.IsSolid = true;
+                Collider.Enabled = true;
             }
             else
             {
-                Collider.IsSolid = false;
+                Collider.Enabled = false;
             }
         }
     }
