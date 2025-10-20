@@ -1,10 +1,12 @@
+using System;
 using ConstructEngine.Physics;
+using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ConstructEngine.Graphics;
 
-public class ColliderDraw()
+public class DrawHelper()
 {
     public static void DrawCircle(Circle circ, Color color, int thickness, float layerDepth = 0.1f)
     {
@@ -35,6 +37,27 @@ public class ColliderDraw()
 
         Core.SpriteBatch.Draw(texture, new Vector2(circ.X, circ.Y), color);
     }
+    public static void DrawRay(Ray2D ray, Color color, float thickness, float layerDepth = 0.1f)
+    {
+
+        Texture2D pixel = new Texture2D(Core.GraphicsDevice, 1, 1);
+        pixel.SetData(new[] { color });
+
+        Vector2 end = ray.Position + ray.Direction * ray.Length;
+        Vector2 edge = end - ray.Position;
+        float angle = (float)Math.Atan2(edge.Y, edge.X);
+
+        Core.SpriteBatch.Draw(
+            pixel,
+            new Rectangle((int)ray.Position.X, (int)ray.Position.Y, (int)edge.Length(), (int)thickness),
+            null,
+            color,
+            angle,
+            Vector2.Zero,
+            SpriteEffects.None,
+            layerDepth);
+    }
+    
     public static void DrawRectangle(Rectangle rect, Color color, int thickness, float layerDepth = 0.1f)
     {
         Texture2D rectangleTexture = new Texture2D(Core.GraphicsDevice, 1, 1);

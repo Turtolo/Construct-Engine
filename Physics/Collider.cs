@@ -9,8 +9,11 @@ namespace ConstructEngine.Physics
     {
         public static List<Collider> ColliderList = new List<Collider>();
 
+
         public Rectangle Rect;
+        public static List<Rectangle> RectangleList = new List<Rectangle>();
         public Circle Circ;
+        public static List<Circle> CircleList = new List<Circle>();
 
         public bool Enabled;
         public bool OneWay;
@@ -24,6 +27,8 @@ namespace ConstructEngine.Physics
             Enabled = enabled;
             OneWay = oneWay;
 
+            RectangleList.Add(Rect);
+
             ColliderList.Add(this);
         }
         
@@ -33,6 +38,8 @@ namespace ConstructEngine.Physics
             Enabled = enabled;
             OneWay = oneWay;
             
+            CircleList.Add(Circ);
+
             ColliderList.Add(this);
         }
 
