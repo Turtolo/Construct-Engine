@@ -39,10 +39,6 @@ public class AnimatedSprite : Sprite
         Animation = animation;
     }
 
-    public bool AnimationFinished()
-    {
-        return finished;
-    }
 
     public bool IsAnimationPlaying()
     {
@@ -50,7 +46,18 @@ public class AnimatedSprite : Sprite
     }
 
 
-    public static async void CallbackAnimationFinished()
+    public bool AnimationFinished(Action callback = null)
+    {
+        if (finished)
+        {
+            callback?.Invoke();
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     public static async void Wait(float seconds, Action callback)
     {
@@ -145,10 +152,29 @@ public class AnimatedSprite : Sprite
 
     }
 
-    public void PlayAnimationChain(List<Animation> animations, bool isLooping)
+    private async Task WaitForAnimationToFinishAsync()
     {
-        
+        while (!finished)
+        {
+            await Task.Delay(10);
+        }
     }
+
+
+    public async Task PlayAnimationChainAsync(List<Animation> animations, bool isLooping)
+    {
+        do
+        {
+            foreach (var animation in animations)
+            {
+                PlayAnimation(animation, false);
+
+                await WaitForAnimationToFinishAsync();
+            }
+        } 
+        while (isLooping);
+    }
+
 
 
     

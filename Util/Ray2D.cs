@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration.Assemblies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,6 +12,8 @@ public struct Ray2D
     public Vector2 Direction;
     public int Length;
 
+    static bool hasHit = false;
+
 
     public Ray2D(Vector2 position, Vector2 direction, int length)
     {
@@ -19,14 +22,16 @@ public struct Ray2D
         Length = length;
     }
 
-    
-
+    public bool IsColliding()
+    {
+        return hasHit;
+    }
 
     public static bool RaycastToRectangles(Ray2D ray, List<Rectangle> rectangles, out Vector2 hitPoint)
     {
             float maxLength = ray.Length;
             float closestDistance = float.MaxValue;
-            bool hasHit = false;
+            hasHit = false;
             hitPoint = Vector2.Zero;
 
             foreach (var rect in rectangles)

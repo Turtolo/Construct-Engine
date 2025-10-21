@@ -40,18 +40,34 @@ public class DrawHelper()
     public static void DrawRay(Ray2D ray, Color color, float thickness, float layerDepth = 0.1f)
     {
 
+
+        Color Color;
+
+        if (ray.IsColliding())
+        {
+            Console.WriteLine("Yes");
+            Color = Color.Red;
+        }
+
+        else
+        {
+            Color = color;
+        }
+        
         Texture2D pixel = new Texture2D(Core.GraphicsDevice, 1, 1);
-        pixel.SetData(new[] { color });
+        pixel.SetData(new[] { Color });
 
         Vector2 end = ray.Position + ray.Direction * ray.Length;
         Vector2 edge = end - ray.Position;
         float angle = (float)Math.Atan2(edge.Y, edge.X);
 
+
+
         Core.SpriteBatch.Draw(
             pixel,
             new Rectangle((int)ray.Position.X, (int)ray.Position.Y, (int)edge.Length(), (int)thickness),
             null,
-            color,
+            Color,
             angle,
             Vector2.Zero,
             SpriteEffects.None,

@@ -21,22 +21,36 @@ public class RoomCamera : Camera
     public Rectangle CameraRectangle;
     
     private bool Entered = false;
-    
-    
-
-    
-    
 
 
-    public RoomCamera(Rectangle target)
+
+
+
+
+
+    public RoomCamera(Rectangle target, float zoom)
     {
+        Zoom = zoom;
+
+        CameraRectangle = new Rectangle
+        (
+            (int)(cameraPosition.X - (Core.VirtualWidth / (2 * Zoom))),
+            (int)(cameraPosition.Y - (Core.VirtualHeight / (2 * Zoom))),
+            (int)(Core.VirtualWidth / Zoom),
+            (int)(Core.VirtualHeight / Zoom)
+        );
 
 
-        CameraRectangle = new Rectangle(0, 0, Core.VirtualWidth, Core.VirtualHeight);
 
-
-        
         cameraPosition = new Vector2(Core.VirtualWidth / 2, Core.VirtualHeight / 2);
+    }
+    
+    private void UpdateCameraRectangle()
+    {
+        CameraRectangle.X = (int)(cameraPosition.X - (Core.VirtualWidth / (2 * Zoom)));
+        CameraRectangle.Y = (int)(cameraPosition.Y - (Core.VirtualHeight / (2 * Zoom)));
+        CameraRectangle.Width = (int)(Core.VirtualWidth / Zoom);
+        CameraRectangle.Height = (int)(Core.VirtualHeight / Zoom);
     }
     
     
@@ -155,6 +169,8 @@ public class RoomCamera : Camera
             cameraYTween.Update(Core.DeltaTime);
             cameraPosition.Y = cameraYTween.GetCurrentValue(cameraYTween.Normal);
         }
+
+        UpdateCameraRectangle();
 
         var position = Matrix.CreateTranslation(-cameraPosition.X, -cameraPosition.Y, 0f);
         var offset = Matrix.CreateTranslation(Core.VirtualWidth / 2f, Core.VirtualHeight / 2f, 0f);
