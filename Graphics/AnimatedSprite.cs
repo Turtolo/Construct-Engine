@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Mime;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 namespace ConstructEngine.Graphics;
@@ -16,9 +19,6 @@ public class AnimatedSprite : Sprite
 
     public bool finished;
 
-    /// <summary>
-    /// Gets or Sets the animation for this animated sprite.
-    /// </summary>
     public Animation Animation
     {
         get => _animation;
@@ -43,6 +43,22 @@ public class AnimatedSprite : Sprite
     {
         return finished;
     }
+
+    public bool IsAnimationPlaying()
+    {
+        return !finished;
+    }
+
+
+    public static async void CallbackAnimationFinished()
+
+    public static async void Wait(float seconds, Action callback)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(seconds));
+        callback?.Invoke();
+    }
+
+
 
     public void Update(GameTime gameTime)
     {
@@ -73,7 +89,7 @@ public class AnimatedSprite : Sprite
     }
 
 
-    
+
     public void PlayAnimation(Animation animation, bool isLooping)
     {
         if (_animation != animation || finished)
@@ -86,6 +102,57 @@ public class AnimatedSprite : Sprite
             Region = _animation.Frames[_currentFrame];
         }
     }
+
+    public void ResetAnimation()
+    {
+        finished = false;
+        _currentFrame = 0;
+        _elapsed = TimeSpan.Zero;
+        Region = _animation.Frames[_currentFrame];
+    }
+
+    public void StopAnimation()
+    {
+        finished = true;
+    }
+
+    public void ResumeAnimation()
+    {
+        finished = false;
+    }
+
+
+    public void SetFrame(int frameIndex)
+    {
+        if (frameIndex >= 0 && frameIndex < _animation.Frames.Count)
+        {
+            _currentFrame = frameIndex;
+            Region = _animation.Frames[_currentFrame];
+        }
+    }
+
+    public void GoToFrame(int frameIndex)
+    {
+        SetFrame(frameIndex);
+    }
+
+
+    public void GoToAndPlay(int frameIndex)
+    {
+        SetFrame(frameIndex);
+        finished = false;
+
+
+    }
+
+    public void PlayAnimationChain(List<Animation> animations, bool isLooping)
+    {
+        
+    }
+
+
+    
+
 
     
 

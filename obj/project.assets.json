@@ -85,10 +85,10 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "MonoGame.Framework.DesktopGL/3.8.4": {
+      "MonoGame.Framework.DesktopGL/3.8.4.1": {
         "type": "package",
         "dependencies": {
-          "MonoGame.Library.OpenAL": "1.23.1.10",
+          "MonoGame.Library.OpenAL": "1.24.3.2",
           "MonoGame.Library.SDL": "2.32.2.1",
           "NVorbis": "0.10.4"
         },
@@ -106,7 +106,7 @@
           "build/MonoGame.Framework.DesktopGL.targets": {}
         }
       },
-      "MonoGame.Library.OpenAL/1.23.1.10": {
+      "MonoGame.Library.OpenAL/1.24.3.2": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/android-arm/native/libopenal.so": {
@@ -125,17 +125,21 @@
             "assetType": "native",
             "rid": "android-x86"
           },
-          "runtimes/ios-arm64/native/libopenal.dylib": {
+          "runtimes/ios-arm64/native/libopenal.a": {
             "assetType": "native",
             "rid": "ios-arm64"
           },
-          "runtimes/iossimulator-arm64/native/libopenal.dylib": {
+          "runtimes/iossimulator-arm64/native/libopenal.a": {
             "assetType": "native",
             "rid": "iossimulator-arm64"
           },
-          "runtimes/iossimulator-x64/native/libopenal.dylib": {
+          "runtimes/iossimulator-x64/native/libopenal.a": {
             "assetType": "native",
             "rid": "iossimulator-x64"
+          },
+          "runtimes/linux-arm64/native/libopenal.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
           },
           "runtimes/linux-x64/native/libopenal.so": {
             "assetType": "native",
@@ -383,10 +387,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "MonoGame.Framework.DesktopGL/3.8.4": {
-      "sha512": "2WR/vPNPcmQ9h4EhMkfpUfMW0Krm6pX0ElkZwSRI1IUecPuzLeXt0i9NRwGxZBUdcNdNxACCmswrxSf4B95Obg==",
+    "MonoGame.Framework.DesktopGL/3.8.4.1": {
+      "sha512": "YybxIIT5+Ky78E/XdkS0glyluMr2EeDZwx2LqXULAOCqiKt1+aDrjPZaqLL5qpNgBcMEHUeZJ4YjWe4TAZlWLw==",
       "type": "package",
-      "path": "monogame.framework.desktopgl/3.8.4",
+      "path": "monogame.framework.desktopgl/3.8.4.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -395,29 +399,30 @@
         "build/MonoGame.Framework.DesktopGL.targets",
         "lib/net8.0/MonoGame.Framework.dll",
         "lib/net8.0/MonoGame.Framework.xml",
-        "monogame.framework.desktopgl.3.8.4.nupkg.sha512",
+        "monogame.framework.desktopgl.3.8.4.1.nupkg.sha512",
         "monogame.framework.desktopgl.nuspec"
       ]
     },
-    "MonoGame.Library.OpenAL/1.23.1.10": {
-      "sha512": "4/F4FFyt7OYhtEmgi/Qmv01eC6GfQ9dkIPsymgkwJ/tV7PewmWrHg/LvTKjd6R+5j/tlO8JkjsEb0Aje6bxfxw==",
+    "MonoGame.Library.OpenAL/1.24.3.2": {
+      "sha512": "nGRsXQXs+NSUC3C5w90hFQfyKdZPpBnHnyg2w+Dw/2pUH7s+CoRWTJNYbzzdJf3+aeUvfvG4rTbFvMKDDj5olA==",
       "type": "package",
-      "path": "monogame.library.openal/1.23.1.10",
+      "path": "monogame.library.openal/1.24.3.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE",
         "README.md",
-        "monogame.library.openal.1.23.1.10.nupkg.sha512",
+        "monogame.library.openal.1.24.3.2.nupkg.sha512",
         "monogame.library.openal.nuspec",
         "runtimes/android-arm/native/libopenal.so",
         "runtimes/android-arm64/native/libopenal.so",
         "runtimes/android-x64/native/libopenal.so",
         "runtimes/android-x86/native/libopenal.so",
-        "runtimes/ios-arm64/native/libopenal.dylib",
-        "runtimes/iossimulator-arm64/native/libopenal.dylib",
-        "runtimes/iossimulator-x64/native/libopenal.dylib",
+        "runtimes/ios-arm64/native/libopenal.a",
+        "runtimes/iossimulator-arm64/native/libopenal.a",
+        "runtimes/iossimulator-x64/native/libopenal.a",
+        "runtimes/linux-arm64/native/libopenal.so",
         "runtimes/linux-x64/native/libopenal.so",
         "runtimes/osx/native/libopenal.dylib",
         "runtimes/win-x64/native/openal.dll"
@@ -619,19 +624,19 @@
     ]
   },
   "packageFolders": {
-    "/home/nils/.nuget/packages/": {}
+    "/Users/nilslauvstad/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
+      "projectUniqueName": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
       "projectName": "Construct",
-      "projectPath": "/home/nils/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
-      "packagesPath": "/home/nils/.nuget/packages/",
-      "outputPath": "/home/nils/Documents/Project/Libraries/Construct-Engine/obj/",
+      "projectPath": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
+      "packagesPath": "/Users/nilslauvstad/.nuget/packages/",
+      "outputPath": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/nils/.nuget/NuGet/NuGet.Config"
+        "/Users/nilslauvstad/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -655,7 +660,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -682,18 +687,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.20, 8.0.20]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
