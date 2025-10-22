@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using ConstructEngine.Object;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ConstructEngine.Util;
+using System.Security.Cryptography.X509Certificates;
+using System;
 
 namespace ConstructEngine.Physics
 {
@@ -50,8 +54,14 @@ namespace ConstructEngine.Physics
 
         public virtual void Update(GameTime gameTime)
         {
+            for (int i = 10; i <= 100; i++)
+            {
+                
+            }
  
         }
+
+        
 
         public virtual void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
         {

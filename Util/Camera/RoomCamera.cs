@@ -32,6 +32,9 @@ public class RoomCamera : Camera
     {
         Zoom = zoom;
 
+
+        cameraPosition = new Vector2(Core.VirtualWidth / 2, Core.VirtualHeight / 2);
+
         CameraRectangle = new Rectangle
         (
             (int)(cameraPosition.X - (Core.VirtualWidth / (2 * Zoom))),
@@ -41,8 +44,6 @@ public class RoomCamera : Camera
         );
 
 
-
-        cameraPosition = new Vector2(Core.VirtualWidth / 2, Core.VirtualHeight / 2);
     }
     
     private void UpdateCameraRectangle()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ConstructEngine.Graphics;
 using Microsoft.Xna.Framework;
@@ -16,7 +17,24 @@ public class ParallaxBackground
     public Camera Camera { get; set; } = null;
 
     public static List<ParallaxBackground> BackgroundList = new();
+
+    public static void AddBackground(ParallaxBackground background)
+    {
+        BackgroundList.Add(background);
+    }
     
+    public static void AddBackgrounds(String[] imagePaths, float topParralaxFactor, Camera camera = null)
+    {
+        float parallaxFactor = 0f;
+
+        foreach (string path in imagePaths)
+        {
+            parallaxFactor += topParralaxFactor;
+
+            //BackgroundList.Add(new ParallaxBackground(path, Core.Content, parallaxFactor, RepeatYX, camera));
+        }
+    }
+
     public static SamplerState RepeatX = new SamplerState()
     {
         AddressU = TextureAddressMode.Wrap,
@@ -43,22 +61,22 @@ public class ParallaxBackground
     public SamplerState SamplerState { get; set; }
 
 
-    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, SamplerState sampler, Camera camera)
+    public ParallaxBackground(string texturePath, float parallaxFactor, SamplerState sampler, Camera camera)
     {
         ParallaxFactor = parallaxFactor;
         Camera = camera;
-        Texture = contentManager.Load<Texture2D>(texturePath);
+        Texture = Core.Content.Load<Texture2D>(texturePath);
         
         SamplerState = sampler;
         
         BackgroundList.Add(this);
     }
 
-    public ParallaxBackground(string texturePath, ContentManager contentManager, float parallaxFactor, SamplerState sampler, Vector2 position)
+    public ParallaxBackground(string texturePath, float parallaxFactor, SamplerState sampler, Vector2 position)
     {
         ParallaxFactor = parallaxFactor;
         Position = position;
-        Texture = contentManager.Load<Texture2D>(texturePath);
+        Texture = Core.Content.Load<Texture2D>(texturePath);
         
         SamplerState = sampler;
         
@@ -106,9 +124,5 @@ public class ParallaxBackground
         }
     }
     
-    public static void AddBackgrounds(params ParallaxBackground[] entities)
-    {
-        BackgroundList.AddRange(entities);
-    }
     
 }

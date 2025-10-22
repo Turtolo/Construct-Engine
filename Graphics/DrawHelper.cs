@@ -10,6 +10,11 @@ public class DrawHelper()
 {
     public static void DrawCircle(Circle circ, Color color, int thickness, float layerDepth = 0.1f)
     {
+        if (circ == null)
+        {
+            return;
+        }
+
         Texture2D texture = new Texture2D(Core.GraphicsDevice, circ.Radius, circ.Radius);
         Color[] colorData = new Color[circ.Radius * circ.Radius];
 
@@ -39,13 +44,12 @@ public class DrawHelper()
     }
     public static void DrawRay(Ray2D ray, Color color, float thickness, float layerDepth = 0.1f)
     {
-
+        
 
         Color Color;
 
         if (ray.IsColliding())
         {
-            Console.WriteLine("Yes");
             Color = Color.Red;
         }
 
@@ -76,6 +80,11 @@ public class DrawHelper()
     
     public static void DrawRectangle(Rectangle rect, Color color, int thickness, float layerDepth = 0.1f)
     {
+        if (rect == null)
+        {
+            return;
+        }
+
         Texture2D rectangleTexture = new Texture2D(Core.GraphicsDevice, 1, 1);
         rectangleTexture.SetData(new[] { color });
 

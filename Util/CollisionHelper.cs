@@ -15,6 +15,43 @@ public enum CollisionSide
 
 public static class CollisionHelper
 {
+
+    public static bool IsRectangleEmpty(Rectangle collider)
+    {
+        if (collider.X == 0 && collider.Y == 0 && collider.Width == 0 && collider.Height == 0)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public static bool IsIntersectingAny(Collider collider)
+    {
+
+
+        foreach (var otherCollider in Collider.ColliderList)
+        {
+            
+            if (collider.Circ != null && otherCollider.Circ != null)
+            {
+                return collider.Circ.Intersects(otherCollider.Circ);
+            }
+
+            if (IsRectangleEmpty(collider.Rect) && !IsRectangleEmpty(otherCollider.Rect))
+            {
+                return collider.Rect.Intersects(otherCollider.Rect);
+            }
+
+            if (!IsRectangleEmpty(otherCollider.Rect) && collider.Circ != null)
+            {
+                return CircleIntersectsRectangle(collider.Circ, otherCollider.Rect);
+            }
+        }
+        return false;
+    }
+        
     public static bool CircleIntersectsRectangle(Circle circle, Rectangle rect)
     {
         int closestX = Math.Clamp(circle.X, rect.Left, rect.Right);
