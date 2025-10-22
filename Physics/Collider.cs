@@ -15,6 +15,7 @@ namespace ConstructEngine.Physics
         public static List<Collider> ColliderList = new List<Collider>();
         public static List<Circle> CircleList = new List<Circle>();
         public static List<Rectangle> RectangleList = new List<Rectangle>();
+        public static List<Collider> CollisionList = new List<Collider>();
 
         public Rectangle Rect;
         public Circle Circ;

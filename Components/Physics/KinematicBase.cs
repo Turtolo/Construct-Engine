@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using ConstructEngine.Physics;
+using ConstructEngine.Objects;
 
 namespace ConstructEngine.Components.Physics
 {
@@ -30,7 +31,8 @@ namespace ConstructEngine.Components.Physics
 
                 foreach (var collider in Collider.ColliderList)
                 {
-                    if (!collider.Enabled || collider.Velocity == Vector2.Zero)
+
+                    if (!collider.Enabled || collider.Velocity == Vector2.Zero || collider.Root.GetType() != typeof(CollisionObject))
                         continue;
 
                     Rectangle feetCheck = Collider.Rect;
@@ -130,7 +132,7 @@ namespace ConstructEngine.Components.Physics
 
             foreach (var collider in Collider.ColliderList)
             {
-                if (!collider.Enabled)
+                if (!collider.Enabled || collider.Root.GetType() != typeof(CollisionObject))
                     continue;
 
                 if (leftCheck.Intersects(collider.Rect) || rightCheck.Intersects(collider.Rect))
@@ -144,7 +146,7 @@ namespace ConstructEngine.Components.Physics
         {
             foreach (var collider in Collider.ColliderList)
             {
-                if (!collider.Enabled)
+                if (!collider.Enabled || collider.Root.GetType() != typeof(CollisionObject))
                 {
                     continue;
                 }

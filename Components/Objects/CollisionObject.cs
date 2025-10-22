@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace ConstructEngine.Objects;
 
-public class ColliderObject : ConstructObject, ConstructObject.IObject
+public class CollisionObject : ConstructObject, ConstructObject.IObject
 {
     
     public bool Collidable { get; set; }
@@ -15,7 +15,7 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
     
     public Collider Collider { get; set; }
     
-    public ColliderObject()
+    public CollisionObject()
     {
         
     }
@@ -38,8 +38,12 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
                 Collidable = false;
             }
         }
-        
-        Collider = new Collider(Rectangle, Collidable, OneWay, null);
+
+        Collider = new Collider(Rectangle, Collidable, OneWay, this);
+
+
+
+
     }
 
     public override void Update(GameTime gameTime)
