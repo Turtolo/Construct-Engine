@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 using ConstructEngine.Physics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConstructEngine.Util;
 
@@ -29,6 +31,9 @@ public static class CollisionHelper
 
     public static bool IsIntersectingAny(Collider collider)
     {
+
+
+        bool intersects = Collider.ColliderList.Any(r => r.Rect.Intersects(collider.Rect));
 
 
         foreach (var otherCollider in Collider.ColliderList)

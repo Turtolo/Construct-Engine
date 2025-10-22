@@ -15,9 +15,9 @@ namespace ConstructEngine.Physics
 
 
         public Rectangle Rect;
-        public static List<Rectangle> RectangleList = new List<Rectangle>();
+        public static List<Rectangle> RectangleList = new List<Rectangle>() {};
         public Circle Circ;
-        public static List<Circle> CircleList = new List<Circle>();
+        public static List<Circle> CircleList = new List<Circle>() {};
 
         public bool Enabled;
         public bool OneWay;
@@ -56,10 +56,71 @@ namespace ConstructEngine.Physics
         {
             for (int i = 10; i <= 100; i++)
             {
-                
+
             }
- 
+
         }
+        
+        public bool HasRect
+        {
+            get { return Rect != default; }
+        }
+
+        public bool HasCircle
+        {
+            get { return Circ != null; }
+        }
+
+        public bool IsIntersecting()
+        {
+            foreach (var other in ColliderList)
+            {
+                // Skip self and disabled colliders
+                if (other == this || !other.Enabled || !this.Enabled)
+                {
+                    continue;
+                }
+
+                // Rectangle vs Rectangle
+                if (this.HasRect && other.HasRect)
+                {
+                    if (this.Rect.Intersects(other.Rect))
+                    {
+                        return true;
+                    }
+                }
+
+                // Circle vs Circle
+                else if (this.HasCircle && other.HasCircle)
+                {
+                    if (this.Circ.Intersects(other.Circ))
+                    {
+                        return true;
+                    }
+                }
+
+                // Rectangle vs Circle
+                else if (this.HasRect && other.HasCircle)
+                {
+                    if (CollisionHelper.CircleIntersectsRectangle(other.Circ, this.Rect))
+                    {
+                        return true;
+                    }
+                }
+
+                // Circle vs Rectangle
+                else if (this.HasCircle && other.HasRect)
+                {
+                    if (CollisionHelper.CircleIntersectsRectangle(this.Circ, other.Rect))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
 
         
 
