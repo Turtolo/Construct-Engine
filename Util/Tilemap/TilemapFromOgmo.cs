@@ -30,52 +30,6 @@ public class TilemapFromOgmo
         
         return new Rectangle(0, 0, root.width, root.height);
     }
-    
-    public static void CreateRectanglesEachTile(string filename, string region)
-    {
-        string json = File.ReadAllText(filename);
-
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        OgmoReader.Root root = JsonSerializer.Deserialize<OgmoReader.Root>(json, options);
-        var tileLayer = root.layers.FirstOrDefault(l => l.data != null && l.tileset != null);
-    
-        if (tileLayer == null)
-        {
-            throw new Exception("No tile layer found in JSON.");
-        }
-    
-        // Parse region
-        string[] split = region.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-        int x = int.Parse(split[0]);
-        int y = int.Parse(split[1]);
-        int width = int.Parse(split[2]);
-        int height = int.Parse(split[3]);
-
-        int tileWidth = tileLayer.gridCellWidth;
-        int tileHeight = tileLayer.gridCellHeight;
-
-        int columns = tileLayer.gridCellsX;
-        int rows = tileLayer.gridCellsY;
-        
-
-        for (int row = 0; row < rows; row++)
-        {
-            for (int col = 0; col < columns; col++)
-            {
-                int index = row * columns + col;
-                int tilesetIndex = tileLayer.data[index];
-                
-                if (tilesetIndex == -1) continue;
-
-                int worldX = col * tileWidth + tileLayer.offsetX;
-                int worldY = row * tileHeight + tileLayer.offsetY;
-                
-                
-                new Collider(new Rectangle(worldX, worldY, tileWidth, tileHeight), true);
-            }
-        }
-        
-    }
 
 
     public static void SearchForDecals(string filename)
@@ -290,32 +244,7 @@ public class TilemapFromOgmo
     
     
     
-    public static void GetCollisions(ContentManager content, string filename)
-    {
-        string json = File.ReadAllText(filename);
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        OgmoReader.Root root = JsonSerializer.Deserialize<OgmoReader.Root>(json, options);
 
-        foreach (var layer in root.layers)
-        {
-            if (layer.entities == null)
-                continue;
-
-            foreach (var entity in layer.entities)
-            {
-                if (entity.values != null &&
-                    entity.values.TryGetValue("collision", out JsonElement element) &&
-                    element.ValueKind == JsonValueKind.True)
-                {
-                    int width = entity.width;
-                    int height = entity.height;
-
-                    new Collider(new Rectangle(entity.x, entity.y, width, height), true);
-                }
-                
-            }
-        }
-    }
     
 
    

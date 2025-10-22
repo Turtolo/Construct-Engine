@@ -6,18 +6,20 @@ using Microsoft.Xna.Framework.Graphics;
 using ConstructEngine.Util;
 using System.Security.Cryptography.X509Certificates;
 using System;
+using ConstructEngine.Components.Entity;
 
 namespace ConstructEngine.Physics
 {
     public class Collider
     {
         public static List<Collider> ColliderList = new List<Collider>();
-
+        public static List<Circle> CircleList = new List<Circle>();
+        public static List<Rectangle> RectangleList = new List<Rectangle>();
 
         public Rectangle Rect;
-        public static List<Rectangle> RectangleList = new List<Rectangle>() {};
         public Circle Circ;
-        public static List<Circle> CircleList = new List<Circle>() {};
+
+        public object Root;
 
         public bool Enabled;
         public bool OneWay;
@@ -25,22 +27,26 @@ namespace ConstructEngine.Physics
         public Vector2 Velocity = Vector2.Zero;
         protected Texture2D pixel;
 
-        public Collider(Rectangle rect, bool enabled, bool oneWay = false)
+        public Collider(Rectangle rect, bool enabled, bool oneWay, object root)
         {
             Rect = rect;
             Enabled = enabled;
             OneWay = oneWay;
+
+            Root = root;
 
             RectangleList.Add(Rect);
 
             ColliderList.Add(this);
         }
         
-        public Collider(Circle circle, bool enabled, bool oneWay = false)
+        public Collider(Circle circle, bool enabled, bool oneWay, object root)
         {
             Circ = circle;
             Enabled = enabled;
             OneWay = oneWay;
+
+            Root = root;
             
             CircleList.Add(Circ);
 
@@ -71,55 +77,48 @@ namespace ConstructEngine.Physics
             get { return Circ != null; }
         }
 
-        public bool IsIntersecting()
+        public Collider GetCurrentlyIntersectingCollider()
         {
+            if (!this.Enabled) return null;
+
             foreach (var other in ColliderList)
             {
-                // Skip self and disabled colliders
-                if (other == this || !other.Enabled || !this.Enabled)
-                {
-                    continue;
-                }
+                if (other == this || !other.Enabled) continue;
 
-                // Rectangle vs Rectangle
-                if (this.HasRect && other.HasRect)
-                {
-                    if (this.Rect.Intersects(other.Rect))
-                    {
-                        return true;
-                    }
-                }
+                if (this.HasRect && other.HasRect && this.Rect.Intersects(other.Rect))
+                    return other;
 
-                // Circle vs Circle
-                else if (this.HasCircle && other.HasCircle)
-                {
-                    if (this.Circ.Intersects(other.Circ))
-                    {
-                        return true;
-                    }
-                }
+                if (this.HasCircle && other.HasCircle && this.Circ.Intersects(other.Circ))
+                    return other;
 
-                // Rectangle vs Circle
-                else if (this.HasRect && other.HasCircle)
-                {
-                    if (CollisionHelper.CircleIntersectsRectangle(other.Circ, this.Rect))
-                    {
-                        return true;
-                    }
-                }
+                if (this.HasRect && other.HasCircle && CollisionHelper.CircleIntersectsRectangle(other.Circ, this.Rect))
+                    return other;
 
-                // Circle vs Rectangle
-                else if (this.HasCircle && other.HasRect)
-                {
-                    if (CollisionHelper.CircleIntersectsRectangle(this.Circ, other.Rect))
-                    {
-                        return true;
-                    }
-                }
+                if (this.HasCircle && other.HasRect && CollisionHelper.CircleIntersectsRectangle(this.Circ, other.Rect))
+                    return other;
+            }
+
+            return null;
+        }
+
+
+        public bool IsIntersectingAny()
+        {
+            if (!this.Enabled) return false;
+
+            foreach (var other in ColliderList)
+            {
+                if (other == this || !other.Enabled) continue;
+
+                if (this.HasRect && other.HasRect && this.Rect.Intersects(other.Rect)) return true;
+                if (this.HasCircle && other.HasCircle && this.Circ.Intersects(other.Circ)) return true;
+                if (this.HasRect && other.HasCircle && CollisionHelper.CircleIntersectsRectangle(other.Circ, this.Rect)) return true;
+                if (this.HasCircle && other.HasRect && CollisionHelper.CircleIntersectsRectangle(this.Circ, other.Rect)) return true;
             }
 
             return false;
         }
+
 
 
         

@@ -39,7 +39,7 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
             }
         }
         
-        Collider = new Collider(Rectangle, Collidable, OneWay);
+        Collider = new Collider(Rectangle, Collidable, OneWay, null);
     }
 
     public override void Update(GameTime gameTime)

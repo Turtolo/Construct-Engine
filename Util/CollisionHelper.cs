@@ -29,33 +29,6 @@ public static class CollisionHelper
 
     }
 
-    public static bool IsIntersectingAny(Collider collider)
-    {
-
-
-        bool intersects = Collider.ColliderList.Any(r => r.Rect.Intersects(collider.Rect));
-
-
-        foreach (var otherCollider in Collider.ColliderList)
-        {
-            
-            if (collider.Circ != null && otherCollider.Circ != null)
-            {
-                return collider.Circ.Intersects(otherCollider.Circ);
-            }
-
-            if (IsRectangleEmpty(collider.Rect) && !IsRectangleEmpty(otherCollider.Rect))
-            {
-                return collider.Rect.Intersects(otherCollider.Rect);
-            }
-
-            if (!IsRectangleEmpty(otherCollider.Rect) && collider.Circ != null)
-            {
-                return CircleIntersectsRectangle(collider.Circ, otherCollider.Rect);
-            }
-        }
-        return false;
-    }
         
     public static bool CircleIntersectsRectangle(Circle circle, Rectangle rect)
     {
