@@ -35,7 +35,7 @@ public class SceneAreaTransition : ConstructObject, ConstructObject.IObject
     {
         if (Rectangle != null)
         {
-            if (Rectangle.Intersects(Player.KinematicBase.Hitbox))
+            if (Rectangle.Intersects(Player.KinematicBase.Collider.Rect))
             {
                 if (resetScene)
                 {

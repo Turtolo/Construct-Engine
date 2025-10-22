@@ -53,8 +53,8 @@ public class Scene
         foreach (Entity e in Entity.EntityList)
         {
             
-            e.KinematicBase.Hitbox.X = (int)LoadPosition.X;
-            e.KinematicBase.Hitbox.Y = (int)LoadPosition.Y;
+            e.KinematicBase.Collider.Rect.X = (int)LoadPosition.X;
+            e.KinematicBase.Collider.Rect.Y = (int)LoadPosition.Y;
             
         }
     }

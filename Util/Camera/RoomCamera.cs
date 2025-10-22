@@ -71,7 +71,7 @@ public class RoomCamera : Camera
                 
                 targetEntity.KinematicBase.Locked = true;
                 
-                targetEntity.KinematicBase.Hitbox.X -= 10;
+                targetEntity.KinematicBase.Collider.Rect.X -= 10;
                 
                 cameraXTween = new Tween(
                     cameraPosition.X,
@@ -90,7 +90,7 @@ public class RoomCamera : Camera
                 
                 targetEntity.KinematicBase.Locked = true;
 
-                targetEntity.KinematicBase.Hitbox.X += 10;
+                targetEntity.KinematicBase.Collider.Rect.X += 10;
                 
                 
                 cameraXTween = new Tween(

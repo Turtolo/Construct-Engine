@@ -47,7 +47,7 @@ public class ColliderObject : ConstructObject, ConstructObject.IObject
 
         if (OneWay)
         {
-            bool playerAbove = Player.KinematicBase.Hitbox.Bottom <= Collider.Rect.Top;
+            bool playerAbove = Player.KinematicBase.Collider.Rect.Bottom <= Collider.Rect.Top;
             bool movingDown = Player.KinematicBase.Velocity.Y >= 0;
 
             if (playerAbove && movingDown)

@@ -7,22 +7,17 @@ namespace ConstructEngine.Components.Physics
 {
     public class KinematicBase
     {
-        public Rectangle Hitbox;
-
-
+        //public Rectangle Hitbox;
+        public Collider Collider;
         public Vector2 Velocity;
         private float remainderX = 0;
         private float remainderY = 0;
-
-    
-
         public bool Locked;
 
-        public List<Collider> Colliders;
 
         public KinematicBase()
         {
-            Colliders = Collider.ColliderList;
+            
         }
 
         public void UpdateCollider(GameTime gameTime)
@@ -33,18 +28,18 @@ namespace ConstructEngine.Components.Physics
 
                 Move(Velocity.X * deltaTime, Velocity.Y * deltaTime);
 
-                foreach (var collider in Colliders)
+                foreach (var collider in Collider.ColliderList)
                 {
                     if (!collider.Enabled || collider.Velocity == Vector2.Zero)
                         continue;
 
-                    Rectangle feetCheck = Hitbox;
+                    Rectangle feetCheck = Collider.Rect;
                     feetCheck.Y += 1;
 
                     if (feetCheck.Intersects(collider.Rect))
                     {
-                        Hitbox.X += (int)collider.Velocity.X;
-                        Hitbox.Y += (int)collider.Velocity.Y;
+                        Collider.Rect.X += (int)collider.Velocity.X;
+                        Collider.Rect.Y += (int)collider.Velocity.Y;
                     }
                 }
             }
@@ -78,14 +73,14 @@ namespace ConstructEngine.Components.Physics
             
             while (amount != 0)
             {
-                Rectangle test = Hitbox;
+                Rectangle test = Collider.Rect;
                 
                 test.X += sign;
                 
                 
 
                 if (!IsColliding(test))
-                    Hitbox = test;
+                    Collider.Rect = test;
                 else
                 {
                     Velocity.X = 0;
@@ -103,11 +98,11 @@ namespace ConstructEngine.Components.Physics
             int sign = Math.Sign(amount);
             while (amount != 0)
             {
-                Rectangle test = Hitbox;
+                Rectangle test = Collider.Rect;
                 test.Y += sign;
 
                 if (!IsColliding(test))
-                    Hitbox = test;
+                    Collider.Rect = test;
                 else
                 {
                     Velocity.Y = 0;
@@ -120,20 +115,20 @@ namespace ConstructEngine.Components.Physics
 
         public bool IsOnGround()
         {
-            Rectangle test = Hitbox;
+            Rectangle test = Collider.Rect;
             test.Y += 1;
             return IsColliding(test);
         }
 
         public bool IsOnWall()
         {
-            Rectangle leftCheck = Hitbox;
+            Rectangle leftCheck = Collider.Rect;
             leftCheck.X -= 1;
 
-            Rectangle rightCheck = Hitbox;
+            Rectangle rightCheck = Collider.Rect;
             rightCheck.X += 1;
 
-            foreach (var collider in Colliders)
+            foreach (var collider in Collider.ColliderList)
             {
                 if (!collider.Enabled)
                     continue;
@@ -147,7 +142,7 @@ namespace ConstructEngine.Components.Physics
 
         public bool IsColliding(Rectangle rect)
         {
-            foreach (var collider in Colliders)
+            foreach (var collider in Collider.ColliderList)
             {
                 if (!collider.Enabled)
                 {
