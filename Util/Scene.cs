@@ -12,7 +12,8 @@ namespace ConstructEngine.Util;
 
 public class Scene
 {
-    
+    public bool SceneFrozen { get; set; }
+
     public static void UpdateEntities(GameTime gameTime)
     {
         for (int i = Entity.EntityList.Count - 1; i >= 0; i--)
@@ -69,7 +70,7 @@ public class Scene
     
     public interface IScene
     {
-
+        public bool SceneFrozen { get; set; }
         public void Initialize();
         public void Load();
         public void Update(GameTime gameTime);

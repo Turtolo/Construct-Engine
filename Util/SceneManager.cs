@@ -12,6 +12,8 @@ public class SceneManager : Scene
 {
 
     public readonly Stack<IScene> sceneStack;
+
+    public bool SceneFrozen;
     
 
 
@@ -27,6 +29,8 @@ public class SceneManager : Scene
         Entity.EntityList.Clear();
         Collider.ColliderList.Clear();
         ConstructObject.ObjectList.Clear();
+
+        SceneFrozen = false;
         
         scene.Initialize();
         scene.Load();
@@ -45,7 +49,7 @@ public class SceneManager : Scene
 
     public void UpdateCurrentScene(GameTime gameTime)
     {
-        if (!IsStackEmpty())
+        if (!IsStackEmpty() && !SceneFrozen)
         {
             GetCurrentScene().Update(gameTime);
         }
