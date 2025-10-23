@@ -23,16 +23,14 @@ namespace ConstructEngine.Physics
         public object Root;
 
         public bool Enabled;
-        public bool OneWay;
         
         public Vector2 Velocity = Vector2.Zero;
         protected Texture2D pixel;
 
-        public Collider(Rectangle rect, bool enabled, bool oneWay, object root)
+        public Collider(Rectangle rect, bool enabled, object root)
         {
             Rect = rect;
             Enabled = enabled;
-            OneWay = oneWay;
 
             Root = root;
 
@@ -41,11 +39,10 @@ namespace ConstructEngine.Physics
             ColliderList.Add(this);
         }
         
-        public Collider(Circle circle, bool enabled, bool oneWay, object root)
+        public Collider(Circle circle, bool enabled, object root)
         {
             Circ = circle;
             Enabled = enabled;
-            OneWay = oneWay;
 
             Root = root;
             
@@ -66,6 +63,11 @@ namespace ConstructEngine.Physics
 
             }
 
+        }
+
+        public void Free()
+        {
+            ColliderList.Remove(this);
         }
         
         public bool HasRect

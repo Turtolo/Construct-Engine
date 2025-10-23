@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using ConstructEngine.Object;
 using ConstructEngine.Physics;
@@ -14,9 +15,18 @@ public class CollisionObject : ConstructObject, ConstructObject.IObject
     public bool OneWay { get; set; }
     
     public Collider Collider { get; set; }
-    
+
     public CollisionObject()
     {
+
+    }
+    
+    public CollisionObject(Rectangle rect, bool collidable, bool oneway)
+    {
+        OneWay = oneway;
+        Collidable = collidable;
+        Rectangle = rect;
+        Collider = new Collider(Rectangle, Collidable, this);
         
     }
 
@@ -39,7 +49,7 @@ public class CollisionObject : ConstructObject, ConstructObject.IObject
             }
         }
 
-        Collider = new Collider(Rectangle, Collidable, OneWay, this);
+        Collider = new Collider(Rectangle, Collidable, this);
 
 
 

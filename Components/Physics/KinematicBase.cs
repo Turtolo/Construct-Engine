@@ -18,8 +18,9 @@ namespace ConstructEngine.Components.Physics
 
         public KinematicBase()
         {
-            
+
         }
+        
 
         public void UpdateCollider(GameTime gameTime)
         {

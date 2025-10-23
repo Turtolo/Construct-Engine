@@ -73,6 +73,7 @@ namespace ConstructEngine.Components.Entity
         public void Free()
         {
             EntityList.Remove(this);
+            KinematicBase.Collider.Free();
         }
 
         public static void AddEntities(params Entity[] entities)
