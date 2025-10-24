@@ -54,7 +54,7 @@ namespace ConstructEngine.Components.Entity
         {
         }
 
-        public void DrawSprites(SpriteBatch spriteBatch, Vector2 position, int textureOffset)
+        public void DrawSprites(SpriteBatch spriteBatch, Vector2 position, int textureOffset = 0)
         {
             if (Visible)
             {
