@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Net.Http.Headers;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Graphics;
+using ConstructEngine.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +21,32 @@ public class Scene
         {
             Entity.IEntity e = Entity.EntityList[i];
             e.Update(gameTime);
+        }
+    }
+
+    public static void InstantiateEntities(string filePath)
+    {
+
+
+        foreach(var entry in EntityLoader.EntityDict)
+        {
+            Vector2 EntityLoadPosition = entry.Value;
+
+            Entity EntryEntity = entry.Key;
+
+
+
+            Entity newEntity = (Entity)Activator.CreateInstance(EntryEntity.GetType());
+
+            Entity.EntityList.Add(newEntity);
+
+            newEntity.KinematicBase.Collider.Rect.X = (int)EntityLoadPosition.X;
+            newEntity.KinematicBase.Collider.Rect.Y = (int)EntityLoadPosition.Y;
+
+            newEntity.Load();
+
+        
+
         }
     }
     
@@ -39,9 +66,9 @@ public class Scene
             {
                 LoadPosition.X = (int)positions[i].X;
                 LoadPosition.Y = (int)positions[i].Y;
-                
-                
+
             }
+
 
             Entity.EntityList.Add(newEntity);
         }
@@ -49,13 +76,16 @@ public class Scene
         foreach (Entity.IEntity e in Entity.EntityList )
         {
             e.Load();
+
         }
         
         foreach (Entity e in Entity.EntityList)
         {
-            
-            e.KinematicBase.Collider.Rect.X = (int)LoadPosition.X;
-            e.KinematicBase.Collider.Rect.Y = (int)LoadPosition.Y;
+            if (e.KinematicBase.Collider.HasRect)
+            {
+                e.KinematicBase.Collider.Rect.X = (int)LoadPosition.X;
+                e.KinematicBase.Collider.Rect.Y = (int)LoadPosition.Y;
+            }
             
         }
     }
