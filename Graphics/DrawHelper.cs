@@ -48,7 +48,7 @@ public class DrawHelper()
 
         Color Color;
 
-        if (ray.IsColliding())
+        if (ray.HasHit)
         {
             Color = Color.Red;
         }

@@ -14,27 +14,6 @@ namespace ConstructEngine.Util;
 public class Scene
 {
     public bool SceneFrozen { get; set; }
-
-
-
-    public static void InstantiateEntities(string filePath)
-    {
-        Dictionary<Entity, Vector2> EntityDictionary = EntityLoader.GetEntityData(filePath);
-
-        foreach (var entry in EntityDictionary)
-        {
-            Vector2 EntityLoadPosition = entry.Value;
-
-            Entity EntryEntity = entry.Key;
-
-            Entity.EntityList.Add(EntryEntity);
-
-            EntryEntity.Load();
-
-            EntryEntity.KinematicBase.Collider.Rect.X = (int)EntityLoadPosition.X;
-            EntryEntity.KinematicBase.Collider.Rect.Y = (int)EntityLoadPosition.Y;
-        }
-    }
     
     public static void UpdateEntities(GameTime gameTime)
     {
@@ -56,7 +35,6 @@ public class Scene
     
     public interface IScene
     {
-        public bool SceneFrozen { get; set; }
         public void Initialize();
         public void Load();
         public void Update(GameTime gameTime);

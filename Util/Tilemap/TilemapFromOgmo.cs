@@ -244,7 +244,24 @@ public class TilemapFromOgmo
     
     
     
+    public static void InstantiateEntities(string filePath)
+    {
+        Dictionary<Entity, Vector2> EntityDictionary = EntityLoader.GetEntityData(filePath);
 
+        foreach (var entry in EntityDictionary)
+        {
+            Vector2 EntityLoadPosition = entry.Value;
+
+            Entity EntryEntity = entry.Key;
+
+            Entity.EntityList.Add(EntryEntity);
+
+            EntryEntity.Load();
+
+            EntryEntity.KinematicBase.Collider.Rect.X = (int)EntityLoadPosition.X;
+            EntryEntity.KinematicBase.Collider.Rect.Y = (int)EntityLoadPosition.Y;
+        }
+    }
     
 
    
