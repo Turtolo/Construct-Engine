@@ -14,9 +14,8 @@ public class SceneManager : Scene
     public readonly Stack<IScene> sceneStack;
 
     public bool SceneFrozen;
+    public bool DoScreenTransition;
     
-
-
     public SceneManager()
     {
         sceneStack = new();
@@ -31,10 +30,18 @@ public class SceneManager : Scene
         ConstructObject.ObjectList.Clear();
 
         SceneFrozen = false;
-        
+
+
         scene.Initialize();
         scene.Load();
         sceneStack.Push(scene);
+
+        if (DoScreenTransition) Transition();
+    }
+    
+    public void Transition()
+    {
+        
     }
 
     public void RemoveScene()

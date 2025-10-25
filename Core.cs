@@ -27,8 +27,6 @@ public class Core : Game
     
     public static GraphicsDeviceManager Graphics { get; private set; }
 
-    public static List<Rectangle> CollisionList { get; private set; } = new List<Rectangle>();
-
     public static new GraphicsDevice GraphicsDevice { get; private set; }
     
     public static SpriteBatch SpriteBatch { get; private set; }
