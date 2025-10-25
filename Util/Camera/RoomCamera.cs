@@ -55,14 +55,14 @@ public class RoomCamera : Camera
     }
     
     
-    public void Follow(Rectangle target, Entity targetEntity)
+    public void Follow(Entity targetEntity)
     {
-        var side = CollisionHelper.GetCameraEdge(target, CameraRectangle);
+        if (targetEntity == null) return;
+        
+        var side = CollisionHelper.GetCameraEdge(targetEntity.KinematicBase.Collider, CameraRectangle);
         
         if (!Entered)
         {
-
-
             if (side == CollisionSide.Left)
             {
                 

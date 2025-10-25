@@ -164,7 +164,7 @@ public class Core : Game
         Graphics.IsFullScreen = isFullscreen;
         Graphics.ApplyChanges();
     }
-    //
+    
     public void UpdateRenderTargetTransform()
     {
         int backBufferWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;

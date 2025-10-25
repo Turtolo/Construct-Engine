@@ -12,13 +12,15 @@ namespace ConstructEngine.Components.Entity
     {
         public static List<Entity> EntityList = new List<Entity>();
 
+        public static Dictionary<Entity, int> EntityDamageDict = new();
         public KinematicBase KinematicBase;
-
         public Sprite Sprite { get; set; } = null;
         public AnimatedSprite AnimatedSprite { get; set; } = null;
         public AnimatedSprite AnimatedSpriteFeet { get; set; } = null;
-        
+
         public bool Visible { get; set; } = true;
+        
+        public int DamageAmount { get; set; }
 
         public string String;
         
@@ -26,9 +28,10 @@ namespace ConstructEngine.Components.Entity
         
         
 
-        public Entity()
+        public Entity(int damageAmount)
         {
-            
+            DamageAmount = damageAmount;
+            EntityDamageDict.Add(this, DamageAmount);
             KinematicBase = new KinematicBase();
             
         }

@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameGum.Forms.Controls;
 using System.Runtime.InteropServices;
+using FlatRedBall;
+using ConstructEngine.Input;
 
 namespace ConstructEngine.Gum;
 
@@ -39,6 +41,7 @@ public class GumHelper
     public static GumService GumInitialize(Game game, string path)
     {
         GumService.Default.Initialize(game, path);
+    
 
         FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
         FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);

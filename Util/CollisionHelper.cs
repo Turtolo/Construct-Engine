@@ -40,26 +40,52 @@ public static class CollisionHelper
 
         return (deltaX * deltaX + deltaY * deltaY) <= (circle.Radius * circle.Radius);
     }
-    public static CollisionSide GetCameraEdge(Rectangle target, Rectangle camera)
+    public static CollisionSide GetCameraEdge(Collider target, Rectangle camera)
     {
-        if (target.Right > camera.Right)
+        if (target.HasRect)
         {
-            return CollisionSide.Right;
+            if (target.Rect.Right > camera.Right)
+            {
+                return CollisionSide.Right;
+            }
+
+            if (target.Rect.Left < camera.Left)
+            {
+                return CollisionSide.Left;
+            }
+
+            if (target.Rect.Top < camera.Top)
+            {
+                return CollisionSide.Top;
+            }
+
+            if (target.Rect.Bottom > camera.Bottom)
+            {
+                return CollisionSide.Bottom;
+            }
         }
 
-        if (target.Left < camera.Left)
+        if (target.HasCircle)
         {
-            return CollisionSide.Left;
-        }
+            if (target.Circ.Right > camera.Right)
+            {
+                return CollisionSide.Right;
+            }
 
-        if (target.Top < camera.Top)
-        {
-            return CollisionSide.Top;
-        }
+            if (target.Circ.Left < camera.Left)
+            {
+                return CollisionSide.Left;
+            }
 
-        if (target.Bottom > camera.Bottom)
-        {
-            return CollisionSide.Bottom;
+            if (target.Circ.Top < camera.Top)
+            {
+                return CollisionSide.Top;
+            }
+
+            if (target.Circ.Bottom > camera.Bottom)
+            {
+                return CollisionSide.Bottom;
+            }
         }
 
         return CollisionSide.None;
