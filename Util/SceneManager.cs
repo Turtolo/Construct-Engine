@@ -12,6 +12,7 @@ public class SceneManager : Scene
 {
 
     public readonly Stack<IScene> sceneStack;
+    private bool pendingFreeze;
 
     public bool SceneFrozen;
     public bool DoScreenTransition;
@@ -54,12 +55,37 @@ public class SceneManager : Scene
         return sceneStack.Peek();
     }
 
+        public void ToggleSceneFreeze(bool freeze)
+    {
+        if (freeze)
+        {
+            pendingFreeze = true;
+        }
+        else
+        {
+            SceneFrozen = false;
+            pendingFreeze = false;
+        }
+    }
+
+    private void ApplyPendingFreeze()
+    {
+        if (pendingFreeze)
+        {
+            SceneFrozen = true;
+            pendingFreeze = false;
+        }
+    }
+
     public void UpdateCurrentScene(GameTime gameTime)
     {
         if (!IsStackEmpty() && !SceneFrozen)
         {
             GetCurrentScene().Update(gameTime);
         }
+
+        // Apply the pending freeze after update
+        ApplyPendingFreeze();
     }
 
     public bool IsStackEmpty()

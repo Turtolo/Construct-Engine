@@ -41,7 +41,6 @@ public class GumHelper
     public static GumService GumInitialize(Game game, string path)
     {
         GumService.Default.Initialize(game, path);
-    
 
         FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
         FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);

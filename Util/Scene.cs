@@ -13,7 +13,6 @@ namespace ConstructEngine.Util;
 
 public class Scene
 {
-    public bool SceneFrozen { get; set; }
     
     public static void UpdateEntities(GameTime gameTime)
     {
