@@ -5,6 +5,8 @@ using ConstructEngine.Graphics;
 using ConstructEngine.Physics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using ConstructEngine.Components;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ConstructEngine.Util;
 
@@ -84,9 +86,30 @@ public class SceneManager : Scene
             GetCurrentScene().Update(gameTime);
         }
 
-        // Apply the pending freeze after update
+        for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+        {
+            BackseatComponent backseatComponent = BackseatComponent.BackseatComponentList[i];
+            backseatComponent.Update(gameTime);
+        }
+
         ApplyPendingFreeze();
     }
+
+    public void DrawCurrentScene(SpriteBatch spriteBatch)
+    {
+        if (!IsStackEmpty())
+        {
+            GetCurrentScene().Draw(spriteBatch);
+        }
+
+        for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+        {
+            BackseatComponent backseatComponent = BackseatComponent.BackseatComponentList[i];
+            backseatComponent.Draw(spriteBatch);
+        }
+
+    }
+
 
     public bool IsStackEmpty()
     {
