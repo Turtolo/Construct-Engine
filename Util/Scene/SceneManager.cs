@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using ConstructEngine.Components;
 using Microsoft.Xna.Framework.Graphics;
+using ConstructEngine.Directory;
 
 namespace ConstructEngine.Util;
 
@@ -57,7 +58,7 @@ public class SceneManager : Scene
         return sceneStack.Peek();
     }
 
-        public void ToggleSceneFreeze(bool freeze)
+    public void ToggleSceneFreeze(bool freeze)
     {
         if (freeze)
         {

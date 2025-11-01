@@ -51,7 +51,6 @@ public class Core : Game
 
     public static int VirtualHeight { get; set; }
 
-    private bool _isResizing;
 
     bool isFullscreen = false;
 
