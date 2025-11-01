@@ -7,6 +7,7 @@ using ConstructEngine.Util;
 using System.Security.Cryptography.X509Certificates;
 using System;
 using ConstructEngine.Components.Entity;
+using System.Xml.Serialization;
 
 namespace ConstructEngine.Physics
 {
@@ -116,8 +117,18 @@ namespace ConstructEngine.Physics
             return false;
         }
 
+        public void SetPosition(float X, float Y)
+        {
+            if (HasCircle) Circ.X = (int)X; Circ.Y = (int)Y;
+            if (HasRect) Rect.X = (int)X; Rect.Y = (int)Y;
+        }
 
-
+        public Vector2 GetPosition()
+        {
+            if (HasCircle) return new Vector2(Circ.X, Circ.Y);
+            if (HasRect) return new Vector2(Rect.X, Rect.Y);
+            return Vector2.Zero;
+        }
         
 
         public virtual void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
