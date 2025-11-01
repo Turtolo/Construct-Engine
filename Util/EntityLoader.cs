@@ -5,11 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using Microsoft.Xna.Framework;
-using ConstructEngine.Components;
 using ConstructEngine.Components.Entity;
-using ConstructEngine.Object;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using ConstructEngine.Directory;
 
 namespace ConstructEngine.Util;
 

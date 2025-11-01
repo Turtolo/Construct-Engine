@@ -1,13 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Microsoft.Xna.Framework;
 using System.Linq;
 
-
-
-namespace ConstructEngine.Util;
+namespace ConstructEngine.Directory;
 
 public class OgmoReader
 {

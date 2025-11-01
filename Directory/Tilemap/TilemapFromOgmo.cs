@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -9,12 +8,12 @@ using System.Text.Json;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Graphics;
 using ConstructEngine.Object;
-using ConstructEngine.Physics;
+using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Util;
+namespace ConstructEngine.Directory;
 
 public class TilemapFromOgmo
 {

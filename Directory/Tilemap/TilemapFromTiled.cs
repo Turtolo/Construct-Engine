@@ -3,15 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using ConstructEngine.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Util;
+namespace ConstructEngine.Directory;
 
 public class TilemapFromTiled
 {
-     public static void GetObjects(ContentManager content, string filename)
+    public static void GetObjects(ContentManager content, string filename)
     {
         string json =  File.ReadAllText(filename);
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -39,13 +38,9 @@ public class TilemapFromTiled
                 {
                     int width = (int)obj.width;
                     int height = (int)obj.height;
-
-                    //Core.CollisionList.Add(new Rectangle((int)obj.x, (int)obj.y, width, height));
                 }
             }
         }
-        
-        
     }
 
 
