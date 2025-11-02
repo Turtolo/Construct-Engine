@@ -16,6 +16,7 @@ using Timer = ConstructEngine.Util.Timer;
 using RenderingLibrary;
 using Gum.Wireframe;
 using ConstructEngine.Gum;
+using ConstructEngine.Object;
 
 namespace ConstructEngine;
 
@@ -145,11 +146,20 @@ public class Core : Game
 
         base.Draw(gameTime);
     }
-    
+
     private void HandleClientSizeChanged(object sender, EventArgs e)
     {
         UpdateRenderTargetTransform();
         UpdateGumCamera();
+    }
+    
+    public static void ClearAllLists()
+    {
+        ParallaxBackground.BackgroundList.Clear();
+        Tilemap.Tilemaps.Clear();
+        Entity.EntityList.Clear();
+        Collider.ColliderList.Clear();
+        ConstructObject.ObjectList.Clear();
     }
 
     public void SetRenderTarget()
