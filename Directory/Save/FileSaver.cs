@@ -47,9 +47,10 @@ namespace ConstructEngine.Directory
 
             string fullPath = Path.Combine(string.IsNullOrEmpty(saveDirectory) ? "." : saveDirectory, fileName);
             string json = JsonSerializer.Serialize(fields, options);
+
+            Console.WriteLine(json);
             File.WriteAllText(fullPath, json);
         }
-
 
         /// <summary>
         /// Loads the data from a file and sets the file's value to the class

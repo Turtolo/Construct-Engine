@@ -14,8 +14,18 @@ namespace ConstructEngine.Components.Physics
         private float remainderX = 0;
         private float remainderY = 0;
 
-        public int x { get => Collider.Rect.X; set { var r = Collider.Rect; r.X = value; Collider.Rect = r; } }
-        public int y { get => Collider.Rect.Y; set { var r = Collider.Rect; r.Y = value; Collider.Rect = r; } }
+        public Vector2 Position
+        {
+            get => new Vector2(Collider.Rect.X, Collider.Rect.Y);
+            set
+            {
+                var rect = Collider.Rect;
+                rect.X = (int)value.X;
+                rect.Y = (int)value.Y;
+                Collider.Rect = rect;
+            }
+        }
+
 
         public bool Locked;
 

@@ -18,7 +18,6 @@ namespace ConstructEngine.Components.Entity
         public Sprite Sprite { get; set; } = null;
         public AnimatedSprite AnimatedSprite { get; set; } = null;
         public AnimatedSprite AnimatedSpriteFeet { get; set; } = null;
-        public VariableData VariableData { get; set; } = null;
         public bool Visible { get; set; } = true;
         
         public int DamageAmount { get; set; }
@@ -32,15 +31,7 @@ namespace ConstructEngine.Components.Entity
             KinematicBase = new KinematicBase();
         }
 
-        public void SaveData()
-        {
-            FileSaver.SaveDataToJson(this, "", "PlayerData.json");
-        }
-
-        public void LoadDataFromSave()
-        {
-            FileSaver.LoadDataFromJson(this, "PlayerData.json");
-        }
+        
     
         
         public interface IEntity

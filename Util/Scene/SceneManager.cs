@@ -111,6 +111,11 @@ public class SceneManager : Scene
         AddScene(targetScene);
     }
 
+    public void LoadSceneFromSave()
+    {
+        
+    }
+
     /// <summary>
     /// Removes the current scene
     /// </summary>
@@ -205,6 +210,7 @@ public class SceneManager : Scene
             backseatComponent.Draw(spriteBatch);
         }
     }
+
 
     /// <summary>
     /// Checks if the stack is empty

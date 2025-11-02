@@ -17,6 +17,7 @@ using RenderingLibrary;
 using Gum.Wireframe;
 using ConstructEngine.Gum;
 using ConstructEngine.Object;
+using ConstructEngine.Directory;
 
 namespace ConstructEngine;
 
@@ -52,7 +53,6 @@ public class Core : Game
 
     public static int VirtualHeight { get; set; }
 
-
     bool isFullscreen = false;
 
     public static RenderTarget2D RenderTarget;
@@ -69,13 +69,14 @@ public class Core : Game
 
     private float currentScale;
 
+
+
     public Core(string title, int virtualWidth, int virtualHeight, bool fullScreen, int resolutionWidth = 320, int resolutionHeight = 180)
     {
         VirtualHeight = virtualHeight;
         VirtualWidth = virtualWidth;
         ResolutionWidth = resolutionWidth;
         ResolutionHeight = resolutionHeight;
-
 
         if (s_instance != null)
         {
@@ -98,6 +99,7 @@ public class Core : Game
 
         IsMouseVisible = true;
     }
+
 
     
 
