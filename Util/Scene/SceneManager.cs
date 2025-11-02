@@ -16,7 +16,6 @@ namespace ConstructEngine.Util;
 
 public class SceneManager : Scene
 {
-
     public readonly Stack<IScene> Scenes = new();
     public bool SceneFrozen;
     public bool DoScreenTransition;
@@ -45,6 +44,27 @@ public class SceneManager : Scene
     {
         Core.ClearAllLists();
         SceneFrozen = false;
+    }
+
+    /// <summary>
+    /// Takes the type and uses assembly to create a new scene instance from it.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public Scene.IScene GetSceneFromType<T>() where T : Scene.IScene, new()
+    {
+        Type targetType = typeof(T);
+
+        Assembly assembly = AppDomain.CurrentDomain.GetAssemblies()
+            .FirstOrDefault(a => a.GetTypes().Any(t => t == targetType));
+
+        if (assembly != null)
+        {
+            Scene.IScene instance = (Scene.IScene)Activator.CreateInstance(targetType);
+            return instance;
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -77,16 +97,18 @@ public class SceneManager : Scene
     /// <param name="sceneName"></param>
     public void AddSceneFromString(string sceneName)
     {
-        IScene TargetScene = GetSceneFromString(sceneName);
-        AddScene(TargetScene);
+        IScene targetScene = GetSceneFromString(sceneName);
+        AddScene(targetScene);
     }
 
-    
+    /// <summary>
+    /// Adds a scene from a type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public void AddSceneFromType<T>() where T : IScene, new()
     {
-        Type sceneType = typeof(T);
-
-        Console.WriteLine(sceneType.Name);
+        IScene targetScene = GetSceneFromType<T>();
+        AddScene(targetScene);
     }
 
     /// <summary>

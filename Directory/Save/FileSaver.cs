@@ -16,6 +16,14 @@ namespace ConstructEngine.Directory
         {
             var fields = info.GetType()
                 .GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(f =>
+                {
+                    var value = f.GetValue(info);
+                    if (value == null) return false;
+
+                    var t = f.FieldType;
+                    return t.IsPrimitive || t == typeof(string) || t == typeof(Vector2);
+                })
                 .ToDictionary(f => f.Name, f =>
                 {
                     var value = f.GetValue(info);
@@ -41,6 +49,7 @@ namespace ConstructEngine.Directory
             string json = JsonSerializer.Serialize(fields, options);
             File.WriteAllText(fullPath, json);
         }
+
 
         /// <summary>
         /// Loads the data from a file and sets the file's value to the class

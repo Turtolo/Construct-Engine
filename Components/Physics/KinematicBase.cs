@@ -13,6 +13,10 @@ namespace ConstructEngine.Components.Physics
         public Vector2 Velocity;
         private float remainderX = 0;
         private float remainderY = 0;
+
+        public int x { get => Collider.Rect.X; set { var r = Collider.Rect; r.X = value; Collider.Rect = r; } }
+        public int y { get => Collider.Rect.Y; set { var r = Collider.Rect; r.Y = value; Collider.Rect = r; } }
+
         public bool Locked;
 
 

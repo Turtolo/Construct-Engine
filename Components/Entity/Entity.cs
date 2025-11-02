@@ -5,6 +5,7 @@ using ConstructEngine.Graphics;
 using ConstructEngine.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ConstructEngine.Directory;
 
 namespace ConstructEngine.Components.Entity
 {
@@ -17,24 +18,30 @@ namespace ConstructEngine.Components.Entity
         public Sprite Sprite { get; set; } = null;
         public AnimatedSprite AnimatedSprite { get; set; } = null;
         public AnimatedSprite AnimatedSpriteFeet { get; set; } = null;
-
+        public VariableData VariableData { get; set; } = null;
         public bool Visible { get; set; } = true;
         
         public int DamageAmount { get; set; }
 
         public string String;
-        
-
-        
-        
 
         public Entity(int damageAmount)
         {
             DamageAmount = damageAmount;
             EntityDamageDict.Add(this, DamageAmount);
             KinematicBase = new KinematicBase();
-            
         }
+
+        public void SaveData()
+        {
+            FileSaver.SaveDataToJson(this, "", "PlayerData.json");
+        }
+
+        public void LoadDataFromSave()
+        {
+            FileSaver.LoadDataFromJson(this, "PlayerData.json");
+        }
+    
         
         public interface IEntity
         {
