@@ -16,17 +16,56 @@ namespace ConstructEngine.Physics
         public static List<Collider> ColliderList = new List<Collider>();
         public static List<Circle> CircleList = new List<Circle>();
         public static List<Rectangle> RectangleList = new List<Rectangle>();
+        public bool HasRect
+        {
+            get { return Rect != default; }
+        }
+        public bool HasCircle
+        {
+            get { return Circ != null; }
+        }
+        public Vector2 Position
+        {
+            get
+            {
+                if (HasCircle)
+                    return new Vector2(Circ.X, Circ.Y);
+                if (HasRect)
+                    return new Vector2(Rect.X, Rect.Y);
+                return Vector2.Zero;
+            }
+            set
+            {
+                if (HasCircle)
+                {
+                    Circ.X = (int)value.X;
+                    Circ.Y = (int)value.Y;
+                }
+                else if (HasRect)
+                {
+                    var rect = Rect;
+                    rect.X = (int)value.X;
+                    rect.Y = (int)value.Y;
+                    Rect = rect;
+                }
+            }
+        }
+
 
         public Rectangle Rect;
         public Circle Circ;
-
         public object Root;
 
         public bool Enabled;
-        
-        public Vector2 Velocity = Vector2.Zero;
-        protected Texture2D pixel;
 
+        public Vector2 Velocity = Vector2.Zero;
+
+        /// <summary>
+        /// A collider with a rect, includes paramteres for a root and whether or not it is enabled.
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="enabled"></param>
+        /// <param name="root"></param>
         public Collider(Rectangle rect, bool enabled, object root)
         {
             Rect = rect;
@@ -38,43 +77,40 @@ namespace ConstructEngine.Physics
 
             ColliderList.Add(this);
         }
-        
+
+        /// <summary>
+        /// A collider with a circle, includes paramteres for a root and whether or not it is enabled.
+        /// </summary>
+        /// <param name="circle"></param>
+        /// <param name="enabled"></param>
+        /// <param name="root"></param>
+
         public Collider(Circle circle, bool enabled, object root)
         {
             Circ = circle;
             Enabled = enabled;
 
             Root = root;
-            
+
             CircleList.Add(Circ);
 
             ColliderList.Add(this);
         }
-
-        public virtual void Update(GameTime gameTime)
-        {
-            for (int i = 10; i <= 100; i++)
-            {
-
-            }
-
-        }
+        
+        /// <summary>
+        /// Frees the current collider immediately
+        /// </summary>
 
         public void Free()
         {
             ColliderList.Remove(this);
         }
+
+        /// <summary>
+        /// Gets the information for the currently intersecting collider
+        /// </summary>
+        /// <returns></returns>
         
-        public bool HasRect
-        {
-            get { return Rect != default; }
-        }
-
-        public bool HasCircle
-        {
-            get { return Circ != null; }
-        }
-
         public Collider GetCurrentlyIntersectingCollider()
         {
             if (!this.Enabled) return null;
@@ -99,6 +135,10 @@ namespace ConstructEngine.Physics
             return null;
         }
 
+        /// <summary>
+        /// Checks if the collider is intersecting with any collider
+        /// </summary>
+        /// <returns></returns>
 
         public bool IsIntersectingAny()
         {
@@ -115,30 +155,6 @@ namespace ConstructEngine.Physics
             }
 
             return false;
-        }
-
-        public void SetPosition(float X, float Y)
-        {
-            if (HasCircle) Circ.X = (int)X; Circ.Y = (int)Y;
-            if (HasRect) Rect.X = (int)X; Rect.Y = (int)Y;
-        }
-
-        public Vector2 GetPosition()
-        {
-            if (HasCircle) return new Vector2(Circ.X, Circ.Y);
-            if (HasRect) return new Vector2(Rect.X, Rect.Y);
-            return Vector2.Zero;
-        }
-        
-
-        public virtual void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
-        {
-            if (pixel == null)
-            {
-                pixel = new Texture2D(device, 1, 1);
-                pixel.SetData(new[] { Color.White });
-            }
-            spriteBatch.Draw(pixel, Rect, Color.Gray);
         }
     }
 }

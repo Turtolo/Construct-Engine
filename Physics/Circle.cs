@@ -46,6 +46,12 @@ namespace ConstructEngine.Physics
             Radius = radius;
         }
 
+        /// <summary>
+        /// Checks for intersection with other circles
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+
         public bool Intersects(Circle other)
         {
             int radiiSquared = (Radius + other.Radius) * (Radius + other.Radius);

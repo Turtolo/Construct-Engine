@@ -31,9 +31,9 @@ namespace ConstructEngine.Components.Entity
             KinematicBase = new KinematicBase();
         }
 
-        
-    
-        
+        /// <summary>
+        /// The interface for entity, includes a sprite, an animated sprite and basic functions.
+        /// </summary>
         public interface IEntity
         {
             public Sprite Sprite { get; set; }
@@ -53,7 +53,15 @@ namespace ConstructEngine.Components.Entity
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+
         }
+
+        /// <summary>
+        /// Draws both the animated and normal sprite
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="position"></param>
+        /// <param name="textureOffset"></param>
 
         public void DrawSprites(SpriteBatch spriteBatch, Vector2 position, int textureOffset = 0)
         {
@@ -71,11 +79,20 @@ namespace ConstructEngine.Components.Entity
             }
         }
 
+        /// <summary>
+        /// Frees the entity immediately
+        /// </summary>
+
         public void Free()
         {
             EntityList.Remove(this);
             KinematicBase.Collider.Free();
         }
+        
+        /// <summary>
+        /// A function for adding multiple entities at once
+        /// </summary>
+        /// <param name="entities"></param>
 
         public static void AddEntities(params Entity[] entities)
         {
