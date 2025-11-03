@@ -10,8 +10,6 @@ namespace ConstructEngine.Graphics;
 public class RoomCamera : Camera
 {
     public Matrix Transform { get; private set; }
-    public float Zoom { get; set; } = 1f;
-
     private Tween cameraXTween;
     private Tween cameraYTween;
     Vector2 cameraTargetPosition = Vector2.Zero;

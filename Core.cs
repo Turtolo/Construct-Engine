@@ -41,6 +41,8 @@ public class Core : Game
 
     public static SceneManager SceneManager { get; private set; }
 
+    public static SpriteFont Font { get; set; }
+
     public static bool ExitOnEscape { get; set; }
 
     public static bool Exit { get; set; }
@@ -69,7 +71,39 @@ public class Core : Game
 
     private float currentScale;
 
+    
 
+
+    public Core()
+    {
+        VirtualHeight = 640;
+        VirtualWidth = 360;
+        ResolutionWidth = 320;
+        ResolutionHeight = 180;
+
+        if (s_instance != null)
+        {
+            throw new InvalidOperationException($"Only a single Core instance can be created");
+        }
+
+        s_instance = this;
+
+        Graphics = new GraphicsDeviceManager(this);
+
+        Graphics.IsFullScreen = false;
+
+        Font = null;
+
+        Graphics.ApplyChanges();
+
+        Window.Title = "Construct Engine - Unnamed project";
+
+        Content = base.Content;
+
+        Content.RootDirectory = "Content";
+
+        IsMouseVisible = true;
+    }
 
     public Core(string title, int virtualWidth, int virtualHeight, bool fullScreen, int resolutionWidth = 320, int resolutionHeight = 180)
     {
@@ -77,6 +111,38 @@ public class Core : Game
         VirtualWidth = virtualWidth;
         ResolutionWidth = resolutionWidth;
         ResolutionHeight = resolutionHeight;
+
+        if (s_instance != null)
+        {
+            throw new InvalidOperationException($"Only a single Core instance can be created");
+        }
+
+        s_instance = this;
+
+        Graphics = new GraphicsDeviceManager(this);
+
+        Font = null;
+
+        Graphics.IsFullScreen = fullScreen;
+
+        Graphics.ApplyChanges();
+
+        Window.Title = title;
+
+        Content = base.Content;
+
+        Content.RootDirectory = "Content";
+
+        IsMouseVisible = true;
+    }
+
+    public Core(string title, int virtualWidth, int virtualHeight, bool fullScreen, string fontPath, int resolutionWidth = 320, int resolutionHeight = 180)
+    {
+        VirtualHeight = virtualHeight;
+        VirtualWidth = virtualWidth;
+        ResolutionWidth = resolutionWidth;
+        ResolutionHeight = resolutionHeight;
+
 
         if (s_instance != null)
         {
@@ -98,6 +164,8 @@ public class Core : Game
         Content.RootDirectory = "Content";
 
         IsMouseVisible = true;
+
+        Font = Content.Load<SpriteFont>(fontPath);
     }
 
 

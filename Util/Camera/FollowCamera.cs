@@ -10,9 +10,6 @@ public class FollowCamera : Camera
     public bool XEnabled = true;
     public bool YEnabled = true;
     public Matrix Transform { get; private set; }
-    public float Zoom { get; set; } = 1f;
-    
-
     public float LerpFactor { get; set; } = 0.1f;
     
     public Rectangle? Bounds { get; set; } = null;
@@ -48,6 +45,7 @@ public class FollowCamera : Camera
     {
         Locked = false;
     }
+
 
 
 

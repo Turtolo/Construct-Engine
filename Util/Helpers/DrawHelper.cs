@@ -4,7 +4,7 @@ using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Graphics;
+namespace ConstructEngine.Util;
 
 public class DrawHelper()
 {
@@ -42,6 +42,12 @@ public class DrawHelper()
 
         Core.SpriteBatch.Draw(texture, new Vector2(circ.X, circ.Y), color);
     }
+
+    public static void DrawString(string input, Color color, Vector2 pos)
+    {
+        Core.SpriteBatch.DrawString(Core.Font, input, pos, color);
+    }
+
     public static void DrawRay(Ray2D ray, Color color, float thickness, float layerDepth = 0.1f)
     {
         
