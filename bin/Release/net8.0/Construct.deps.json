@@ -9,7 +9,7 @@
       "Construct/1.0.0": {
         "dependencies": {
           "Gum.MonoGame": "2025.9.27.1",
-          "MonoGame.Framework.DesktopGL": "3.8.4"
+          "MonoGame.Framework.DesktopGL": "3.8.4.1"
         },
         "runtime": {
           "Construct.dll": {}
@@ -60,20 +60,20 @@
           }
         }
       },
-      "MonoGame.Framework.DesktopGL/3.8.4": {
+      "MonoGame.Framework.DesktopGL/3.8.4.1": {
         "dependencies": {
-          "MonoGame.Library.OpenAL": "1.23.1.10",
+          "MonoGame.Library.OpenAL": "1.24.3.2",
           "MonoGame.Library.SDL": "2.32.2.1",
           "NVorbis": "0.10.4"
         },
         "runtime": {
           "lib/net8.0/MonoGame.Framework.dll": {
-            "assemblyVersion": "3.8.4.0",
-            "fileVersion": "3.8.4.0"
+            "assemblyVersion": "3.8.4.1",
+            "fileVersion": "3.8.4.1"
           }
         }
       },
-      "MonoGame.Library.OpenAL/1.23.1.10": {
+      "MonoGame.Library.OpenAL/1.24.3.2": {
         "runtimeTargets": {
           "runtimes/android-arm/native/libopenal.so": {
             "rid": "android-arm",
@@ -95,18 +95,23 @@
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
-          "runtimes/ios-arm64/native/libopenal.dylib": {
+          "runtimes/ios-arm64/native/libopenal.a": {
             "rid": "ios-arm64",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
-          "runtimes/iossimulator-arm64/native/libopenal.dylib": {
+          "runtimes/iossimulator-arm64/native/libopenal.a": {
             "rid": "iossimulator-arm64",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
-          "runtimes/iossimulator-x64/native/libopenal.dylib": {
+          "runtimes/iossimulator-x64/native/libopenal.a": {
             "rid": "iossimulator-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm64/native/libopenal.so": {
+            "rid": "linux-arm64",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
@@ -216,19 +221,19 @@
       "path": "microsoft.extensions.dependencyinjection.abstractions/7.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
     },
-    "MonoGame.Framework.DesktopGL/3.8.4": {
+    "MonoGame.Framework.DesktopGL/3.8.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-2WR/vPNPcmQ9h4EhMkfpUfMW0Krm6pX0ElkZwSRI1IUecPuzLeXt0i9NRwGxZBUdcNdNxACCmswrxSf4B95Obg==",
-      "path": "monogame.framework.desktopgl/3.8.4",
-      "hashPath": "monogame.framework.desktopgl.3.8.4.nupkg.sha512"
+      "sha512": "sha512-YybxIIT5+Ky78E/XdkS0glyluMr2EeDZwx2LqXULAOCqiKt1+aDrjPZaqLL5qpNgBcMEHUeZJ4YjWe4TAZlWLw==",
+      "path": "monogame.framework.desktopgl/3.8.4.1",
+      "hashPath": "monogame.framework.desktopgl.3.8.4.1.nupkg.sha512"
     },
-    "MonoGame.Library.OpenAL/1.23.1.10": {
+    "MonoGame.Library.OpenAL/1.24.3.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-4/F4FFyt7OYhtEmgi/Qmv01eC6GfQ9dkIPsymgkwJ/tV7PewmWrHg/LvTKjd6R+5j/tlO8JkjsEb0Aje6bxfxw==",
-      "path": "monogame.library.openal/1.23.1.10",
-      "hashPath": "monogame.library.openal.1.23.1.10.nupkg.sha512"
+      "sha512": "sha512-nGRsXQXs+NSUC3C5w90hFQfyKdZPpBnHnyg2w+Dw/2pUH7s+CoRWTJNYbzzdJf3+aeUvfvG4rTbFvMKDDj5olA==",
+      "path": "monogame.library.openal/1.24.3.2",
+      "hashPath": "monogame.library.openal.1.24.3.2.nupkg.sha512"
     },
     "MonoGame.Library.SDL/2.32.2.1": {
       "type": "package",
