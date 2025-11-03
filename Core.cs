@@ -61,13 +61,13 @@ public class Core : Game
 
     private bool IntegerScaling = true;
 
-    private int finalWidth;
+    public int finalWidth;
 
-    private int finalHeight;
+    public int finalHeight;
 
-    private int offsetX;
+    public int offsetX;
 
-    private int offsetY;
+    public int offsetY;
 
     private float currentScale;
 
@@ -216,6 +216,8 @@ public class Core : Game
 
         base.Draw(gameTime);
     }
+
+
 
     private void HandleClientSizeChanged(object sender, EventArgs e)
     {

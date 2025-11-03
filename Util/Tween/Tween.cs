@@ -16,7 +16,6 @@ public class Tween
     
     public Func<float, float> EasingFunction { get; set; } = EasingFunctions.Linear;
     
-
     public Tween(float start, float end, float duration, Func<float, float> easingFunction)
     {
         EasingFunction = easingFunction;

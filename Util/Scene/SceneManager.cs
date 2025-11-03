@@ -211,6 +211,20 @@ public class SceneManager : Scene
         }
     }
 
+    public void DrawCurrentScene(SpriteBatch spriteBatch, BloomFilter bloom)
+    {
+        if (!IsStackEmpty())
+        {
+            GetCurrentScene().Draw(spriteBatch);
+        }
+
+        for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+        {
+            BackseatComponent backseatComponent = BackseatComponent.BackseatComponentList[i];
+            backseatComponent.Draw(spriteBatch);
+        }
+    }
+
 
     /// <summary>
     /// Checks if the stack is empty

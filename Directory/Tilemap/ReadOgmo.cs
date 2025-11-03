@@ -7,16 +7,6 @@ namespace ConstructEngine.Directory;
 
 public class OgmoReader
 {
-
-    string json;
-
-    string filePath;
-
-    public OgmoReader(string Filepath)
-    {
-        this.filePath = Filepath;
-    }
-
     public class Root
     {
         public string ogmoVersion { get; set; }
@@ -41,12 +31,11 @@ public class OgmoReader
         
         public float depth {get; set;}
 
-        // Tile layer
+
         public string tileset { get; set; }
         public string region { get; set; }
         public List<int> data { get; set; }
 
-        // Entity layer
         public List<Entity> entities { get; set; }
         public List<Decal> decals { get; set; }
         
