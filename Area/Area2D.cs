@@ -54,6 +54,8 @@ namespace ConstructEngine.Area
         public Rectangle Rect;
         public Circle Circ;
         public object Root;
+        public Type RootType { get; private set; }
+
         public bool Enabled;
 
         public Vector2 Velocity = Vector2.Zero;
@@ -70,6 +72,8 @@ namespace ConstructEngine.Area
             Enabled = enabled;
 
             Root = root;
+
+            RootType = Root.GetType();
 
             RectangleList.Add(Rect);
 
@@ -89,6 +93,8 @@ namespace ConstructEngine.Area
             Enabled = enabled;
 
             Root = root;
+
+            RootType = Root.GetType();
 
             CircleList.Add(Circ);
 
