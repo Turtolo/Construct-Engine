@@ -6,8 +6,9 @@ namespace ConstructEngine.Util
 {
     public struct Ray2D
     {
+        public static List<Ray2D> RayList = new();
         public Vector2 Position { get; }
-        public Vector2 Direction { get; }
+        public float AngleDegrees { get; }
         public float Length { get; }
 
         private bool _hasHit;
@@ -16,13 +17,20 @@ namespace ConstructEngine.Util
         public bool HasHit => _hasHit;
         public Vector2 HitPoint => _hitPoint;
 
-        public Ray2D(Vector2 position, Vector2 direction, float length)
+        public Vector2 Direction => new Vector2(
+            MathF.Cos(MathHelper.ToRadians(AngleDegrees)),
+            MathF.Sin(MathHelper.ToRadians(AngleDegrees))
+        );
+
+        public Ray2D(Vector2 position, float angleDegrees, float length)
         {
             Position = position;
-            Direction = Vector2.Normalize(direction);
+            AngleDegrees = angleDegrees;
             Length = length;
             _hasHit = false;
             _hitPoint = Vector2.Zero;
+
+            RayList.Add(this);
         }
 
         public bool Raycast(List<Rectangle> rectangles)
