@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,7 +40,7 @@ public static class CollisionHelper
 
         return (deltaX * deltaX + deltaY * deltaY) <= (circle.Radius * circle.Radius);
     }
-    public static CollisionSide GetCameraEdge(Collider target, Rectangle camera)
+    public static CollisionSide GetCameraEdge(Area2D target, Rectangle camera)
     {
         if (target.HasRect)
         {
@@ -90,6 +90,4 @@ public static class CollisionHelper
 
         return CollisionSide.None;
     }
-
-
 }

@@ -1,5 +1,5 @@
 using System;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

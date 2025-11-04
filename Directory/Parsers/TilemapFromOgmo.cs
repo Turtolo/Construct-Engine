@@ -17,20 +17,6 @@ namespace ConstructEngine.Directory;
 
 public class TilemapFromOgmo
 {
-    public static List<Sprite> SpriteList = new List<Sprite>();
-
-    // Helper method
-
-    public static Rectangle GetMapWidth(string filename)
-    {
-        string json = File.ReadAllText(filename);
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        OgmoReader.Root root = JsonSerializer.Deserialize<OgmoReader.Root>(json, options);
-        
-        return new Rectangle(0, 0, root.width, root.height);
-    }
-
-
     public static void SearchForDecals(string filename)
     {
         string json = File.ReadAllText(filename);
@@ -41,16 +27,7 @@ public class TilemapFromOgmo
         
         foreach (var layer in root.layers)
         {
-            if (layer.folder == null)
-            {
-                continue;
-            }
-            
-
-            if (layer.decals == null)
-            {
-                continue;
-            }
+            if (layer.folder == null || layer.decals == null) continue;
 
             foreach (var decal in layer.decals)
             {
@@ -62,15 +39,10 @@ public class TilemapFromOgmo
                     path = path.Substring(index);
                 }
                 
-                Texture2D texture;
-                
-                
                 path = Path.ChangeExtension(path, null);
 
-                texture = Core.Content.Load<Texture2D>(path);
-                
-                
-                
+                Texture2D texture = Core.Content.Load<Texture2D>(path);
+
                 TextureAtlas atlas = new TextureAtlas(texture);
                 
                 atlas.AddRegion(path,0,0 , texture.Width, texture.Height);
@@ -80,9 +52,7 @@ public class TilemapFromOgmo
                 
                 sprite.StartPosition = new Vector2(decal.x, decal.y);
                 
-                SpriteList.Add(sprite);
-                
-                
+                Sprite.SpriteList.Add(sprite);
             }
 
             
@@ -138,9 +108,6 @@ public class TilemapFromOgmo
                         }
                     ); 
                 }
-
-
-                string name = "ConstructObject";
                 
                 Assembly assembly = AppDomain.CurrentDomain.GetAssemblies()
                     .FirstOrDefault(a => a.GetTypes().Any(t => t.Name == className && typeof(ConstructObject).IsAssignableFrom(t)));
@@ -194,54 +161,14 @@ public class TilemapFromOgmo
             ConstructObject.ObjectList[i].Draw(spriteBatch);
         }
     }
-    
-    public static void DrawDecals(string filename, SpriteBatch spriteBatch)
-    {
-        string json = File.ReadAllText(filename);
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        OgmoReader.Root root = JsonSerializer.Deserialize<OgmoReader.Root>(json, options);
-
-        Texture2D texture;
-        
-        foreach (var layer in root.layers)
-        {
-            if (layer.folder == null)
-            {
-                continue;
-            }
-            
-
-            if (layer.decals == null)
-            {
-                continue;
-            }
-            
-            foreach (Sprite sprite in SpriteList) 
-            {
-                sprite.Draw(spriteBatch, sprite.StartPosition);
-                
-            }
-
-            
-
-            
-        }
-        
-    }
-
-
-    
-    
 
     public static void UpdateObjects(GameTime gameTime)
-    {   
+    {
         for (int i = 0; i < ConstructObject.ObjectList.Count; i++)
         {
             ConstructObject.ObjectList[i].Update(gameTime);
         }
     }
-    
-    
     
     public static void InstantiateEntities(string filePath)
     {
@@ -263,7 +190,6 @@ public class TilemapFromOgmo
     }
     
 
-   
     public static void FromFile(ContentManager content, string filename, string region, string textureName = null)
     {
         string json = File.ReadAllText(filename);

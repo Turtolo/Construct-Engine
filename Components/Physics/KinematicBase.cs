@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using ConstructEngine.Objects;
 
 namespace ConstructEngine.Components.Physics
@@ -9,7 +9,7 @@ namespace ConstructEngine.Components.Physics
     public class KinematicBase
     {
         //public Rectangle Hitbox;
-        public Collider Collider;
+        public Area2D Collider;
         public Vector2 Velocity;
         private float remainderX = 0;
         private float remainderY = 0;
@@ -46,7 +46,7 @@ namespace ConstructEngine.Components.Physics
 
                 Move(Velocity.X * deltaTime, Velocity.Y * deltaTime);
 
-                foreach (var collider in Collider.ColliderList)
+                foreach (var collider in Area2D.AreaList)
                 {
 
                     if (!collider.Enabled || collider.Velocity == Vector2.Zero || collider.Root.GetType() != typeof(CollisionObject))
@@ -147,7 +147,7 @@ namespace ConstructEngine.Components.Physics
             Rectangle rightCheck = Collider.Rect;
             rightCheck.X += 1;
 
-            foreach (var collider in Collider.ColliderList)
+            foreach (var collider in Area2D.AreaList)
             {
                 if (!collider.Enabled || collider.Root.GetType() != typeof(CollisionObject))
                     continue;
@@ -161,7 +161,7 @@ namespace ConstructEngine.Components.Physics
 
         public bool IsColliding(Rectangle rect)
         {
-            foreach (var collider in Collider.ColliderList)
+            foreach (var collider in Area2D.AreaList)
             {
                 if (!collider.Enabled || collider.Root.GetType() != typeof(CollisionObject))
                 {

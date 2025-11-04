@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Net.Http.Headers;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Graphics;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

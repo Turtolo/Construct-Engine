@@ -2,7 +2,7 @@ using ConstructEngine.Components.Physics;
 using System;
 using System.Collections.Generic;
 using ConstructEngine.Graphics;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ConstructEngine.Directory;

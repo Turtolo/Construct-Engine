@@ -1,12 +1,11 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace ConstructEngine.Physics
+namespace ConstructEngine.Area
 {
     public class Circle : IEquatable<Circle>
     {
         private static readonly Circle s_empty = new Circle(0, 0, 0);
-
         public int X { get; set; }
         public int Y { get; set; }
         public int Radius { get; set; }

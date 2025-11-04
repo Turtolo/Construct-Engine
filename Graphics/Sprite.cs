@@ -85,7 +85,10 @@ public class Sprite
     /// <summary>
     /// Creates a new sprite.
     /// </summary>
-    public Sprite() { }
+    public Sprite()
+    {
+        SpriteList.Add(this);
+    }
 
     /// <summary>
     /// Creates a new sprite using the specified source texture region.
@@ -101,15 +104,16 @@ public class Sprite
 
     public static void DrawSpritesFromList(SpriteBatch spriteBatch, Vector2 position)
     {
-        foreach (Sprite sprite in SpriteList)
+        for (int i = SpriteList.Count - 1; i >= 0; i--)
         {
-            sprite.Draw(spriteBatch, position);
+            Sprite sprite = SpriteList[i];
+            sprite.Draw(spriteBatch, sprite.StartPosition);
         }
     }
     
     /// <summary>
-/// Sets the origin of this sprite to the center.
-/// </summary>
+    /// Sets the origin of this sprite to the center.
+    /// </summary>
     public void CenterOrigin()
     {
         Origin = new Vector2(Region.Width, Region.Height) * 0.5f;

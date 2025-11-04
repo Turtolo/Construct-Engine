@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using ConstructEngine.Object;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using Microsoft.Xna.Framework;
 
 namespace ConstructEngine.Objects;
@@ -14,7 +14,7 @@ public class CollisionObject : ConstructObject, ConstructObject.IObject
     
     public bool OneWay { get; set; }
     
-    public Collider Collider { get; set; }
+    public Area2D Collider { get; set; }
 
     public CollisionObject()
     {
@@ -26,7 +26,7 @@ public class CollisionObject : ConstructObject, ConstructObject.IObject
         OneWay = oneway;
         Collidable = collidable;
         Rectangle = rect;
-        Collider = new Collider(Rectangle, Collidable, this);
+        Collider = new Area2D(Rectangle, Collidable, this);
         
     }
 
@@ -49,11 +49,7 @@ public class CollisionObject : ConstructObject, ConstructObject.IObject
             }
         }
 
-        Collider = new Collider(Rectangle, Collidable, this);
-
-
-
-
+        Collider = new Area2D(Rectangle, Collidable, this);
     }
 
     public override void Update(GameTime gameTime)

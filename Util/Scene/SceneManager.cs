@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Object;
 using ConstructEngine.Graphics;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using ConstructEngine.Components;

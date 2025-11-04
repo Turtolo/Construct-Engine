@@ -9,11 +9,11 @@ using System;
 using ConstructEngine.Components.Entity;
 using System.Xml.Serialization;
 
-namespace ConstructEngine.Physics
+namespace ConstructEngine.Area
 {
-    public class Collider
+    public class Area2D
     {
-        public static List<Collider> ColliderList = new List<Collider>();
+        public static List<Area2D> AreaList = new List<Area2D>();
         public static List<Circle> CircleList = new List<Circle>();
         public static List<Rectangle> RectangleList = new List<Rectangle>();
         public bool HasRect
@@ -51,22 +51,20 @@ namespace ConstructEngine.Physics
             }
         }
 
-
         public Rectangle Rect;
         public Circle Circ;
         public object Root;
-
         public bool Enabled;
 
         public Vector2 Velocity = Vector2.Zero;
 
         /// <summary>
-        /// A collider with a rect, includes paramteres for a root and whether or not it is enabled.
+        /// A Area2D with a rect, includes paramteres for a root and whether or not it is enabled.
         /// </summary>
         /// <param name="rect"></param>
         /// <param name="enabled"></param>
         /// <param name="root"></param>
-        public Collider(Rectangle rect, bool enabled, object root)
+        public Area2D(Rectangle rect, bool enabled, object root)
         {
             Rect = rect;
             Enabled = enabled;
@@ -75,17 +73,17 @@ namespace ConstructEngine.Physics
 
             RectangleList.Add(Rect);
 
-            ColliderList.Add(this);
+            AreaList.Add(this);
         }
 
         /// <summary>
-        /// A collider with a circle, includes paramteres for a root and whether or not it is enabled.
+        /// An Area with a circle, includes paramteres for a root and whether or not it is enabled.
         /// </summary>
         /// <param name="circle"></param>
         /// <param name="enabled"></param>
         /// <param name="root"></param>
 
-        public Collider(Circle circle, bool enabled, object root)
+        public Area2D(Circle circle, bool enabled, object root)
         {
             Circ = circle;
             Enabled = enabled;
@@ -94,28 +92,28 @@ namespace ConstructEngine.Physics
 
             CircleList.Add(Circ);
 
-            ColliderList.Add(this);
+            AreaList.Add(this);
         }
         
         /// <summary>
-        /// Frees the current collider immediately
+        /// Frees the current Area immediately
         /// </summary>
 
         public void Free()
         {
-            ColliderList.Remove(this);
+            AreaList.Remove(this);
         }
 
         /// <summary>
-        /// Gets the information for the currently intersecting collider
+        /// Gets the information for the currently intersecting Area
         /// </summary>
         /// <returns></returns>
         
-        public Collider GetCurrentlyIntersectingCollider()
+        public Area2D GetCurrentlyIntersectingArea()
         {
             if (!this.Enabled) return null;
 
-            foreach (var other in ColliderList)
+            foreach (var other in AreaList)
             {
                 if (other == this || !other.Enabled) continue;
 
@@ -136,7 +134,7 @@ namespace ConstructEngine.Physics
         }
 
         /// <summary>
-        /// Checks if the collider is intersecting with any collider
+        /// Checks if the Area is intersecting with any Area
         /// </summary>
         /// <returns></returns>
 
@@ -144,7 +142,7 @@ namespace ConstructEngine.Physics
         {
             if (!this.Enabled) return false;
 
-            foreach (var other in ColliderList)
+            foreach (var other in AreaList)
             {
                 if (other == this || !other.Enabled) continue;
 

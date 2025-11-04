@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using ConstructEngine.Physics;
+using ConstructEngine.Area;
 using Microsoft.Xna.Framework;
 using Timer = ConstructEngine.Util.Timer;
 
@@ -10,7 +10,7 @@ public class HealthComponent : Component
 {
     public int MaxHealth { get; set; }
     public int CurrentHealth { get; set; }
-    public Collider TakeDamageArea { get; set; }
+    public Area2D TakeDamageArea { get; set; }
     private Entity HostEntity { get; set; }
 
     public bool CanTakeDamage { get; set; } = true;
@@ -22,7 +22,7 @@ public class HealthComponent : Component
         CurrentHealth = maxHealth;
     }
 
-    public HealthComponent(Entity entity, int maxHealth, Collider takeDamageArea)
+    public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea)
     {
         TakeDamageArea = takeDamageArea;
         HostEntity = entity;
@@ -55,7 +55,7 @@ public class HealthComponent : Component
     {
         if (TakeDamageArea.IsIntersectingAny())
         {
-            var rootEntity = TakeDamageArea.GetCurrentlyIntersectingCollider()?.Root as Entity;
+            var rootEntity = TakeDamageArea.GetCurrentlyIntersectingArea()?.Root as Entity;
 
             if (rootEntity != null && Entity.EntityDamageDict.TryGetValue(rootEntity, out int damageAmount))
             {

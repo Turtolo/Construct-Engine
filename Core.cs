@@ -4,20 +4,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ConstructEngine.Input;
-using ConstructEngine.Physics;
-
-
 using ConstructEngine.Graphics;
-using System.Collections.Generic;
-
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Util;
-using Timer = ConstructEngine.Util.Timer;
 using RenderingLibrary;
 using Gum.Wireframe;
 using ConstructEngine.Gum;
 using ConstructEngine.Object;
-using ConstructEngine.Directory;
+using ConstructEngine.Area;
 
 namespace ConstructEngine;
 
@@ -230,7 +224,7 @@ public class Core : Game
         ParallaxBackground.BackgroundList.Clear();
         Tilemap.Tilemaps.Clear();
         Entity.EntityList.Clear();
-        Collider.ColliderList.Clear();
+        Area2D.AreaList.Clear();
         ConstructObject.ObjectList.Clear();
     }
 
