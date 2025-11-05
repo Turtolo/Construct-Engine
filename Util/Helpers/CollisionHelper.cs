@@ -4,7 +4,7 @@ using ConstructEngine.Area;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConstructEngine.Util;
+namespace ConstructEngine.Helpers;
 
 public enum CollisionSide
 {
@@ -17,7 +17,6 @@ public enum CollisionSide
 
 public static class CollisionHelper
 {
-
     public static bool IsRectangleEmpty(Rectangle collider)
     {
         if (collider.X == 0 && collider.Y == 0 && collider.Width == 0 && collider.Height == 0)

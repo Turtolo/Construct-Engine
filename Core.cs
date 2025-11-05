@@ -20,11 +20,11 @@ public class Core : Game
     internal static Core s_instance;
 
     public static Core Instance => s_instance;
-    
+
     public static GraphicsDeviceManager Graphics { get; private set; }
 
     public static new GraphicsDevice GraphicsDevice { get; private set; }
-    
+
     public static SpriteBatch SpriteBatch { get; private set; }
 
     public static float DeltaTime { get; private set; }
@@ -65,7 +65,7 @@ public class Core : Game
 
     private float currentScale;
 
-    
+
 
 
     public Core()
@@ -163,7 +163,7 @@ public class Core : Game
     }
 
 
-    
+
 
     protected override void Initialize()
     {
@@ -218,7 +218,7 @@ public class Core : Game
         UpdateRenderTargetTransform();
         UpdateGumCamera();
     }
-    
+
     public static void ClearAllLists()
     {
         ParallaxBackground.BackgroundList.Clear();
@@ -239,7 +239,7 @@ public class Core : Game
         Graphics.IsFullScreen = isFullscreen;
         Graphics.ApplyChanges();
     }
-    
+
     public void UpdateRenderTargetTransform()
     {
         int backBufferWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
@@ -264,8 +264,8 @@ public class Core : Game
         offsetY = (backBufferHeight - finalHeight) / 2;
     }
 
-    
-    
+
+
 
     public void UpdateGumCamera()
     {

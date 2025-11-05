@@ -1,13 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
-using ConstructEngine.Object;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ConstructEngine.Util;
-using System.Security.Cryptography.X509Certificates;
+using ConstructEngine.Helpers;
 using System;
-using ConstructEngine.Components.Entity;
-using System.Xml.Serialization;
 
 namespace ConstructEngine.Area
 {

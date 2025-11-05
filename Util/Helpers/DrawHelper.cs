@@ -4,7 +4,7 @@ using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Util;
+namespace ConstructEngine.Helpers;
 
 public class DrawHelper()
 {
@@ -50,13 +50,11 @@ public class DrawHelper()
 
     public static void DrawRay(Ray2D ray, Color color, float thickness, float layerDepth = 0.1f)
     {
-        
-
         Color Color;
 
         if (ray.HasHit)
         {
-            Color = Color.Red;
+            Color = ColorHelper.GetOppositeColor(color);
         }
 
         else

@@ -2,7 +2,7 @@ using ConstructEngine.Area;
 using Microsoft.Xna.Framework;
 using System;
 using ConstructEngine.Components.Entity;
-using ConstructEngine.Util;
+using ConstructEngine.Helpers;
 using ConstructEngine.Util.Tween;
 
 namespace ConstructEngine.Graphics;
