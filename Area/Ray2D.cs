@@ -102,8 +102,6 @@ namespace ConstructEngine.Area
             {
                 if (area.RootType != target) continue;
 
-                Console.WriteLine(area.RootType);
-
                 Vector2 currentHitPoint;
                 float currentDistance;
                 bool hit = false;
@@ -222,9 +220,9 @@ namespace ConstructEngine.Area
         /// <returns></returns>
         private static bool CheckRaycast(Ray2D ray, Area2D area, float maxLength, out Vector2 hitPoint, out float distance)
         {
-            if (area.Rect != null)
+            if (area.HasRect)
                 return RectangleIntersect(ray, area.Rect, maxLength, out hitPoint, out distance);
-            else if (area.Circ != null)
+            else if (area.HasCircle)
                 return CircleIntersect(ray, area.Circ, maxLength, out hitPoint, out distance);
 
             hitPoint = Vector2.Zero;

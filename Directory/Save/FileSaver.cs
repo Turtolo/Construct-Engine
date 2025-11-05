@@ -48,7 +48,6 @@ namespace ConstructEngine.Directory
             string fullPath = Path.Combine(string.IsNullOrEmpty(saveDirectory) ? "." : saveDirectory, fileName);
             string json = JsonSerializer.Serialize(fields, options);
 
-            Console.WriteLine(json);
             File.WriteAllText(fullPath, json);
         }
 
@@ -92,6 +91,7 @@ namespace ConstructEngine.Directory
                 }
                 catch (Exception ex)
                 {
+                    
                     Console.WriteLine($"Failed to load field {field.Name}: {ex.Message}");
                 }
             }
