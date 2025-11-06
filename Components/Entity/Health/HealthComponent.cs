@@ -12,22 +12,27 @@ public class HealthComponent : Component
     public int CurrentHealth { get; set; }
     public Area2D TakeDamageArea { get; set; }
     private Entity HostEntity { get; set; }
+    public Type PreferedRootType { get; set; }
 
     public bool CanTakeDamage { get; set; } = true;
 
-    public HealthComponent(Entity entity, int maxHealth)
+    private Type RootType;
+
+    public HealthComponent(Entity entity, int maxHealth, object root)
     {
         HostEntity = entity;
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
+        RootType = root.GetType();
     }
 
-    public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea)
+    public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea, object root)
     {
         TakeDamageArea = takeDamageArea;
         HostEntity = entity;
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
+        RootType = root.GetType();
     }
 
     public void TakeDamage(int damage)
@@ -55,12 +60,10 @@ public class HealthComponent : Component
     {
         if (TakeDamageArea.IsIntersectingAny())
         {
-            var rootEntity = TakeDamageArea.GetCurrentlyIntersectingArea()?.Root as Entity;
-
-            if (rootEntity != null && Entity.EntityDamageDict.TryGetValue(rootEntity, out int damageAmount))
-            {
-                if (CanTakeDamage) TakeDamage(damageAmount);
-            }
+            Entity OtherEntity = (Entity)TakeDamageArea.GetCurrentlyIntersectingArea().Root;
+            
+            if (OtherEntity.GetType() != RootType)
+                TakeDamage(OtherEntity.DamageAmount);
         }
 
         if (CurrentHealth <= 0)

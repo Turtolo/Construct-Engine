@@ -226,6 +226,7 @@ public class Core : Game
         Entity.EntityList.Clear();
         Area2D.AreaList.Clear();
         ConstructObject.ObjectList.Clear();
+        Ray2D.RayList.Clear();
     }
 
     public void SetRenderTarget()

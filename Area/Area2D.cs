@@ -55,7 +55,7 @@ namespace ConstructEngine.Area
         public Vector2 Velocity = Vector2.Zero;
 
         /// <summary>
-        /// A Area2D with a rect, includes paramteres for a root and whether or not it is enabled.
+        /// An Area2D with a rect, includes paramteres for a root and whether or not it is enabled.
         /// </summary>
         /// <param name="rect"></param>
         /// <param name="enabled"></param>
@@ -75,7 +75,7 @@ namespace ConstructEngine.Area
         }
 
         /// <summary>
-        /// An Area with a circle, includes paramteres for a root and whether or not it is enabled.
+        /// An area with a circle, includes paramteres for a root and whether or not it is enabled.
         /// </summary>
         /// <param name="circle"></param>
         /// <param name="enabled"></param>
@@ -96,7 +96,7 @@ namespace ConstructEngine.Area
         }
         
         /// <summary>
-        /// Frees the current Area immediately
+        /// Frees the current area immediately
         /// </summary>
 
         public void Free()
@@ -105,7 +105,7 @@ namespace ConstructEngine.Area
         }
 
         /// <summary>
-        /// Gets the information for the currently intersecting Area
+        /// Gets the information for the currently intersecting area
         /// </summary>
         /// <returns></returns>
         
@@ -134,7 +134,7 @@ namespace ConstructEngine.Area
         }
 
         /// <summary>
-        /// Checks if the Area is intersecting with any Area
+        /// Checks if the area is intersecting with any area
         /// </summary>
         /// <returns></returns>
 
@@ -154,5 +154,30 @@ namespace ConstructEngine.Area
 
             return false;
         }
+        /// <summary>
+        /// Checks if the area is intersecting another target area
+        /// </summary>
+        /// <param name="otherArea"></param>
+        /// <returns></returns>
+        public bool Intersecting(Area2D otherArea)
+        {
+            if (otherArea == null || !Enabled || !otherArea.Enabled)
+                return false;
+
+            if (HasRect && otherArea.HasRect)
+                return Rect.Intersects(otherArea.Rect);
+
+            if (HasCircle && otherArea.HasCircle)
+                return Circ.Intersects(otherArea.Circ);
+
+            if (HasRect && otherArea.HasCircle)
+                return CollisionHelper.CircleIntersectsRectangle(otherArea.Circ, Rect);
+
+            if (HasCircle && otherArea.HasRect)
+                return CollisionHelper.CircleIntersectsRectangle(Circ, otherArea.Rect);
+
+            return false;
+        }
+
     }
 }
