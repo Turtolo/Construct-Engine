@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ConstructEngine.Area;
+using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Timer = ConstructEngine.Util.Timer;
 
@@ -12,10 +13,7 @@ public class HealthComponent : Component
     public int CurrentHealth { get; set; }
     public Area2D TakeDamageArea { get; set; }
     private Entity HostEntity { get; set; }
-    public Type PreferedRootType { get; set; }
-
     public bool CanTakeDamage { get; set; } = true;
-
     private Type RootType;
 
     public HealthComponent(Entity entity, int maxHealth, object root)
@@ -37,6 +35,8 @@ public class HealthComponent : Component
 
     public void TakeDamage(int damage)
     {
+        if (!CanTakeDamage) return;
+
         CanTakeDamage = false;
         CurrentHealth -= damage;
         if (CurrentHealth < 0) CurrentHealth = 0;
@@ -60,10 +60,12 @@ public class HealthComponent : Component
     {
         if (TakeDamageArea.IsIntersectingAny())
         {
-            Entity OtherEntity = (Entity)TakeDamageArea.GetCurrentlyIntersectingArea().Root;
-            
-            if (OtherEntity.GetType() != RootType)
-                TakeDamage(OtherEntity.DamageAmount);
+            var otherRoot = TakeDamageArea.GetCurrentlyIntersectingArea().Root;
+            if (otherRoot is Entity otherEntity)
+            {
+                if (otherEntity.GetType() != RootType)
+                    TakeDamage(otherEntity.DamageAmount);
+            }
         }
 
         if (CurrentHealth <= 0)
