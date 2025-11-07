@@ -6,7 +6,7 @@ using ConstructEngine.Objects;
 
 namespace ConstructEngine.Components.Physics
 {
-    public class KinematicBase
+    public class KinematicBase : Component
     {
         //public Rectangle Hitbox;
         public Area2D Collider;
@@ -30,10 +30,7 @@ namespace ConstructEngine.Components.Physics
         public bool Locked;
 
 
-        public KinematicBase()
-        {
-
-        }
+        public KinematicBase(object root) : base(root) { }
 
     
         

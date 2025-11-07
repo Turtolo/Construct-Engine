@@ -19,7 +19,7 @@ namespace ConstructEngine.Components.Entity
         public AnimatedSprite AnimatedSprite { get; set; } = null;
         public AnimatedSprite AnimatedSpriteFeet { get; set; } = null;
         public bool Visible { get; set; } = true;
-        
+
         public int DamageAmount { get; set; }
 
         public string String;
@@ -28,7 +28,7 @@ namespace ConstructEngine.Components.Entity
         {
             DamageAmount = damageAmount;
             EntityDamageDict.Add(this, DamageAmount);
-            KinematicBase = new KinematicBase();
+            KinematicBase = new KinematicBase(this);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ConstructEngine.Components.Entity
             void Update(GameTime gameTime);
             void Draw(SpriteBatch spriteBatch);
         }
-        
+
         public virtual void Load()
         {
         }
@@ -88,7 +88,7 @@ namespace ConstructEngine.Components.Entity
             EntityList.Remove(this);
             KinematicBase.Collider.Free();
         }
-        
+
         /// <summary>
         /// A function for adding multiple entities at once
         /// </summary>
@@ -98,6 +98,6 @@ namespace ConstructEngine.Components.Entity
         {
             EntityList.AddRange(entities);
         }
-        
+
     }
 }

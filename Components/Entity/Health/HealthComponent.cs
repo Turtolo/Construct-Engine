@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using ConstructEngine.Area;
 using ConstructEngine.Util;
+using ConstructEngine;
 using Microsoft.Xna.Framework;
 using Timer = ConstructEngine.Util.Timer;
 
@@ -11,37 +12,42 @@ public class HealthComponent : Component
 {
     public int MaxHealth { get; set; }
     public int CurrentHealth { get; set; }
+    public float HitFreezeDuration { get; set; }
+
     public Area2D TakeDamageArea { get; set; }
     private Entity HostEntity { get; set; }
     public bool CanTakeDamage { get; set; } = true;
-    private Type RootType;
 
-    public HealthComponent(Entity entity, int maxHealth, object root)
-    {
-        HostEntity = entity;
-        MaxHealth = maxHealth;
-        CurrentHealth = maxHealth;
-        RootType = root.GetType();
-    }
 
-    public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea, object root)
+    public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea, object root) : base(root)
     {
         TakeDamageArea = takeDamageArea;
         HostEntity = entity;
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
-        RootType = root.GetType();
+        HitFreezeDuration = 0.1f;
+    }
+
+    public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea, object root, float hitFreezeDuration) : base(root)
+    {
+        TakeDamageArea = takeDamageArea;
+        HostEntity = entity;
+        MaxHealth = maxHealth;
+        CurrentHealth = maxHealth;
+        HitFreezeDuration = hitFreezeDuration;
     }
 
     public void TakeDamage(int damage)
     {
         if (!CanTakeDamage) return;
 
+        Core.SceneManager.QueeFreezeCurrentSceneFor(0.5f);
+
         CanTakeDamage = false;
         CurrentHealth -= damage;
         if (CurrentHealth < 0) CurrentHealth = 0;
 
-        Timer.Wait(1.0f, () => {CanTakeDamage = true;});
+        Timer.Wait(1.0f, () => { CanTakeDamage = true; });
     }
 
     public void Heal(int amount)

@@ -113,7 +113,7 @@ public class SceneManager : Scene
 
     public void LoadSceneFromSave()
     {
-        
+
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class SceneManager : Scene
     {
         Scenes.Pop();
     }
-    
+
     /// <summary>
     /// Gets the current scene
     /// </summary>
@@ -157,7 +157,7 @@ public class SceneManager : Scene
     {
         SceneFrozen = false;
         pendingFreeze = false;
-        
+
     }
 
     /// <summary>
@@ -173,7 +173,17 @@ public class SceneManager : Scene
     }
 
     /// <summary>
-    /// Updates the current scene, loops safely through backseat components and updates them. Calls ApplyFreeze at the end to ensure the scene is frozen 
+    /// Quee freezes the current scene for a period of time
+    /// </summary>
+    /// <param name="duration"></param>
+    public void QueeFreezeCurrentSceneFor(float duration)
+    {
+        QueeFreezeCurrentScene();
+        Timer.Wait(duration, UnFreezeCurrentScene);
+    }
+
+    /// <summary>
+    /// Updates the current scene, loops safely through backseat components and updates them. Calls ApplyFreeze at the end to ensure the scene is frozen
     /// </summary>
     /// <param name="gameTime"></param>
 
@@ -239,7 +249,7 @@ public class SceneManager : Scene
 
         return false;
     }
-    
+
     /// <summary>
     /// Reloads current scene
     /// </summary>
