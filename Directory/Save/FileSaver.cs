@@ -10,9 +10,14 @@ namespace ConstructEngine.Directory
     public class FileSaver
     {
         /// <summary>
+        /// The location of the appdata
+        /// </summary>
+        public static readonly string ApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        
+        /// <summary>
         /// Saves a JSON file containing the data of a class
         /// </summary>
-        public static void SaveDataToJson(object info, string saveDirectory, string fileName, bool compactFormat = false)
+        public static void SaveDataToJson(object info, string fullPath, bool compactFormat = false)
         {
             var fields = info.GetType()
                 .GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
@@ -42,12 +47,17 @@ namespace ConstructEngine.Directory
                 WriteIndented = !compactFormat
             };
 
+            // Extract filename from fullPath
+            string fileName = Path.GetFileName(fullPath);
             if (string.IsNullOrEmpty(fileName))
                 fileName = "data.json";
 
-            string fullPath = Path.Combine(string.IsNullOrEmpty(saveDirectory) ? "." : saveDirectory, fileName);
-            string json = JsonSerializer.Serialize(fields, options);
+            // Extract directory from fullPath
+            string saveDirectory = Path.GetDirectoryName(fullPath);
+            if (!string.IsNullOrEmpty(saveDirectory))
+                System.IO.Directory.CreateDirectory(saveDirectory);
 
+            string json = JsonSerializer.Serialize(fields, options);
             File.WriteAllText(fullPath, json);
         }
 
