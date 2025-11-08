@@ -12,7 +12,6 @@ namespace ConstructEngine.Components.Entity
     public class Entity : Entity.IEntity
     {
         public static List<Entity> EntityList = new List<Entity>();
-
         public static Dictionary<Entity, int> EntityDamageDict = new();
         public KinematicBase KinematicBase;
         public Sprite Sprite { get; set; } = null;
