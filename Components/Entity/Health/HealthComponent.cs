@@ -17,6 +17,7 @@ public class HealthComponent : Component
     public Area2D TakeDamageArea { get; set; }
     private Entity HostEntity { get; set; }
     public bool CanTakeDamage { get; set; } = true;
+    public bool TakingDamage;
 
 
     public HealthComponent(Entity entity, int maxHealth, Area2D takeDamageArea, object root) : base(root)
@@ -66,12 +67,19 @@ public class HealthComponent : Component
     {
         if (TakeDamageArea.IsIntersectingAny())
         {
+            TakingDamage = true;
+
             var otherRoot = TakeDamageArea.GetCurrentlyIntersectingArea().Root;
             if (otherRoot is Entity otherEntity)
             {
                 if (otherEntity.GetType() != RootType)
                     TakeDamage(otherEntity.DamageAmount);
             }
+        }
+
+        else
+        {
+            TakingDamage = false;
         }
 
         if (CurrentHealth <= 0)
