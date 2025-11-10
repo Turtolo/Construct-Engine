@@ -26,7 +26,7 @@ public class RoomCamera : Camera
 
 
 
-    public RoomCamera(Rectangle target, float zoom)
+    public RoomCamera(float zoom)
     {
         Zoom = zoom;
 
@@ -102,38 +102,7 @@ public class RoomCamera : Camera
 
             }
 
-            if (side == CollisionSide.Top)
-            {
-                cameraTargetPosition.Y = CameraRectangle.X - CameraRectangle.Height + CameraRectangle.Height / 2;
-                CameraRectangle.Y -= CameraRectangle.Height;
-                
-                targetEntity.KinematicBase.Locked = true;
-                
-                
-                
-                cameraYTween = new Tween(
-                    cameraPosition.Y,
-                    cameraTargetPosition.Y,
-                    0.5f,
-                    EasingFunctions.Linear
-                );
-            }
-
-            if (side == CollisionSide.Bottom)
-            {
-                cameraTargetPosition.Y = CameraRectangle.X + CameraRectangle.Height + CameraRectangle.Height / 2;
-                CameraRectangle.Y += CameraRectangle.Height;
-                
-                targetEntity.KinematicBase.Locked = true;
-                
-                cameraYTween = new Tween(
-                    cameraPosition.Y,
-                    cameraTargetPosition.Y,  
-                    0.5f,
-                    EasingFunctions.Linear
-                );
-
-            }
+            
             
         }
 
