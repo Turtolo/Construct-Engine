@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework.Input;
 
 namespace ConstructEngine.Input;
@@ -7,6 +9,7 @@ public class KeyboardInfo
 
     public KeyboardState PreviousState { get; private set; }
     public KeyboardState CurrentState { get; private set; }
+
     public KeyboardInfo()
     {
         PreviousState = new KeyboardState();
@@ -37,8 +40,4 @@ public class KeyboardInfo
     {
         return CurrentState.IsKeyUp(key) && PreviousState.IsKeyDown(key);
     }
-
-
-
 }
-

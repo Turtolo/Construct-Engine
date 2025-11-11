@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 
+namespace ConstructEngine.Util;
+
 public abstract class State : IState
 {
     public event Action<IState, string> TransitionRequested;

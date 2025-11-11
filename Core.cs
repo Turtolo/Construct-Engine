@@ -9,7 +9,7 @@ using ConstructEngine.Components.Entity;
 using ConstructEngine.Util;
 using RenderingLibrary;
 using Gum.Wireframe;
-using ConstructEngine.Gum;
+using ConstructEngine.UI;
 using ConstructEngine.Object;
 using ConstructEngine.Area;
 
@@ -126,6 +126,8 @@ public class Core : Game
         Content = base.Content;
 
         Content.RootDirectory = "Content";
+
+    
 
         IsMouseVisible = true;
     }

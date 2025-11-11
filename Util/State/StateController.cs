@@ -1,10 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
+
+namespace ConstructEngine.Util;
 
 public class StateController
 {
@@ -59,7 +59,7 @@ public class StateController
         OnChildTransition(_currentState, newStateName);
     }
 
-    
+
     public void Update(GameTime gameTime)
     {
         _currentState?.Update(gameTime);

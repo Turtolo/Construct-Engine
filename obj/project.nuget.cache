@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Xw2BUTkm/pA=",
+  "dgSpecHash": "pW1L46fHtv0=",
   "success": true,
   "projectFilePath": "/Users/nilslauvstad/Documents/Project/Libraries/Construct-Engine/Construct.csproj",
   "expectedPackageFiles": [
@@ -19,9 +19,7 @@
     "/Users/nilslauvstad/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
     "/Users/nilslauvstad/.nuget/packages/textcopy/6.2.1/textcopy.6.2.1.nupkg.sha512",
     "/Users/nilslauvstad/.nuget/packages/microsoft.netcore.app.ref/8.0.21/microsoft.netcore.app.ref.8.0.21.nupkg.sha512",
-    "/Users/nilslauvstad/.nuget/packages/microsoft.netcore.app.runtime.win-x64/8.0.21/microsoft.netcore.app.runtime.win-x64.8.0.21.nupkg.sha512",
-    "/Users/nilslauvstad/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.21/microsoft.aspnetcore.app.ref.8.0.21.nupkg.sha512",
-    "/Users/nilslauvstad/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/8.0.21/microsoft.aspnetcore.app.runtime.win-x64.8.0.21.nupkg.sha512"
+    "/Users/nilslauvstad/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.21/microsoft.aspnetcore.app.ref.8.0.21.nupkg.sha512"
   ],
   "logs": []
 }

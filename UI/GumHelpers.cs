@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using FlatRedBall;
 using ConstructEngine.Input;
 
-namespace ConstructEngine.Gum;
+namespace ConstructEngine.UI;
 
 public class GumHelper
 {
