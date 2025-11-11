@@ -8,6 +8,7 @@ public class InputAction
 {
     public Keys Key;
     public Buttons Button;
+    public MouseButton MouseButton;
 
     public bool HasKey
     {
@@ -27,6 +28,11 @@ public class InputAction
     public InputAction(Buttons button)
     {
         Button = button;
+    }
+
+    public InputAction(MouseButton mouseButton)
+    {
+        
     }
 
     public static implicit operator InputAction(List<Action> v)
