@@ -20,6 +20,20 @@ public class KeyboardInfo
         CurrentState = Keyboard.GetState();
     }
 
+    /// <summary>
+    /// Returns the first currently pressed key, or Keys.None if no key is pressed.
+    /// </summary>
+    public Keys CurrentKeyPressed()
+    {
+        KeyboardState keyboardState = Keyboard.GetState();
+        Keys[] pressedKeys = keyboardState.GetPressedKeys();
+
+        if (pressedKeys.Length > 0)
+            return pressedKeys[0];
+        else
+            return Keys.None;
+    }
+
     public bool IsKeyDown(Keys key)
     {
         return CurrentState.IsKeyDown(key);
