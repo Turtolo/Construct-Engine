@@ -22,6 +22,9 @@ public class InputManager
         Keyboard = new KeyboardInfo();
         Mouse = new MouseInfo();
 
+        KeyboardBinds = new Dictionary<string, Keys>();
+        ControllerBinds = new Dictionary<string, Buttons>();
+
         GamePads = new GamePadInfo[4];
         for (int i = 0; i < 4; i++)
         {
@@ -42,15 +45,35 @@ public class InputManager
         }
     }
 
+    /// <summary>
+    /// Adds a bind to the binds dictionary
+    /// </summary>
+    /// <param name="bindName"></param>
+    /// <param name="inputActions"></param>
+
     public void AddBind(string bindName, List<InputAction> inputActions)
     {
-        Binds.Add(bindName, inputActions);
+        if (Binds.ContainsKey(bindName))
+        {
+            Binds[bindName].AddRange(inputActions);
+        }
+        else
+        {
+            Binds.Add(bindName, inputActions);
+        }
+
+
         foreach (var action in inputActions)
         {
             if (action.HasKey) KeyboardBinds.Add(bindName, action.Key);
             if (action.HasButton) ControllerBinds.Add(bindName, action.Button);
         }
     }
+
+    /// <summary>
+    /// Adds a range of binds to the binds dictionary
+    /// </summary>
+    /// <param name="bindsToAdd"></param>
 
     public void AddBinds(Dictionary<string, List<InputAction>> bindsToAdd)
     {
@@ -60,6 +83,11 @@ public class InputManager
         }
     }
 
+    /// <summary>
+    /// Checks if an action in the binds dictionary is being pressed down
+    /// </summary>
+    /// <param name="actionString"></param>
+    /// <returns></returns>
 
     public bool IsActionPressed(string actionString)
     {
@@ -81,6 +109,11 @@ public class InputManager
         return false;
     }
 
+    /// <summary>
+    /// Checks if an action in the binds dictionary has just been pressed
+    /// </summary>
+    /// <param name="actionString"></param>
+    /// <returns></returns>
 
     public bool IsActionJustPressed(string actionString)
     {
@@ -101,6 +134,11 @@ public class InputManager
 
         return false;
     }
+    /// <summary>
+    /// Checks if an action in the binds dictionary has just been released
+    /// </summary>
+    /// <param name="actionString"></param>
+    /// <returns></returns>
 
     public bool IsActionJustReleased(string actionString)
     {
@@ -121,6 +159,14 @@ public class InputManager
 
         return false;
     }
+
+    /// <summary>
+    /// Get the input axis of two actions.
+    /// -1 if the first is pressed, 1 if the second is pressed and zero if both or none are pressed
+    /// </summary>
+    /// <param name="actionString1"></param>
+    /// <param name="actionString2"></param>
+    /// <returns></returns>
 
     public int GetAxis(string actionString1, string actionString2)
     {
