@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
 namespace ConstructEngine.Input
@@ -29,6 +28,9 @@ namespace ConstructEngine.Input
             MouseButton = mouseButton;
         }
 
+        /// <summary>
+        /// Creates a copy of this InputAction.
+        /// </summary>
         public InputAction Clone()
         {
             return new InputAction(Key)
@@ -36,11 +38,6 @@ namespace ConstructEngine.Input
                 Button = this.Button,
                 MouseButton = this.MouseButton
             };
-        }
-
-        public static implicit operator InputAction(List<Action> v)
-        {
-            throw new NotImplementedException();
         }
     }
 }
