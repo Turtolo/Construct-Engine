@@ -2,41 +2,44 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
-namespace ConstructEngine.Input;
-
-public class InputAction
+namespace ConstructEngine.Input
 {
-    public Keys Key;
-    public Buttons Button;
-    public MouseButton MouseButton;
-
-    public bool HasKey
+    public class InputAction
     {
-        get => Key != Keys.None;
-    }
+        public Keys Key;
+        public Buttons Button;
+        public MouseButton MouseButton;
 
-    public bool HasButton
-    {
-        get => Button != Buttons.None;
-    }
+        public bool HasKey => Key != Keys.None;
+        public bool HasButton => Button != Buttons.None;
 
-    public InputAction(Keys key)
-    {
-        Key = key;
-    }
+        public InputAction(Keys key)
+        {
+            Key = key;
+        }
 
-    public InputAction(Buttons button)
-    {
-        Button = button;
-    }
+        public InputAction(Buttons button)
+        {
+            Button = button;
+        }
 
-    public InputAction(MouseButton mouseButton)
-    {
-        MouseButton = mouseButton;
-    }
+        public InputAction(MouseButton mouseButton)
+        {
+            MouseButton = mouseButton;
+        }
 
-    public static implicit operator InputAction(List<Action> v)
-    {
-        throw new NotImplementedException();
+        public InputAction Clone()
+        {
+            return new InputAction(Key)
+            {
+                Button = this.Button,
+                MouseButton = this.MouseButton
+            };
+        }
+
+        public static implicit operator InputAction(List<Action> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

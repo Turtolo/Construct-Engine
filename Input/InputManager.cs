@@ -11,6 +11,8 @@ public class InputManager
     public MouseInfo Mouse { get; private set; }
     public GamePadInfo[] GamePads { get; private set; }
     public Dictionary<string, List<InputAction>> Binds = new Dictionary<string, List<InputAction>>();
+    public Dictionary<string, List<InputAction>> InitialBinds = new Dictionary<string, List<InputAction>>();
+
     public GamePadInfo CurrentGamePad { get; private set; }
 
 
@@ -26,6 +28,9 @@ public class InputManager
         }
 
         CurrentGamePad = GamePads[(int)PlayerIndex.One];
+
+        
+
     }
 
     public void Update(GameTime gameTime)
@@ -78,19 +83,25 @@ public class InputManager
 
     public void RebindKey(string actionName, Keys newKey)
     {
-        var newAction = new InputAction(newKey);
-
-        if (Binds.ContainsKey(actionName))
+        if (Binds.TryGetValue(actionName, out var actions))
         {
-            Binds[actionName].RemoveAll(a => a.HasKey);
+            foreach (var action in actions)
+            {
+                if (action.HasKey)
+                {
+                    action.Key = newKey;
+                    return;
+                }
+            }
 
-            Binds[actionName].Add(newAction);
+            actions.Add(new InputAction(newKey));
         }
         else
         {
-            Binds[actionName] = new List<InputAction> { newAction };
+            Binds[actionName] = new List<InputAction> { new InputAction(newKey) };
         }
     }
+
 
     /// <summary>
     /// Rebinds the button in an action in the binds dictionary
@@ -100,19 +111,25 @@ public class InputManager
     
     public void RebindButton(string actionName, Buttons newButton)
     {
-        var newAction = new InputAction(newButton);
-
-        if (Binds.ContainsKey(actionName))
+        if (Binds.TryGetValue(actionName, out var actions))
         {
-            Binds[actionName].RemoveAll(a => a.HasKey);
+            foreach (var action in actions)
+            {
+                if (action.HasButton)
+                {
+                    action.Button = newButton;
+                    return;
+                }
+            }
 
-            Binds[actionName].Add(newAction);
+            actions.Add(new InputAction(newButton));
         }
         else
         {
-            Binds[actionName] = new List<InputAction> { newAction };
+            Binds[actionName] = new List<InputAction> { new InputAction(newButton) };
         }
     }
+
 
 
     /// <summary>

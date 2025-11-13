@@ -23,7 +23,7 @@ public class KeyboardInfo
     /// <summary>
     /// Returns the first currently pressed key, or Keys.None if no key is pressed.
     /// </summary>
-    public Keys CurrentKeyPressed()
+    public Keys GetCurrentKeyPressed()
     {
         KeyboardState keyboardState = Keyboard.GetState();
         Keys[] pressedKeys = keyboardState.GetPressedKeys();
@@ -33,6 +33,22 @@ public class KeyboardInfo
         else
             return Keys.None;
     }
+
+    private KeyboardState _previousKeyboardState;
+
+    public Keys GetCurrentlyReleasedKey()
+    {
+        KeyboardState currentKeyboardState = Keyboard.GetState();
+        Keys[] previousKeys = _previousKeyboardState.GetPressedKeys();
+        Keys[] currentKeys = currentKeyboardState.GetPressedKeys();
+
+        Keys releasedKey = previousKeys.FirstOrDefault(key => !currentKeys.Contains(key));
+
+        _previousKeyboardState = currentKeyboardState;
+
+        return releasedKey == default(Keys) ? Keys.None : releasedKey;
+    }
+
 
     public bool IsKeyDown(Keys key)
     {
