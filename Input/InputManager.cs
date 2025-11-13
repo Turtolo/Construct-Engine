@@ -153,6 +153,11 @@ public class InputManager
             {
                 return CurrentGamePad.IsButtonDown(action.Button);
             }
+
+            if (action.HasMouseButton)
+            {
+                return Mouse.IsButtonDown(action.MouseButton);
+            }
         }
 
         return false;
@@ -179,6 +184,11 @@ public class InputManager
             {
                 return CurrentGamePad.WasButtonJustPressed(action.Button);
             }
+
+            if (action.HasMouseButton)
+            {
+                return Mouse.WasButtonJustPressed(action.MouseButton);
+            }
         }
 
         return false;
@@ -203,6 +213,11 @@ public class InputManager
             if (action.HasButton)
             {
                 return CurrentGamePad.WasButtonJustReleased(action.Button);
+            }
+
+            if (action.HasMouseButton)
+            {
+                return Mouse.WasButtonJustReleased(action.MouseButton);
             }
         }
 

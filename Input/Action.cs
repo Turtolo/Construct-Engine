@@ -12,6 +12,7 @@ namespace ConstructEngine.Input
 
         public bool HasKey => Key != Keys.None;
         public bool HasButton => Button != Buttons.None;
+        public bool HasMouseButton => MouseButton != MouseButton.None;
 
         public InputAction(Keys key)
         {

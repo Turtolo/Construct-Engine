@@ -36,6 +36,7 @@ public class GumHelper
         }
 
         newScreen.AddToRoot();
+
     }
 
     public static GumService GumInitialize(Game game, string path)

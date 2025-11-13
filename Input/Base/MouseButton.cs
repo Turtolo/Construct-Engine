@@ -6,5 +6,6 @@ public enum MouseButton
     Middle,
     Right,
     XButton1,
-    XButton2
+    XButton2,
+    None
 }

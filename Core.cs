@@ -206,7 +206,7 @@ public class Core : Game
         GraphicsDevice.SetRenderTarget(null);
         GraphicsDevice.Clear(Color.Black);
 
-        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp);
         SpriteBatch.Draw(RenderTarget, new Rectangle(offsetX, offsetY, finalWidth, finalHeight), Color.White);
         SpriteBatch.End();
 
@@ -299,27 +299,6 @@ public class Core : Game
         );
     }
 
-    public void LoadScreenDraw()
-    {
-        GraphicsDevice.SetRenderTarget(null);
-        GraphicsDevice.Clear(Color.Black);
-
-        int scale = Math.Min(
-            GraphicsDevice.PresentationParameters.BackBufferWidth / VirtualWidth,
-            GraphicsDevice.PresentationParameters.BackBufferHeight / VirtualHeight
-        );
-
-        int scaledWidth = VirtualWidth * scale;
-        int scaledHeight = VirtualHeight * scale;
-        int offsetX = (GraphicsDevice.PresentationParameters.BackBufferWidth - scaledWidth) / 2;
-        int offsetY = (GraphicsDevice.PresentationParameters.BackBufferHeight - scaledHeight) / 2;
-
-        Rectangle destinationRectangle = new Rectangle(offsetX, offsetY, scaledWidth, scaledHeight);
-
-        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        SpriteBatch.Draw(RenderTarget, destinationRectangle, Color.White);
-        SpriteBatch.End();
-    }
 
 
 }
