@@ -32,7 +32,7 @@ public class InputAction
 
     public InputAction(MouseButton mouseButton)
     {
-        
+        MouseButton = mouseButton;
     }
 
     public static implicit operator InputAction(List<Action> v)

@@ -11,9 +11,6 @@ public class InputManager
     public MouseInfo Mouse { get; private set; }
     public GamePadInfo[] GamePads { get; private set; }
     public Dictionary<string, List<InputAction>> Binds = new Dictionary<string, List<InputAction>>();
-    public Dictionary<string, Keys> KeyboardBinds { get; private set; }
-    public Dictionary<string, Buttons> ControllerBinds { get; private set; }
-
     public GamePadInfo CurrentGamePad { get; private set; }
 
 
@@ -21,9 +18,6 @@ public class InputManager
     {
         Keyboard = new KeyboardInfo();
         Mouse = new MouseInfo();
-
-        KeyboardBinds = new Dictionary<string, Keys>();
-        ControllerBinds = new Dictionary<string, Buttons>();
 
         GamePads = new GamePadInfo[4];
         for (int i = 0; i < 4; i++)
@@ -61,13 +55,6 @@ public class InputManager
         {
             Binds.Add(bindName, inputActions);
         }
-
-
-        foreach (var action in inputActions)
-        {
-            if (action.HasKey) KeyboardBinds.Add(bindName, action.Key);
-            if (action.HasButton) ControllerBinds.Add(bindName, action.Button);
-        }
     }
 
     /// <summary>
@@ -82,6 +69,51 @@ public class InputManager
             AddBind(kvp.Key, kvp.Value);
         }
     }
+
+    /// <summary>
+    /// Rebinds the key in an action in the binds dictionary
+    /// </summary>
+    /// <param name="actionName"></param>
+    /// <param name="newKey"></param>
+
+    public void RebindKey(string actionName, Keys newKey)
+    {
+        var newAction = new InputAction(newKey);
+
+        if (Binds.ContainsKey(actionName))
+        {
+            Binds[actionName].RemoveAll(a => a.HasKey);
+
+            Binds[actionName].Add(newAction);
+        }
+        else
+        {
+            Binds[actionName] = new List<InputAction> { newAction };
+        }
+    }
+
+    /// <summary>
+    /// Rebinds the button in an action in the binds dictionary
+    /// </summary>
+    /// <param name="actionName"></param>
+    /// <param name="newKey"></param>
+    
+    public void RebindButton(string actionName, Buttons newButton)
+    {
+        var newAction = new InputAction(newButton);
+
+        if (Binds.ContainsKey(actionName))
+        {
+            Binds[actionName].RemoveAll(a => a.HasKey);
+
+            Binds[actionName].Add(newAction);
+        }
+        else
+        {
+            Binds[actionName] = new List<InputAction> { newAction };
+        }
+    }
+
 
     /// <summary>
     /// Checks if an action in the binds dictionary is being pressed down
