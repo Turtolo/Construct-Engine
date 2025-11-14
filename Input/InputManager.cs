@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConstructEngine.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,12 +9,19 @@ namespace ConstructEngine.Input
 {
     public class InputManager
     {
+        #region Fields & Properties
+
         public KeyboardInfo Keyboard { get; private set; }
         public MouseInfo Mouse { get; private set; }
         public GamePadInfo[] GamePads { get; private set; }
         public GamePadInfo CurrentGamePad { get; private set; }
-        public Dictionary<string, List<InputAction>> Binds = new Dictionary<string, List<InputAction>>();
-        public Dictionary<string, List<InputAction>> InitialBinds = new Dictionary<string, List<InputAction>>();
+
+        public Dictionary<string, List<InputAction>> Binds { get; private set; } = new Dictionary<string, List<InputAction>>();
+        public Dictionary<string, List<InputAction>> InitialBinds { get; private set; } = new Dictionary<string, List<InputAction>>();
+
+        #endregion
+
+        #region Constructor
 
         public InputManager()
         {
@@ -26,6 +34,10 @@ namespace ConstructEngine.Input
 
             CurrentGamePad = GamePads[0];
         }
+
+        #endregion
+
+        #region Update
 
         /// <summary>
         /// Updates the keyboard, mouse, and all gamepads.
@@ -42,9 +54,29 @@ namespace ConstructEngine.Input
             CurrentGamePad = GamePads[0];
         }
 
+        #endregion
+
+        #region Bind Initialization
+
+        /// <summary>
+        /// Adds binds to the map and clones it.
+        /// </summary>
+        public void InitializeBinds(Dictionary<string, List<InputAction>> bindsToAdd)
+        {
+            AddBinds(bindsToAdd);
+
+            InitialBinds = DictionaryHelper.CloneDictionaryOfLists(
+                Binds,
+                action => action.Clone()
+            );
+        }
+
+        #endregion
+
+        #region Bind Management
+
         /// <summary>
         /// Adds a bind to the dictionary.
-        /// Clones InputActions to avoid reference issues.
         /// </summary>
         public void AddBind(string actionName, List<InputAction> inputActions)
         {
@@ -80,6 +112,21 @@ namespace ConstructEngine.Input
         }
 
         /// <summary>
+        /// Resets all binds to their initial states.
+        /// </summary>
+        public void ResetBinds()
+        {
+            Binds = InitialBinds.ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.Select(action => action.Clone()).ToList()
+            );
+        }
+
+        #endregion
+
+        #region Rebinding
+
+        /// <summary>
         /// Rebinds a key in an action.
         /// Adds a new InputAction if one with a key does not exist.
         /// </summary>
@@ -90,6 +137,7 @@ namespace ConstructEngine.Input
                 Binds[actionName] = new List<InputAction> { new InputAction(newKey) };
                 return;
             }
+
             for (int i = 0; i < actions.Count; i++)
             {
                 if (actions[i].HasKey)
@@ -102,7 +150,6 @@ namespace ConstructEngine.Input
             actions.Add(new InputAction(newKey));
         }
 
-
         /// <summary>
         /// Rebinds a button in an action.
         /// Adds a new InputAction if one with a button does not exist.
@@ -114,6 +161,7 @@ namespace ConstructEngine.Input
                 Binds[actionName] = new List<InputAction> { new InputAction(newButton) };
                 return;
             }
+
             for (int i = 0; i < actions.Count; i++)
             {
                 if (actions[i].HasButton)
@@ -126,9 +174,12 @@ namespace ConstructEngine.Input
             actions.Add(new InputAction(newButton));
         }
 
+        #endregion
+
+        #region Action Queries
+
         /// <summary>
         /// Checks if an action is currently pressed.
-        /// Supports keyboard, gamepad, and mouse buttons.
         /// </summary>
         public bool IsActionPressed(string actionName)
         {
@@ -144,6 +195,27 @@ namespace ConstructEngine.Input
 
             return false;
         }
+
+        public InputAction GetCurrentActionPressed()
+        {
+            foreach (var kvp in Binds)
+            {
+                foreach (var action in kvp.Value)
+                {
+                    if (action.HasKey && Keyboard.IsKeyDown(action.Key))
+                        return action;
+
+                    if (action.HasButton && CurrentGamePad.IsButtonDown(action.Button))
+                        return action;
+
+                    if (action.HasMouseButton && Mouse.IsButtonDown(action.MouseButton))
+                        return action;
+                }
+            }
+
+            return null;
+        }
+
 
         /// <summary>
         /// Checks if an action was just pressed this frame.
@@ -163,6 +235,27 @@ namespace ConstructEngine.Input
             return false;
         }
 
+        public InputAction GetCurrentActionJustPressed()
+        {
+            foreach (var kvp in Binds)
+            {
+                foreach (var action in kvp.Value)
+                {
+                    if (action.HasKey && Keyboard.WasKeyJustPressed(action.Key))
+                        return action;
+
+                    if (action.HasButton && CurrentGamePad.WasButtonJustPressed(action.Button))
+                        return action;
+
+                    if (action.HasMouseButton && Mouse.WasButtonJustPressed(action.MouseButton))
+                        return action;
+                }
+            }
+
+            return null;
+        }
+        
+
         /// <summary>
         /// Checks if an action was just released this frame.
         /// </summary>
@@ -181,9 +274,28 @@ namespace ConstructEngine.Input
             return false;
         }
 
+        public InputAction GetCurrentActionJustReleased()
+        {
+            foreach (var kvp in Binds)
+            {
+                foreach (var action in kvp.Value)
+                {
+                    if (action.HasKey && Keyboard.WasKeyJustReleased(action.Key))
+                        return action;
+
+                    if (action.HasButton && CurrentGamePad.WasButtonJustReleased(action.Button))
+                        return action;
+
+                    if (action.HasMouseButton && Mouse.WasButtonJustReleased(action.MouseButton))
+                        return action;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Returns an axis value based on two actions.
-        /// -1 if the first is pressed, 1 if the second is pressed, 0 if both or none are pressed.
         /// </summary>
         public int GetAxis(string negativeAction, string positiveAction)
         {
@@ -195,5 +307,7 @@ namespace ConstructEngine.Input
             if (positivePressed) return 1;
             return 0;
         }
+
+        #endregion
     }
 }

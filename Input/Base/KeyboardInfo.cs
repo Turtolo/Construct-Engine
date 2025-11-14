@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
@@ -23,36 +24,41 @@ public class KeyboardInfo
     /// <summary>
     /// Returns the first currently pressed key, or Keys.None if no key is pressed.
     /// </summary>
-    public Keys GetCurrentKeyPressed()
+    public Keys GetFirstKeyDown()
     {
-        KeyboardState keyboardState = Keyboard.GetState();
-        Keys[] pressedKeys = keyboardState.GetPressedKeys();
-
-        if (pressedKeys.Length > 0)
-            return pressedKeys[0];
-        else
-            return Keys.None;
+        return CurrentState.GetPressedKeys().FirstOrDefault();
     }
-
-    private KeyboardState _previousKeyboardState;
 
     /// <summary>
     /// Returns the first currently released key, or Keys.None if no key is released.
     /// </summary>
-
-    public Keys GetCurrentlyReleasedKey()
+    public Keys GetFirstKeyUp()
     {
-        KeyboardState currentKeyboardState = Keyboard.GetState();
-        Keys[] previousKeys = _previousKeyboardState.GetPressedKeys();
-        Keys[] currentKeys = currentKeyboardState.GetPressedKeys();
-
-        Keys releasedKey = previousKeys.FirstOrDefault(key => !currentKeys.Contains(key));
-
-        _previousKeyboardState = currentKeyboardState;
-
-        return releasedKey == default(Keys) ? Keys.None : releasedKey;
+        var pressed = CurrentState.GetPressedKeys();
+        return Enum.GetValues(typeof(Keys))
+                .Cast<Keys>()
+                .FirstOrDefault(k => !pressed.Contains(k));
     }
 
+    /// <summary>
+    /// Returns the first key that was just pressed, or Keys.None if no key is pressed.
+    /// </summary>
+    public Keys GetFirstKeyJustPressed()
+    {
+        return CurrentState
+            .GetPressedKeys()
+            .FirstOrDefault(key => PreviousState.IsKeyUp(key));
+    }
+
+    /// <summary>
+    /// Returns the first key that was just released, or Keys.None if no key is released.
+    /// </summary>
+    public Keys GetFirstKeyJustReleased()
+    {
+        return PreviousState
+            .GetPressedKeys()
+            .FirstOrDefault(key => CurrentState.IsKeyUp(key));
+    }
 
     public bool IsKeyDown(Keys key)
     {

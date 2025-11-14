@@ -83,22 +83,22 @@ namespace ConstructEngine.Input
             };
         }
 
-        public IEnumerable<MouseButton> CurrentlyPressedButtons =>
+        public IEnumerable<MouseButton> GetFirstButtonDown =>
             Enum.GetValues(typeof(MouseButton))
                 .Cast<MouseButton>()
                 .Where(IsButtonDown);
 
-        public IEnumerable<MouseButton> CurrentlyReleasedButtons =>
+        public IEnumerable<MouseButton> GetFirstButtonUp =>
             Enum.GetValues(typeof(MouseButton))
                 .Cast<MouseButton>()
                 .Where(IsButtonUp);
 
-        public IEnumerable<MouseButton> JustPressedButtons =>
+        public IEnumerable<MouseButton> GetFirstButtonJustPressed =>
             Enum.GetValues(typeof(MouseButton))
                 .Cast<MouseButton>()
                 .Where(WasButtonJustPressed);
 
-        public IEnumerable<MouseButton> JustReleasedButtons =>
+        public IEnumerable<MouseButton> GetFirstButtonJustReleased =>
             Enum.GetValues(typeof(MouseButton))
                 .Cast<MouseButton>()
                 .Where(WasButtonJustReleased);

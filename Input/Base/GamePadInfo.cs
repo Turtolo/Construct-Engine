@@ -1,4 +1,5 @@
 using System;
+using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -80,6 +81,59 @@ public class GamePadInfo
             }
         }
     }
+
+    /// <summary>
+    /// Returns the first currently pressed button, or Buttons.None if no button is pressed.
+    /// </summary>
+    public Buttons GetFirstButtonDown()
+    {
+        foreach (var button in ButtonInfo.AllButtons)
+        {
+            if (CurrentState.IsButtonDown(button))
+                return button;
+        }
+        return Buttons.None;
+    }
+
+    /// <summary>
+    /// Returns the first currently released button, or Buttons.None if no button is released.
+    /// </summary>
+    public Buttons GetFirstButtonUp()
+    {
+        foreach (var button in ButtonInfo.AllButtons)
+        {
+            if (CurrentState.IsButtonUp(button))
+                return button;
+        }
+        return Buttons.None;
+    }
+
+    /// <summary>
+    /// Returns the first button that was just pressed, or Buttons.None if no button is pressed.
+    /// </summary>
+    public Buttons GetFirstButtonJustPressed()
+    {
+        foreach (var button in ButtonInfo.AllButtons)
+        {
+            if (WasButtonJustPressed(button))
+                return button;
+        }
+        return Buttons.None;
+    }
+
+    /// <summary>
+    /// Returns the first button that was just released, or Buttons.None if no button is released.
+    /// </summary>
+    public Buttons GetFirstButtonJustReleased()
+    {
+        foreach (var button in ButtonInfo.AllButtons)
+        {
+            if (WasButtonJustReleased(button))
+                return button;
+        }
+        return Buttons.None;
+    }
+
 
     /// <summary>
     /// Returns a value that indicates whether the specified gamepad button is current down.
