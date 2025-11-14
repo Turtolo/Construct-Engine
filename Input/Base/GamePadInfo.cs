@@ -87,7 +87,7 @@ public class GamePadInfo
     /// </summary>
     public Buttons GetFirstButtonDown()
     {
-        foreach (var button in ButtonInfo.AllButtons)
+        foreach (var button in ButtonArrays.AllGamePadButtons)
         {
             if (CurrentState.IsButtonDown(button))
                 return button;
@@ -100,7 +100,7 @@ public class GamePadInfo
     /// </summary>
     public Buttons GetFirstButtonUp()
     {
-        foreach (var button in ButtonInfo.AllButtons)
+        foreach (var button in ButtonArrays.AllGamePadButtons)
         {
             if (CurrentState.IsButtonUp(button))
                 return button;
@@ -113,7 +113,7 @@ public class GamePadInfo
     /// </summary>
     public Buttons GetFirstButtonJustPressed()
     {
-        foreach (var button in ButtonInfo.AllButtons)
+        foreach (var button in ButtonArrays.AllGamePadButtons)
         {
             if (WasButtonJustPressed(button))
                 return button;
@@ -126,7 +126,7 @@ public class GamePadInfo
     /// </summary>
     public Buttons GetFirstButtonJustReleased()
     {
-        foreach (var button in ButtonInfo.AllButtons)
+        foreach (var button in ButtonArrays.AllGamePadButtons)
         {
             if (WasButtonJustReleased(button))
                 return button;

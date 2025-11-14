@@ -2,9 +2,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ConstructEngine.Input;
 
-public class ButtonInfo
+public class ButtonArrays
 {
-    public static readonly Buttons[] AllButtons = new[]
+    public static readonly Buttons[] AllGamePadButtons = new[]
     {
         Buttons.A,
         Buttons.B,
@@ -21,6 +21,16 @@ public class ButtonInfo
         Buttons.DPadDown,
         Buttons.DPadLeft,
         Buttons.DPadRight
+    };
+
+    public static readonly MouseButton[] AllMouseButtons = new[]
+    {
+        MouseButton.Left,
+        MouseButton.Middle,
+        MouseButton.None,
+        MouseButton.Right,
+        MouseButton.XButton1,
+        MouseButton.XButton2,
     };
 
 }

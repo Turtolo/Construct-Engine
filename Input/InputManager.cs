@@ -15,6 +15,7 @@ namespace ConstructEngine.Input
         public MouseInfo Mouse { get; private set; }
         public GamePadInfo[] GamePads { get; private set; }
         public GamePadInfo CurrentGamePad { get; private set; }
+        public InputRebind Rebind { get; private set; }
 
         public Dictionary<string, List<InputAction>> Binds { get; private set; } = new Dictionary<string, List<InputAction>>();
         public Dictionary<string, List<InputAction>> InitialBinds { get; private set; } = new Dictionary<string, List<InputAction>>();
@@ -27,6 +28,7 @@ namespace ConstructEngine.Input
         {
             Keyboard = new KeyboardInfo();
             Mouse = new MouseInfo();
+            Rebind = new InputRebind(this);
 
             GamePads = new GamePadInfo[4];
             for (int i = 0; i < 4; i++)
@@ -123,59 +125,6 @@ namespace ConstructEngine.Input
         }
 
         #endregion
-
-        #region Rebinding
-
-        /// <summary>
-        /// Rebinds a key in an action.
-        /// Adds a new InputAction if one with a key does not exist.
-        /// </summary>
-        public void RebindKey(string actionName, Keys newKey)
-        {
-            if (!Binds.TryGetValue(actionName, out var actions))
-            {
-                Binds[actionName] = new List<InputAction> { new InputAction(newKey) };
-                return;
-            }
-
-            for (int i = 0; i < actions.Count; i++)
-            {
-                if (actions[i].HasKey)
-                {
-                    actions[i] = new InputAction(newKey);
-                    return;
-                }
-            }
-
-            actions.Add(new InputAction(newKey));
-        }
-
-        /// <summary>
-        /// Rebinds a button in an action.
-        /// Adds a new InputAction if one with a button does not exist.
-        /// </summary>
-        public void RebindButton(string actionName, Buttons newButton)
-        {
-            if (!Binds.TryGetValue(actionName, out var actions))
-            {
-                Binds[actionName] = new List<InputAction> { new InputAction(newButton) };
-                return;
-            }
-
-            for (int i = 0; i < actions.Count; i++)
-            {
-                if (actions[i].HasButton)
-                {
-                    actions[i] = new InputAction(newButton);
-                    return;
-                }
-            }
-
-            actions.Add(new InputAction(newButton));
-        }
-
-        #endregion
-
         #region Action Queries
 
         /// <summary>

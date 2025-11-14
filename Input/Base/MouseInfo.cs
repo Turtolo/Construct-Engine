@@ -53,9 +53,35 @@ namespace ConstructEngine.Input
             return GetButtonState(CurrentState, button) == ButtonState.Pressed;
         }
 
+        /// <summary>
+        /// Returns the first currently pressed button, or Buttons.None if no button is pressed.
+        /// </summary>
+        public MouseButton GetFirstButtonDown()
+        {
+            foreach (var button in ButtonArrays.AllMouseButtons)
+            {
+                if (IsButtonDown(button))
+                    return button;
+            }
+            return MouseButton.None;
+        }
+
         public bool IsButtonUp(MouseButton button)
         {
             return GetButtonState(CurrentState, button) == ButtonState.Released;
+        }
+
+        /// <summary>
+        /// Returns the first currently released button, or Buttons.None if no button is released.
+        /// </summary>
+        public MouseButton GetFirstButtonUp()
+        {
+            foreach (var button in ButtonArrays.AllMouseButtons)
+            {
+                if (IsButtonUp(button))
+                    return button;
+            }
+            return MouseButton.None;
         }
 
         public bool WasButtonJustPressed(MouseButton button)
@@ -64,10 +90,35 @@ namespace ConstructEngine.Input
                    GetButtonState(PreviousState, button) == ButtonState.Released;
         }
 
+        /// <summary>
+        /// Returns the first button that was just pressed, or Buttons.None if no button is pressed.
+        /// </summary>
+        public MouseButton GetFirstButtonJustPressed()
+        {
+            foreach (var button in ButtonArrays.AllMouseButtons)
+            {
+                if (WasButtonJustPressed(button))
+                    return button;
+            }
+            return MouseButton.None;
+        }
         public bool WasButtonJustReleased(MouseButton button)
         {
             return GetButtonState(CurrentState, button) == ButtonState.Released &&
                    GetButtonState(PreviousState, button) == ButtonState.Pressed;
+        }
+
+        /// <summary>
+        /// Returns the first button that was just released, or Buttons.None if no button is released.
+        /// </summary>
+        public MouseButton GetFirstButtonJustReleased()
+        {
+            foreach (var button in ButtonArrays.AllMouseButtons)
+            {
+                if (WasButtonJustReleased(button))
+                    return button;
+            }
+            return MouseButton.None;
         }
 
         private ButtonState GetButtonState(MouseState state, MouseButton button)
@@ -82,27 +133,6 @@ namespace ConstructEngine.Input
                 _ => ButtonState.Released
             };
         }
-
-        public IEnumerable<MouseButton> GetFirstButtonDown =>
-            Enum.GetValues(typeof(MouseButton))
-                .Cast<MouseButton>()
-                .Where(IsButtonDown);
-
-        public IEnumerable<MouseButton> GetFirstButtonUp =>
-            Enum.GetValues(typeof(MouseButton))
-                .Cast<MouseButton>()
-                .Where(IsButtonUp);
-
-        public IEnumerable<MouseButton> GetFirstButtonJustPressed =>
-            Enum.GetValues(typeof(MouseButton))
-                .Cast<MouseButton>()
-                .Where(WasButtonJustPressed);
-
-        public IEnumerable<MouseButton> GetFirstButtonJustReleased =>
-            Enum.GetValues(typeof(MouseButton))
-                .Cast<MouseButton>()
-                .Where(WasButtonJustReleased);
-
 
         public void SetPosition(int x, int y)
         {
