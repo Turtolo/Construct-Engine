@@ -7,28 +7,20 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ConstructEngine.Input
 {
-    public class InputManager
+    public partial class InputManager
     {
-        #region Fields & Properties
-
         public KeyboardInfo Keyboard { get; private set; }
         public MouseInfo Mouse { get; private set; }
         public GamePadInfo[] GamePads { get; private set; }
         public GamePadInfo CurrentGamePad { get; private set; }
-        public InputRebind Rebind { get; private set; }
-
         public Dictionary<string, List<InputAction>> Binds { get; private set; } = new Dictionary<string, List<InputAction>>();
         public Dictionary<string, List<InputAction>> InitialBinds { get; private set; } = new Dictionary<string, List<InputAction>>();
 
-        #endregion
-
-        #region Constructor
 
         public InputManager()
         {
             Keyboard = new KeyboardInfo();
             Mouse = new MouseInfo();
-            Rebind = new InputRebind(this);
 
             GamePads = new GamePadInfo[4];
             for (int i = 0; i < 4; i++)
@@ -36,10 +28,6 @@ namespace ConstructEngine.Input
 
             CurrentGamePad = GamePads[0];
         }
-
-        #endregion
-
-        #region Update
 
         /// <summary>
         /// Updates the keyboard, mouse, and all gamepads.
@@ -55,208 +43,5 @@ namespace ConstructEngine.Input
 
             CurrentGamePad = GamePads[0];
         }
-
-        #endregion
-
-        #region Bind Initialization
-
-        /// <summary>
-        /// Adds binds to the map and clones it.
-        /// </summary>
-        public void InitializeBinds(Dictionary<string, List<InputAction>> bindsToAdd)
-        {
-            AddBinds(bindsToAdd);
-
-            InitialBinds = DictionaryHelper.CloneDictionaryOfLists(
-                Binds,
-                action => action.Clone()
-            );
-        }
-
-        #endregion
-
-        #region Bind Management
-
-        /// <summary>
-        /// Adds a bind to the dictionary.
-        /// </summary>
-        public void AddBind(string actionName, List<InputAction> inputActions)
-        {
-            if (Binds.TryGetValue(actionName, out var existing))
-                existing.AddRange(inputActions.Select(a => a.Clone()));
-            else
-                Binds[actionName] = inputActions.Select(a => a.Clone()).ToList();
-        }
-
-        /// <summary>
-        /// Adds multiple binds at once.
-        /// </summary>
-        public void AddBinds(Dictionary<string, List<InputAction>> bindsToAdd)
-        {
-            foreach (var kvp in bindsToAdd)
-                AddBind(kvp.Key, kvp.Value);
-        }
-
-        /// <summary>
-        /// Removes a bind by name.
-        /// </summary>
-        public void RemoveBind(string actionName)
-        {
-            Binds.Remove(actionName);
-        }
-
-        /// <summary>
-        /// Clears all binds.
-        /// </summary>
-        public void ClearBinds()
-        {
-            Binds.Clear();
-        }
-
-        /// <summary>
-        /// Resets all binds to their initial states.
-        /// </summary>
-        public void ResetBinds()
-        {
-            Binds = InitialBinds.ToDictionary(
-                kvp => kvp.Key,
-                kvp => kvp.Value.Select(action => action.Clone()).ToList()
-            );
-        }
-
-        #endregion
-        #region Action Queries
-
-        /// <summary>
-        /// Checks if an action is currently pressed.
-        /// </summary>
-        public bool IsActionPressed(string actionName)
-        {
-            if (!Binds.TryGetValue(actionName, out var actions))
-                return false;
-
-            foreach (var action in actions)
-            {
-                if (action.HasKey && Keyboard.IsKeyDown(action.Key)) return true;
-                if (action.HasButton && CurrentGamePad.IsButtonDown(action.Button)) return true;
-                if (action.HasMouseButton && Mouse.IsButtonDown(action.MouseButton)) return true;
-            }
-
-            return false;
-        }
-
-        public InputAction GetCurrentActionPressed()
-        {
-            foreach (var kvp in Binds)
-            {
-                foreach (var action in kvp.Value)
-                {
-                    if (action.HasKey && Keyboard.IsKeyDown(action.Key))
-                        return action;
-
-                    if (action.HasButton && CurrentGamePad.IsButtonDown(action.Button))
-                        return action;
-
-                    if (action.HasMouseButton && Mouse.IsButtonDown(action.MouseButton))
-                        return action;
-                }
-            }
-
-            return null;
-        }
-
-
-        /// <summary>
-        /// Checks if an action was just pressed this frame.
-        /// </summary>
-        public bool IsActionJustPressed(string actionName)
-        {
-            if (!Binds.TryGetValue(actionName, out var actions))
-                return false;
-
-            foreach (var action in actions)
-            {
-                if (action.HasKey && Keyboard.WasKeyJustPressed(action.Key)) return true;
-                if (action.HasButton && CurrentGamePad.WasButtonJustPressed(action.Button)) return true;
-                if (action.HasMouseButton && Mouse.WasButtonJustPressed(action.MouseButton)) return true;
-            }
-
-            return false;
-        }
-
-        public InputAction GetCurrentActionJustPressed()
-        {
-            foreach (var kvp in Binds)
-            {
-                foreach (var action in kvp.Value)
-                {
-                    if (action.HasKey && Keyboard.WasKeyJustPressed(action.Key))
-                        return action;
-
-                    if (action.HasButton && CurrentGamePad.WasButtonJustPressed(action.Button))
-                        return action;
-
-                    if (action.HasMouseButton && Mouse.WasButtonJustPressed(action.MouseButton))
-                        return action;
-                }
-            }
-
-            return null;
-        }
-        
-
-        /// <summary>
-        /// Checks if an action was just released this frame.
-        /// </summary>
-        public bool IsActionJustReleased(string actionName)
-        {
-            if (!Binds.TryGetValue(actionName, out var actions))
-                return false;
-
-            foreach (var action in actions)
-            {
-                if (action.HasKey && Keyboard.WasKeyJustReleased(action.Key)) return true;
-                if (action.HasButton && CurrentGamePad.WasButtonJustReleased(action.Button)) return true;
-                if (action.HasMouseButton && Mouse.WasButtonJustReleased(action.MouseButton)) return true;
-            }
-
-            return false;
-        }
-
-        public InputAction GetCurrentActionJustReleased()
-        {
-            foreach (var kvp in Binds)
-            {
-                foreach (var action in kvp.Value)
-                {
-                    if (action.HasKey && Keyboard.WasKeyJustReleased(action.Key))
-                        return action;
-
-                    if (action.HasButton && CurrentGamePad.WasButtonJustReleased(action.Button))
-                        return action;
-
-                    if (action.HasMouseButton && Mouse.WasButtonJustReleased(action.MouseButton))
-                        return action;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Returns an axis value based on two actions.
-        /// </summary>
-        public int GetAxis(string negativeAction, string positiveAction)
-        {
-            bool negativePressed = IsActionPressed(negativeAction);
-            bool positivePressed = IsActionPressed(positiveAction);
-
-            if (negativePressed && positivePressed) return 0;
-            if (negativePressed) return -1;
-            if (positivePressed) return 1;
-            return 0;
-        }
-
-        #endregion
     }
 }
