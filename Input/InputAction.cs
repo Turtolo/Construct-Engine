@@ -1,43 +1,48 @@
-using System;
+using ConstructEngine.Input;
 using Microsoft.Xna.Framework.Input;
 
-namespace ConstructEngine.Input
+public enum InputType
 {
-    public class InputAction
+    None,
+    Key,
+    Button,
+    MouseButton
+}
+
+public class InputAction
+{
+    public InputType Type { get;}
+    public Keys Key { get; }
+    public Buttons Button { get; }
+    public MouseButton MouseButton { get; }
+
+    public bool HasKey => Type == InputType.Key;
+    public bool HasButton => Type == InputType.Button;
+    public bool HasMouseButton => Type == InputType.MouseButton;
+
+    public InputAction(Keys key)
     {
-        public Keys Key;
-        public Buttons Button;
-        public MouseButton MouseButton;
-
-        public bool HasKey => Key != Keys.None;
-        public bool HasButton => Button != Buttons.None;
-        public bool HasMouseButton => MouseButton != MouseButton.None;
-
-        public InputAction(Keys key)
-        {
-            Key = key;
-        }
-
-        public InputAction(Buttons button)
-        {
-            Button = button;
-        }
-
-        public InputAction(MouseButton mouseButton)
-        {
-            MouseButton = mouseButton;
-        }
-
-        /// <summary>
-        /// Creates a copy of this InputAction.
-        /// </summary>
-        public InputAction Clone()
-        {
-            return new InputAction(Key)
-            {
-                Button = this.Button,
-                MouseButton = this.MouseButton
-            };
-        }
+        Type = InputType.Key;
+        Key = key;
     }
+
+    public InputAction(Buttons button)
+    {
+        Type = InputType.Button;
+        Button = button;
+    }
+
+    public InputAction(MouseButton mouseButton)
+    {
+        Type = InputType.MouseButton;
+        MouseButton = mouseButton;
+    }
+
+    public InputAction Clone() => Type switch
+    {
+        InputType.Key => new InputAction(Key),
+        InputType.Button => new InputAction(Button),
+        InputType.MouseButton => new InputAction(MouseButton),
+        _ => new InputAction(Keys.None)
+    };
 }

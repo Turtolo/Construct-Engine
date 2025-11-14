@@ -90,21 +90,18 @@ namespace ConstructEngine.Input
                 Binds[actionName] = new List<InputAction> { new InputAction(newKey) };
                 return;
             }
-
-            bool found = false;
-            foreach (var action in actions)
+            for (int i = 0; i < actions.Count; i++)
             {
-                if (action.HasKey)
+                if (actions[i].HasKey)
                 {
-                    action.Key = newKey;
-                    found = true;
-                    break;
+                    actions[i] = new InputAction(newKey);
+                    return;
                 }
             }
 
-            if (!found)
-                actions.Add(new InputAction(newKey));
+            actions.Add(new InputAction(newKey));
         }
+
 
         /// <summary>
         /// Rebinds a button in an action.
@@ -117,20 +114,16 @@ namespace ConstructEngine.Input
                 Binds[actionName] = new List<InputAction> { new InputAction(newButton) };
                 return;
             }
-
-            bool found = false;
-            foreach (var action in actions)
+            for (int i = 0; i < actions.Count; i++)
             {
-                if (action.HasButton)
+                if (actions[i].HasButton)
                 {
-                    action.Button = newButton;
-                    found = true;
-                    break;
+                    actions[i] = new InputAction(newButton);
+                    return;
                 }
             }
 
-            if (!found)
-                actions.Add(new InputAction(newButton));
+            actions.Add(new InputAction(newButton));
         }
 
         /// <summary>

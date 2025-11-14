@@ -36,6 +36,10 @@ public class KeyboardInfo
 
     private KeyboardState _previousKeyboardState;
 
+    /// <summary>
+    /// Returns the first currently released key, or Keys.None if no key is released.
+    /// </summary>
+
     public Keys GetCurrentlyReleasedKey()
     {
         KeyboardState currentKeyboardState = Keyboard.GetState();
