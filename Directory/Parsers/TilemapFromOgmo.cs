@@ -41,7 +41,7 @@ public class TilemapFromOgmo
                 
                 path = Path.ChangeExtension(path, null);
 
-                Texture2D texture = Core.Content.Load<Texture2D>(path);
+                Texture2D texture = Engine.Content.Load<Texture2D>(path);
 
                 TextureAtlas atlas = new TextureAtlas(texture);
                 

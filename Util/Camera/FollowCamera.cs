@@ -28,7 +28,7 @@ public class FollowCamera : Camera
     public FollowCamera(float Zoom, bool XEnabled = true, bool YEnabled = true)
     {
         cameraPosition = Vector2.Zero;
-        CameraRectangle = new Rectangle(0, 0, Core.VirtualWidth, Core.VirtualHeight);
+        CameraRectangle = new Rectangle(0, 0, Engine.VirtualWidth, Engine.VirtualHeight);
         this.Zoom = Zoom;
         this.XEnabled = XEnabled;
         this.YEnabled = YEnabled;
@@ -62,8 +62,8 @@ public class FollowCamera : Camera
             if (YEnabled)
                 cameraPosition.Y = float.Lerp(cameraPosition.Y, targetPosition.Y, LerpFactor);
 
-            float halfWidth = (Core.VirtualWidth / 2f) / Zoom;
-            float halfHeight = (Core.VirtualHeight / 2f) / Zoom;
+            float halfWidth = (Engine.VirtualWidth / 2f) / Zoom;
+            float halfHeight = (Engine.VirtualHeight / 2f) / Zoom;
 
             if (LimitLeft.HasValue && LimitRight.HasValue)
             {
@@ -85,7 +85,7 @@ public class FollowCamera : Camera
         }
 
         var position = Matrix.CreateTranslation(-cameraPosition.X, -cameraPosition.Y, 0f);
-        var offset = Matrix.CreateTranslation(Core.VirtualWidth / 2f, Core.VirtualHeight / 2f, 0f);
+        var offset = Matrix.CreateTranslation(Engine.VirtualWidth / 2f, Engine.VirtualHeight / 2f, 0f);
         var scale = Matrix.CreateScale(Zoom, Zoom, 1f);
         
         
@@ -94,7 +94,7 @@ public class FollowCamera : Camera
 
         Transform = position * scale * offset;
         
-        Console.WriteLine((Core.VirtualWidth / 2f, Core.VirtualHeight / 2f));
+        Console.WriteLine((Engine.VirtualWidth / 2f, Engine.VirtualHeight / 2f));
     }
 
 

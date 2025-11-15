@@ -42,7 +42,7 @@ public class SceneManager : Scene
     /// </summary>
     private void SceneIntervention()
     {
-        Core.ClearAllLists();
+        Engine.ClearAllLists();
         SceneFrozen = false;
     }
 
@@ -208,20 +208,6 @@ public class SceneManager : Scene
     /// </summary>
     /// <param name="spriteBatch"></param>
     public void DrawCurrentScene(SpriteBatch spriteBatch)
-    {
-        if (!IsStackEmpty())
-        {
-            GetCurrentScene().Draw(spriteBatch);
-        }
-
-        for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
-        {
-            BackseatComponent backseatComponent = BackseatComponent.BackseatComponentList[i];
-            backseatComponent.Draw(spriteBatch);
-        }
-    }
-
-    public void DrawCurrentScene(SpriteBatch spriteBatch, BloomFilter bloom)
     {
         if (!IsStackEmpty())
         {

@@ -31,7 +31,7 @@ public class ParallaxBackground
         {
             parallaxFactor += topParralaxFactor;
 
-            //BackgroundList.Add(new ParallaxBackground(path, Core.Content, parallaxFactor, RepeatYX, camera));
+            //BackgroundList.Add(new ParallaxBackground(path, Engine.Content, parallaxFactor, RepeatYX, camera));
         }
     }
 
@@ -65,7 +65,7 @@ public class ParallaxBackground
     {
         ParallaxFactor = parallaxFactor;
         Camera = camera;
-        Texture = Core.Content.Load<Texture2D>(texturePath);
+        Texture = Engine.Content.Load<Texture2D>(texturePath);
         
         SamplerState = sampler;
         
@@ -76,7 +76,7 @@ public class ParallaxBackground
     {
         ParallaxFactor = parallaxFactor;
         Position = position;
-        Texture = Core.Content.Load<Texture2D>(texturePath);
+        Texture = Engine.Content.Load<Texture2D>(texturePath);
         
         SamplerState = sampler;
         

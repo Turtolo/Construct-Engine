@@ -15,7 +15,7 @@ public class DrawHelper()
             return;
         }
 
-        Texture2D texture = new Texture2D(Core.GraphicsDevice, circ.Radius, circ.Radius);
+        Texture2D texture = new Texture2D(Engine.GraphicsDevice, circ.Radius, circ.Radius);
         Color[] colorData = new Color[circ.Radius * circ.Radius];
 
         float diam = circ.Radius / 2f;
@@ -40,12 +40,12 @@ public class DrawHelper()
 
         texture.SetData(colorData);
 
-        Core.SpriteBatch.Draw(texture, new Vector2(circ.X, circ.Y), color);
+        Engine.SpriteBatch.Draw(texture, new Vector2(circ.X, circ.Y), color);
     }
 
     public static void DrawString(string input, Color color, Vector2 pos)
     {
-        Core.SpriteBatch.DrawString(Core.Font, input, pos, color);
+        Engine.SpriteBatch.DrawString(Engine.Font, input, pos, color);
     }
 
     public static void DrawRay(Ray2D ray, Color color, float thickness, float layerDepth = 0.1f)
@@ -62,7 +62,7 @@ public class DrawHelper()
             Color = color;
         }
         
-        Texture2D pixel = new Texture2D(Core.GraphicsDevice, 1, 1);
+        Texture2D pixel = new Texture2D(Engine.GraphicsDevice, 1, 1);
         pixel.SetData(new[] { Color });
 
         Vector2 end = ray.Position + ray.Direction * ray.Length;
@@ -71,7 +71,7 @@ public class DrawHelper()
 
 
 
-        Core.SpriteBatch.Draw(
+        Engine.SpriteBatch.Draw(
             pixel,
             new Rectangle((int)ray.Position.X, (int)ray.Position.Y, (int)edge.Length(), (int)thickness),
             null,
@@ -89,22 +89,22 @@ public class DrawHelper()
             return;
         }
 
-        Texture2D rectangleTexture = new Texture2D(Core.GraphicsDevice, 1, 1);
+        Texture2D rectangleTexture = new Texture2D(Engine.GraphicsDevice, 1, 1);
         rectangleTexture.SetData(new[] { color });
 
-        Core.SpriteBatch.Draw(rectangleTexture,
+        Engine.SpriteBatch.Draw(rectangleTexture,
             new Rectangle(rect.X, rect.Y, rect.Width, thickness),
             null, color, 0f, Vector2.Zero, SpriteEffects.None, layerDepth);
 
-        Core.SpriteBatch.Draw(rectangleTexture,
+        Engine.SpriteBatch.Draw(rectangleTexture,
             new Rectangle(rect.X, rect.Bottom - thickness, rect.Width, thickness),
             null, color, 0f, Vector2.Zero, SpriteEffects.None, layerDepth);
 
-        Core.SpriteBatch.Draw(rectangleTexture,
+        Engine.SpriteBatch.Draw(rectangleTexture,
             new Rectangle(rect.X, rect.Y, thickness, rect.Height),
             null, color, 0f, Vector2.Zero, SpriteEffects.None, layerDepth);
 
-        Core.SpriteBatch.Draw(rectangleTexture,
+        Engine.SpriteBatch.Draw(rectangleTexture,
             new Rectangle(rect.Right - thickness, rect.Y, thickness, rect.Height),
             null, color, 0f, Vector2.Zero, SpriteEffects.None, layerDepth);
     }

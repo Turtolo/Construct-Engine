@@ -31,14 +31,14 @@ public class RoomCamera : Camera
         Zoom = zoom;
 
 
-        cameraPosition = new Vector2(Core.VirtualWidth / 2, Core.VirtualHeight / 2);
+        cameraPosition = new Vector2(Engine.VirtualWidth / 2, Engine.VirtualHeight / 2);
 
         CameraRectangle = new Rectangle
         (
-            (int)(cameraPosition.X - (Core.VirtualWidth / (2 * Zoom))),
-            (int)(cameraPosition.Y - (Core.VirtualHeight / (2 * Zoom))),
-            (int)(Core.VirtualWidth / Zoom),
-            (int)(Core.VirtualHeight / Zoom)
+            (int)(cameraPosition.X - (Engine.VirtualWidth / (2 * Zoom))),
+            (int)(cameraPosition.Y - (Engine.VirtualHeight / (2 * Zoom))),
+            (int)(Engine.VirtualWidth / Zoom),
+            (int)(Engine.VirtualHeight / Zoom)
         );
 
 
@@ -46,10 +46,10 @@ public class RoomCamera : Camera
     
     private void UpdateCameraRectangle()
     {
-        CameraRectangle.X = (int)(cameraPosition.X - (Core.VirtualWidth / (2 * Zoom)));
-        CameraRectangle.Y = (int)(cameraPosition.Y - (Core.VirtualHeight / (2 * Zoom)));
-        CameraRectangle.Width = (int)(Core.VirtualWidth / Zoom);
-        CameraRectangle.Height = (int)(Core.VirtualHeight / Zoom);
+        CameraRectangle.X = (int)(cameraPosition.X - (Engine.VirtualWidth / (2 * Zoom)));
+        CameraRectangle.Y = (int)(cameraPosition.Y - (Engine.VirtualHeight / (2 * Zoom)));
+        CameraRectangle.Width = (int)(Engine.VirtualWidth / Zoom);
+        CameraRectangle.Height = (int)(Engine.VirtualHeight / Zoom);
     }
     
     
@@ -128,20 +128,20 @@ public class RoomCamera : Camera
         
         if (cameraXTween != null && !cameraXTween.IsFinished())
         {
-            cameraXTween.Update(Core.DeltaTime);
+            cameraXTween.Update(Engine.DeltaTime);
             cameraPosition.X = cameraXTween.GetCurrentValue(cameraXTween.Normal);
         }
 
         if (cameraYTween != null && !cameraYTween.IsFinished())
         {
-            cameraYTween.Update(Core.DeltaTime);
+            cameraYTween.Update(Engine.DeltaTime);
             cameraPosition.Y = cameraYTween.GetCurrentValue(cameraYTween.Normal);
         }
 
         UpdateCameraRectangle();
 
         var position = Matrix.CreateTranslation(-cameraPosition.X, -cameraPosition.Y, 0f);
-        var offset = Matrix.CreateTranslation(Core.VirtualWidth / 2f, Core.VirtualHeight / 2f, 0f);
+        var offset = Matrix.CreateTranslation(Engine.VirtualWidth / 2f, Engine.VirtualHeight / 2f, 0f);
         var scale = Matrix.CreateScale(Zoom, Zoom, 1f);
 
         Transform = position * scale * offset;

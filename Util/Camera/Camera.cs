@@ -16,8 +16,8 @@ public class Camera
 
     public (Vector2 TopLeft, Vector2 TopRight, Vector2 BottomLeft, Vector2 BottomRight) GetScreenEdges()
     {
-        float halfWidth = (Core.VirtualWidth / 2f) / Zoom;
-        float halfHeight = (Core.VirtualHeight / 2f) / Zoom;
+        float halfWidth = (Engine.VirtualWidth / 2f) / Zoom;
+        float halfHeight = (Engine.VirtualHeight / 2f) / Zoom;
 
         Vector2 topLeft = new Vector2(cameraPosition.X - halfWidth, cameraPosition.Y - halfHeight);
         Vector2 topRight = new Vector2(cameraPosition.X + halfWidth, cameraPosition.Y - halfHeight);
