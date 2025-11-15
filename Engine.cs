@@ -1,155 +1,163 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using ConstructEngine.Input;
 using ConstructEngine.Graphics;
-using ConstructEngine.UI;
-using ConstructEngine.Area;
-using ConstructEngine.Object;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Util;
+using ConstructEngine.UI;
+using ConstructEngine.Object;
+using ConstructEngine.Area;
 
+using RenderingLibrary;
 using Gum.Wireframe;
 using Gum.DataTypes;
-using RenderingLibrary;
-using MonoGameGum;
 
 namespace ConstructEngine;
 
 public class Engine : Game
 {
     public static Engine Instance { get; private set; }
+
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static new GraphicsDevice GraphicsDevice { get; private set; }
-    public static new ContentManager Content { get; private set; }
     public static SpriteBatch SpriteBatch { get; private set; }
-
-    public static SpriteFont Font { get; private set; }
-    public static SceneManager SceneManager { get; private set; }
+    public static new ContentManager Content { get; private set; }
     public static InputManager Input { get; private set; }
+    public static SceneManager SceneManager { get; private set; }
+    public static SpriteFont Font { get; set; }
 
     public static float DeltaTime { get; private set; }
-    public static bool ExitOnEscape { get; set; } = true;
-    
+    public static bool ExitOnEscape { get; set; }
+    public static bool ExitRequested { get; set; }
+
+    public static int ResolutionWidth { get; private set; }
+    public static int ResolutionHeight { get; private set; }
+    public static int VirtualWidth { get; private set; }
+    public static int VirtualHeight { get; private set; }
+
     public static RenderTarget2D RenderTarget { get; private set; }
 
     public Effect PostProcessingShader { get; set; }
 
-    public static int VirtualWidth { get; private set; }
-    public static int VirtualHeight { get; private set; }
+    public bool IntegerScaling = true;
+    public int finalWidth;
+    public int finalHeight;
+    public int offsetX;
+    public int offsetY;
+    private float currentScale;
+    bool isFullscreen = false;
 
-    public bool IntegerScaling { get; private set; }
-
-    int scaledW, scaledH;
-    int offsetX, offsetY;
-    float currentScale;
-
-    private static bool quit;
-
-    private EngineConfig Config;
-
-    public GumService GumUI { get; private set; }
-
-    public Engine(EngineConfig config)
+    public Engine(
+        string title = "Construct Engine - Unnamed project",
+        int virtualWidth = 360,
+        int virtualHeight = 640,
+        bool fullScreen = false,
+        int resolutionWidth = 320,
+        int resolutionHeight = 180,
+        string fontPath = null)
     {
-        Config = config;
-
         if (Instance != null)
-            throw new InvalidOperationException(
-                "Only one Engine instance can exist."
-            );
+            throw new InvalidOperationException("Only a single Engine instance can be created");
 
         Instance = this;
 
-        VirtualWidth = config.VirtualWidth;
-        VirtualHeight = config.VirtualHeight;
-        IntegerScaling = config.IntegerScaling;
+        VirtualWidth = virtualWidth;
+        VirtualHeight = virtualHeight;
+        ResolutionWidth = resolutionWidth;
+        ResolutionHeight = resolutionHeight;
 
         Graphics = new GraphicsDeviceManager(this)
         {
-            IsFullScreen = config.Fullscreen
+            IsFullScreen = fullScreen
         };
 
         Content = base.Content;
         Content.RootDirectory = "Content";
 
+        if (fontPath != null)
+            Font = Content.Load<SpriteFont>(fontPath);
 
-        Window.Title = config.Title;
+        Window.Title = title;
         IsMouseVisible = true;
-
-        Window.AllowUserResizing = true;
-        Window.ClientSizeChanged += (_, _) =>
-        {
-            UpdateRenderScale();
-            UpdateGumCamera();
-        };
     }
+
+    public Engine(
+        string title,
+        int virtualWidth,
+        int virtualHeight,
+        bool fullScreen,
+        string fontPath)
+        : this(title, virtualWidth, virtualHeight, fullScreen, 320, 180, fontPath)
+    {
+    }
+
 
     protected override void Initialize()
     {
         SceneManager = new SceneManager();
         Input = new InputManager();
-        Input.InitializeBinds(DefaultInput.Binds);
 
         base.Initialize();
 
         GraphicsDevice = base.GraphicsDevice;
         SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-        if (Config.FontPath != null)
-            Font = Content.Load<SpriteFont>(Config.FontPath);
-        
-        if (Config.GumProject != null)
-            InitializeGum(Config.GumProject);
+        Graphics.PreferredBackBufferWidth = ResolutionWidth;
+        Graphics.PreferredBackBufferHeight = ResolutionHeight;
+        Graphics.ApplyChanges();
 
         LoadRenderTarget();
-        UpdateRenderScale();
+
+        Window.ClientSizeChanged += (_, _) =>
+        {
+            UpdateRenderTargetTransform();
+            UpdateGumCamera();
+        };
     }
 
     protected override void Update(GameTime gameTime)
     {
         DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
         Input.Update(gameTime);
 
-        if (ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape) || quit)
+        if ((ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape)) || ExitRequested)
             Exit();
-
-        SceneManager.UpdateCurrentScene(gameTime);
-        GumManager.UpdateAll(gameTime);
-        GumUI?.Update(this, gameTime);
 
         base.Update(gameTime);
     }
 
-
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.Black);
+
         SpriteBatch.Begin(
             SpriteSortMode.Immediate,
             BlendState.Additive,
             SamplerState.PointClamp,
-            effect: PostProcessingShader);
+            effect: PostProcessingShader
+        );
 
-        SpriteBatch.Draw(
-            RenderTarget,
-            new Rectangle(offsetX, offsetY, scaledW, scaledH),
+        SpriteBatch.Draw(RenderTarget,
+            new Rectangle(offsetX, offsetY, finalWidth, finalHeight),
             Color.White);
 
         SpriteBatch.End();
 
-
-        GumUI?.Draw();
         base.Draw(gameTime);
     }
 
-    public void SetRenderTarget() =>
+    public void SetRenderTarget()
+    {
         GraphicsDevice.SetRenderTarget(RenderTarget);
+    }
 
-    public static void Quit() => quit = true;
-    void LoadRenderTarget()
+    public void LoadRenderTarget()
     {
         RenderTarget = new RenderTarget2D(
             GraphicsDevice,
@@ -157,17 +165,20 @@ public class Engine : Game
             VirtualHeight,
             false,
             SurfaceFormat.Color,
-            DepthFormat.None);
+            DepthFormat.None,
+            0,
+            RenderTargetUsage.DiscardContents
+        );
     }
 
-    public void InitializeGum(string gumProject)
+    public void ToggleFullscreen()
     {
-        GumUI = GumHelper.GumInitialize(this, gumProject);
-        UpdateRenderScale();
-        UpdateGumCamera();
+        isFullscreen = !isFullscreen;
+        Graphics.IsFullScreen = isFullscreen;
+        Graphics.ApplyChanges();
     }
 
-    public void UpdateRenderScale()
+    public void UpdateRenderTargetTransform()
     {
         var pp = GraphicsDevice.PresentationParameters;
 
@@ -176,25 +187,25 @@ public class Engine : Game
             pp.BackBufferHeight / (float)VirtualHeight);
 
         if (IntegerScaling)
-            currentScale = Math.Max(1, MathF.Floor(currentScale));
+        {
+            currentScale = MathF.Floor(currentScale);
+            if (currentScale < 1f)
+                currentScale = 1f;
+        }
 
-        scaledW = (int)(VirtualWidth * currentScale);
-        scaledH = (int)(VirtualHeight * currentScale);
+        finalWidth = (int)(VirtualWidth * currentScale);
+        finalHeight = (int)(VirtualHeight * currentScale);
 
-        offsetX = (pp.BackBufferWidth - scaledW) / 2;
-        offsetY = (pp.BackBufferHeight - scaledH) / 2;
+        offsetX = (pp.BackBufferWidth - finalWidth) / 2;
+        offsetY = (pp.BackBufferHeight - finalHeight) / 2;
     }
 
     public void UpdateGumCamera()
     {
-        if (GumUI == null)
-            return;
-
-        var cam = SystemManagers.Default.Renderer.Camera;
-
-        cam.Zoom = currentScale;
-        cam.X = -offsetX / currentScale;
-        cam.Y = -offsetY / currentScale;
+        var camera = SystemManagers.Default.Renderer.Camera;
+        camera.Zoom = currentScale;
+        camera.X = -offsetX / currentScale;
+        camera.Y = -offsetY / currentScale;
 
         GraphicalUiElement.CanvasWidth = VirtualWidth;
         GraphicalUiElement.CanvasHeight = VirtualHeight;
