@@ -9,38 +9,41 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Util;
-
-public class Scene
+namespace ConstructEngine.Util
 {
-    
-    public static void UpdateEntities(GameTime gameTime)
+    public class Scene
     {
-        for (int i = Entity.EntityList.Count - 1; i >= 0; i--)
+        
+        public static void UpdateEntities(GameTime gameTime)
         {
-            Entity.IEntity e = Entity.EntityList[i];
-            e.Update(gameTime);
+            for (int i = Entity.EntityList.Count - 1; i >= 0; i--)
+            {
+                Entity.IEntity e = Entity.EntityList[i];
+                e.Update(gameTime);
+            }
         }
-    }
-    
+        
 
-    public static void DrawEntities(SpriteBatch spriteBatch)
-    {
-        foreach (Entity.IEntity e in Entity.EntityList)
+        public static void DrawEntities(SpriteBatch spriteBatch)
         {
-            e.Draw(spriteBatch);
+            foreach (Entity.IEntity e in Entity.EntityList)
+            {
+                e.Draw(spriteBatch);
+            }
         }
-    }
-    
-    public interface IScene
-    {
-        public void Initialize();
-        public void Load();
-        public void Update(GameTime gameTime);
-        public void Draw(SpriteBatch spriteBatch);
+        
+        public interface IScene
+        {
+            public void Initialize();
+            public void Load();
+            public void Unload();
+            public void Update(GameTime gameTime);
+            public void Draw(SpriteBatch spriteBatch);
 
+        }
+        
+        
+        
     }
-    
-    
-    
+
 }

@@ -1,8 +1,9 @@
 using System;
 
-namespace ConstructEngine.UI;
+namespace ConstructEngine.UI
+{
+    public class KeyboardRebinder {
 
-public class KeyboardRebinder {
-
-    public KeyboardRebinder() {}
+        public KeyboardRebinder() {}
+    }
 }

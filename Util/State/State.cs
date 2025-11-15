@@ -1,27 +1,28 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace ConstructEngine.Util;
-
-public abstract class State : IState
+namespace ConstructEngine.Util
 {
-    public event Action<IState, string> TransitionRequested;
-    protected State ParentState { get; private set; }
-
-    protected void RequestTransition(string newStateName)
+    public abstract class State : IState
     {
-        TransitionRequested?.Invoke(this, newStateName);
-    }
+        public event Action<IState, string> TransitionRequested;
+        protected State ParentState { get; private set; }
 
-    public virtual void SetParent(State parent)
-    {
-        ParentState = parent;
-    }
+        protected void RequestTransition(string newStateName)
+        {
+            TransitionRequested?.Invoke(this, newStateName);
+        }
 
-    public virtual void OnEnter() { }
-    public virtual void Update(GameTime gameTime)
-    {
-        ParentState?.Update(gameTime);
+        public virtual void SetParent(State parent)
+        {
+            ParentState = parent;
+        }
+
+        public virtual void OnEnter() { }
+        public virtual void Update(GameTime gameTime)
+        {
+            ParentState?.Update(gameTime);
+        }
+        public virtual void OnExit() { }
     }
-    public virtual void OnExit() { }
 }

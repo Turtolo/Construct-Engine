@@ -1,13 +1,16 @@
 using System;
 
-public class Component
+namespace ConstructEngine.Components
 {
-    public Type RootType { get; set; }
-    public Object Root { get; set; }
-
-    public Component(object root)
+    public class Component
     {
-        Root = root;
-        RootType = root.GetType();
+        public Type RootType { get; set; }
+        public Object Root { get; set; }
+
+        public Component(object root)
+        {
+            Root = root;
+            RootType = root.GetType();
+        }
     }
 }

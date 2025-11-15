@@ -1,82 +1,83 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using ConstructEngine.Object;
+using ConstructEngine.Objects;
 using ConstructEngine.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace ConstructEngine.Object;
-
-public class SceneAreaTransition : ConstructObject, ConstructObject.IObject
+namespace ConstructEngine.Objects
 {
-    public Scene.IScene Scene { get; set; }
-
-    private bool resetScene = false;
-
-
-    public SceneAreaTransition()
+    public class SceneAreaTransition : ConstructObject, ConstructObject.IObject
     {
+        public Scene.IScene Scene { get; set; }
 
-    }
+        private bool resetScene = false;
 
-    public override void Load()
-    {
-        if (Values.ContainsKey("ResetScene"))
+
+        public SceneAreaTransition()
         {
-            if (Values["ResetScene"] as bool? == true)
-            {
-                resetScene = true;
-            }
+
         }
-    }
 
-    public override void Update(GameTime gameTime)
-    {
-        if (Rectangle != null)
+        public override void Load()
         {
-            if (Rectangle.Intersects(Player.KinematicBase.Collider.Rect))
+            if (Values.ContainsKey("ResetScene"))
             {
-                if (resetScene)
+                if (Values["ResetScene"] as bool? == true)
                 {
-                    CurrentSceneManager.ReloadCurrentScene();
-                }
-                else
-                {
-                    CurrentSceneManager.AddScene(ChangeSceneWithAssembly());
+                    resetScene = true;
                 }
             }
         }
-    }
 
-    private Scene.IScene ChangeSceneWithAssembly()
-    {
-        if (Values.ContainsKey("Scene"))
+        public override void Update(GameTime gameTime)
         {
-            string className = Values["Scene"] as string;
-
-            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies()
-                .FirstOrDefault(a =>
-                    a.GetTypes().Any(t => t.Name == className && typeof(Scene.IScene).IsAssignableFrom(t)));
-
-
-            if (assembly != null)
+            if (Rectangle != null)
             {
-
-
-                Type type = assembly.GetTypes()
-                    .First(t => t.Name == className && typeof(Scene.IScene).IsAssignableFrom(t));
-
-
-
-                Scene.IScene instance = (Scene.IScene)Activator.CreateInstance(type, CurrentSceneManager);
-
-                return instance;
-
+                if (Rectangle.Intersects(Player.KinematicBase.Collider.Rect))
+                {
+                    if (resetScene)
+                    {
+                        CurrentSceneManager.ReloadCurrentScene();
+                    }
+                    else
+                    {
+                        CurrentSceneManager.AddScene(ChangeSceneWithAssembly());
+                    }
+                }
             }
-
-           
         }
-        return null;
+
+        private Scene.IScene ChangeSceneWithAssembly()
+        {
+            if (Values.ContainsKey("Scene"))
+            {
+                string className = Values["Scene"] as string;
+
+                Assembly assembly = AppDomain.CurrentDomain.GetAssemblies()
+                    .FirstOrDefault(a =>
+                        a.GetTypes().Any(t => t.Name == className && typeof(Scene.IScene).IsAssignableFrom(t)));
+
+
+                if (assembly != null)
+                {
+
+
+                    Type type = assembly.GetTypes()
+                        .First(t => t.Name == className && typeof(Scene.IScene).IsAssignableFrom(t));
+
+
+
+                    Scene.IScene instance = (Scene.IScene)Activator.CreateInstance(type, CurrentSceneManager);
+
+                    return instance;
+
+                }
+
+            
+            }
+            return null;
+        }
     }
 }

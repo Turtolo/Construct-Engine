@@ -16,6 +16,7 @@ namespace ConstructEngine
         public bool IsBorderless;
         public bool IsFixedTimeStep;
         public bool SynchronizeWithVerticalRetrace;
+        public bool ExitOnEscape;
         public string FontPath;
         public string GumProject;
 

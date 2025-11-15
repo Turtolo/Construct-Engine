@@ -1,247 +1,216 @@
-using System.Collections.Generic;
-using ConstructEngine.Components.Entity;
-using ConstructEngine.Object;
-using ConstructEngine.Graphics;
-using ConstructEngine.Area;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
-using ConstructEngine.Components;
-using Microsoft.Xna.Framework.Graphics;
-using ConstructEngine.Directory;
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using ConstructEngine.Components;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace ConstructEngine.Util;
-
-public class SceneManager : Scene
+namespace ConstructEngine.Util
 {
-    public readonly Stack<IScene> Scenes = new();
-    public bool SceneFrozen;
-    public bool DoScreenTransition;
-
-    private bool pendingFreeze;
-
-    public SceneManager() { }
-
-    /// <summary>
-    /// A function that takes an IScene adds it to the stack, loads it and initializes it
-    /// </summary>
-    /// <param name="scene"></param>
-    public void AddScene(IScene scene)
+    public class SceneManager : Scene
     {
-        SceneIntervention();
+        public readonly Stack<IScene> Scenes = new();
+        private bool _sceneFrozen;
+        private bool _pendingFreeze;
 
-        scene.Initialize();
-        scene.Load();
-        Scenes.Push(scene);
-    }
+        public bool SceneFrozen => _sceneFrozen;
 
-    /// <summary>
-    /// Acts in between scene actions where scenes are removed, added, etc
-    /// </summary>
-    private void SceneIntervention()
-    {
-        Engine.ClearAllLists();
-        SceneFrozen = false;
-    }
+        public SceneManager() { }
 
-    /// <summary>
-    /// Takes the type and uses assembly to create a new scene instance from it.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public Scene.IScene GetSceneFromType<T>() where T : Scene.IScene, new()
-    {
-        Type targetType = typeof(T);
-
-        Assembly assembly = AppDomain.CurrentDomain.GetAssemblies()
-            .FirstOrDefault(a => a.GetTypes().Any(t => t == targetType));
-
-        if (assembly != null)
+        /// <summary>
+        /// A function that takes an IScene adds it to the stack, loads it and initializes it
+        /// </summary>
+        /// <param name="scene"></param>
+        public void AddScene(IScene scene)
         {
-            Scene.IScene instance = (Scene.IScene)Activator.CreateInstance(targetType);
-            return instance;
+            if (scene == null)
+                throw new ArgumentNullException(nameof(scene), "Cannot add a null scene.");
+
+            SceneIntervention();
+
+            scene.Initialize();
+            scene.Load();
+
+            Scenes.Push(scene);
         }
 
-        return null;
-    }
-
-    /// <summary>
-    /// Takes the string and uses assembly to create a new scene instance from it.
-    /// </summary>
-    /// <param name="sceneName"></param>
-    /// <returns></returns>
-    public Scene.IScene GetSceneFromString(string sceneName)
-    {
-        Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a =>
-            a.GetTypes().Any(t => t.Name == sceneName && typeof(Scene.IScene).IsAssignableFrom(t)));
-
-
-        if (assembly != null)
+        /// <summary>
+        /// Acts in between scene actions where scenes are removed, added, etc
+        /// </summary>
+        private void SceneIntervention()
         {
-            Type type = assembly.GetTypes()
-                .First(t => t.Name == sceneName && typeof(Scene.IScene).IsAssignableFrom(t));
-
-            Scene.IScene instance = (Scene.IScene)Activator.CreateInstance(type);
-
-            return instance;
-
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Adds scene from string
-    /// </summary>
-    /// <param name="sceneName"></param>
-    public void AddSceneFromString(string sceneName)
-    {
-        IScene targetScene = GetSceneFromString(sceneName);
-        AddScene(targetScene);
-    }
-
-    /// <summary>
-    /// Adds a scene from a type
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public void AddSceneFromType<T>() where T : IScene, new()
-    {
-        IScene targetScene = GetSceneFromType<T>();
-        AddScene(targetScene);
-    }
-
-    public void LoadSceneFromSave()
-    {
-
-    }
-
-    /// <summary>
-    /// Removes the current scene
-    /// </summary>
-    public void RemoveCurrentScene()
-    {
-        Scenes.Pop();
-    }
-
-    /// <summary>
-    /// Gets the current scene
-    /// </summary>
-    /// <returns></returns>
-    public IScene GetCurrentScene()
-    {
-        return Scenes.Peek();
-    }
-
-    /// <summary>
-    /// Freezes the current scene at the end of the frame
-    /// </summary>
-    public void QueeFreezeCurrentScene()
-    {
-        pendingFreeze = true;
-    }
-
-    /// <summary>
-    /// Freezes the current scene immediately
-    /// </summary>
-    public void FreezeCurrentScene()
-    {
-        SceneFrozen = true;
-    }
-
-    /// <summary>
-    /// Unfreezes the current scene
-    /// </summary>
-    /// <param name="freeze"></param>
-    public void UnFreezeCurrentScene()
-    {
-        SceneFrozen = false;
-        pendingFreeze = false;
-
-    }
-
-    /// <summary>
-    /// Function that waits until the end of update cycle to freeze
-    /// </summary>
-    private void ApplyPendingFreeze()
-    {
-        if (pendingFreeze)
-        {
-            SceneFrozen = true;
-            pendingFreeze = false;
-        }
-    }
-
-    /// <summary>
-    /// Quee freezes the current scene for a period of time
-    /// </summary>
-    /// <param name="duration"></param>
-    public void QueeFreezeCurrentSceneFor(float duration)
-    {
-        QueeFreezeCurrentScene();
-        Timer.Wait(duration, UnFreezeCurrentScene);
-    }
-
-    /// <summary>
-    /// Updates the current scene, loops safely through backseat components and updates them. Calls ApplyFreeze at the end to ensure the scene is frozen
-    /// </summary>
-    /// <param name="gameTime"></param>
-
-    public void UpdateCurrentScene(GameTime gameTime)
-    {
-        if (!IsStackEmpty() && !SceneFrozen)
-        {
-            GetCurrentScene().Update(gameTime);
+            Engine.ClearSceneLists();
+            _sceneFrozen = false;
         }
 
-        for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+        /// <summary>
+        /// Takes the type and uses assembly to create a new scene instance from it.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IScene GetSceneFromType<T>() where T : IScene, new()
         {
-            BackseatComponent backseatComponent = BackseatComponent.BackseatComponentList[i];
-            backseatComponent.Update(gameTime);
+            return new T();
         }
 
-        ApplyPendingFreeze();
-    }
-
-    /// <summary>
-    /// Draws the current scene, loops safely through backseat components and draws them.
-    /// </summary>
-    /// <param name="spriteBatch"></param>
-    public void DrawCurrentScene(SpriteBatch spriteBatch)
-    {
-        if (!IsStackEmpty())
+        /// <summary>
+        /// Takes the string and uses assembly to create a new scene instance from it.
+        /// </summary>
+        /// <param name="sceneName"></param>
+        /// <returns></returns>
+        public IScene GetSceneFromString(string sceneName)
         {
-            GetCurrentScene().Draw(spriteBatch);
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.GetTypes().Any(t => t.Name == sceneName && typeof(IScene).IsAssignableFrom(t)));
+
+            if (assembly == null) return null;
+
+            var type = assembly.GetTypes()
+                .FirstOrDefault(t => t.Name == sceneName && typeof(IScene).IsAssignableFrom(t));
+
+            if (type == null) return null;
+
+            return (IScene)Activator.CreateInstance(type);
         }
 
-        for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+        /// <summary>
+        /// Adds scene from string
+        /// </summary>
+        /// <param name="sceneName"></param>
+        public void AddSceneFromString(string sceneName)
         {
-            BackseatComponent backseatComponent = BackseatComponent.BackseatComponentList[i];
-            backseatComponent.Draw(spriteBatch);
-        }
-    }
+            IScene targetScene = GetSceneFromString(sceneName);
+            if (targetScene == null)
+                throw new InvalidOperationException($"Scene '{sceneName}' not found.");
 
-
-    /// <summary>
-    /// Checks if the stack is empty
-    /// </summary>
-    /// <returns></returns>
-    public bool IsStackEmpty()
-    {
-        if (Scenes.Count == 0)
-        {
-            return true;
+            AddScene(targetScene);
         }
 
-        return false;
-    }
+        /// <summary>
+        /// Adds a scene from a type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void AddSceneFromType<T>() where T : IScene, new()
+        {
+            IScene targetScene = GetSceneFromType<T>();
+            AddScene(targetScene);
+        }
 
-    /// <summary>
-    /// Reloads current scene
-    /// </summary>
-    public void ReloadCurrentScene()
-    {
-        AddScene(Scenes.Peek());
-    }
+        /// <summary>
+        /// Removes the current scene
+        /// </summary>
+        public void RemoveCurrentScene()
+        {
+            if (Scenes.Count == 0) return;
 
+            var current = Scenes.Pop();
+            current?.Unload();
+        }
+
+        /// <summary>
+        /// Gets the current scene
+        /// </summary>
+        /// <returns></returns>
+        public IScene GetCurrentScene()
+        {
+            return Scenes.Count > 0 ? Scenes.Peek() : null;
+        }
+
+        /// <summary>
+        /// Freezes the current scene at the end of the frame
+        /// </summary>
+        public void QueueFreezeCurrentScene()
+        {
+            _pendingFreeze = true;
+        }
+
+        /// <summary>
+        /// Freezes the current scene immediately
+        /// </summary>
+        public void FreezeCurrentScene()
+        {
+            _sceneFrozen = true;
+        }
+
+        /// <summary>
+        /// Unfreezes the current scene
+        /// </summary>
+        public void UnfreezeCurrentScene()
+        {
+            _sceneFrozen = false;
+            _pendingFreeze = false;
+        }
+
+        /// <summary>
+        /// Function that waits until the end of update cycle to freeze
+        /// </summary>
+        private void ApplyPendingFreeze()
+        {
+            if (_pendingFreeze)
+            {
+                _sceneFrozen = true;
+                _pendingFreeze = false;
+            }
+        }
+
+        /// <summary>
+        /// Queues freezing the current scene for a period of time
+        /// </summary>
+        /// <param name="duration"></param>
+        public void QueueFreezeCurrentSceneFor(float duration)
+        {
+            QueueFreezeCurrentScene();
+            Timer.Wait(duration, UnfreezeCurrentScene);
+        }
+
+        /// <summary>
+        /// Updates the current scene, loops safely through backseat components and updates them. Calls ApplyFreeze at the end to ensure the scene is frozen
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void UpdateCurrentScene(GameTime gameTime)
+        {
+            if (!IsStackEmpty() && !_sceneFrozen)
+                GetCurrentScene()?.Update(gameTime);
+
+            for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+                BackseatComponent.BackseatComponentList[i].Update(gameTime);
+
+            ApplyPendingFreeze();
+        }
+
+        /// <summary>
+        /// Draws the current scene, loops safely through backseat components and draws them.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public void DrawCurrentScene(SpriteBatch spriteBatch)
+        {
+            if (!IsStackEmpty())
+                GetCurrentScene()?.Draw(spriteBatch);
+
+            for (int i = BackseatComponent.BackseatComponentList.Count - 1; i >= 0; i--)
+                BackseatComponent.BackseatComponentList[i].Draw(spriteBatch);
+        }
+
+        /// <summary>
+        /// Checks if the stack is empty
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStackEmpty()
+        {
+            return Scenes.Count == 0;
+        }
+
+        /// <summary>
+        /// Reloads current scene as a fresh instance
+        /// </summary>
+        public void ReloadCurrentScene()
+        {
+            if (Scenes.Count == 0) return;
+
+            var currentType = Scenes.Peek().GetType();
+            var newScene = (IScene)Activator.CreateInstance(currentType);
+            AddScene(newScene);
+        }
+    }
 }

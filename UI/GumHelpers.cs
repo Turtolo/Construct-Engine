@@ -11,80 +11,81 @@ using System.Runtime.InteropServices;
 using FlatRedBall;
 using ConstructEngine.Input;
 
-namespace ConstructEngine.UI;
-
-public class GumHelper
+namespace ConstructEngine.UI
 {
-    
-    public static Dictionary<string, FrameworkElement> ScreenDictionary = new();
-
-    public static void AddScreenToRoot(FrameworkElement newScreen)
+    public class GumHelper
     {
-        string key = newScreen.ToString();
         
-        if (ScreenDictionary.ContainsKey(key))
+        public static Dictionary<string, FrameworkElement> ScreenDictionary = new();
+
+        public static void AddScreenToRoot(FrameworkElement newScreen)
         {
-            FrameworkElement oldScreen = ScreenDictionary[key];
+            string key = newScreen.ToString();
             
-            oldScreen.RemoveFromRoot(); 
-            
-            ScreenDictionary[key] = newScreen;
+            if (ScreenDictionary.ContainsKey(key))
+            {
+                FrameworkElement oldScreen = ScreenDictionary[key];
+                
+                oldScreen.RemoveFromRoot(); 
+                
+                ScreenDictionary[key] = newScreen;
+            }
+            else
+            {
+                ScreenDictionary.Add(key, newScreen);
+            }
+
+            newScreen.AddToRoot();
+
         }
-        else
+
+        public static GumService GumInitialize(Game game, string path)
         {
-            ScreenDictionary.Add(key, newScreen);
+            GumService.Default.Initialize(game, path);
+
+            FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
+            FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);
+            FrameworkElement.TabReverseKeyCombos.Add(
+                new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Up });
+            FrameworkElement.TabKeyCombos.Add(
+                new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Down });
+
+            return GumService.Default;
         }
 
-        newScreen.AddToRoot();
-
-    }
-
-    public static GumService GumInitialize(Game game, string path)
-    {
-        GumService.Default.Initialize(game, path);
-
-        FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
-        FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);
-        FrameworkElement.TabReverseKeyCombos.Add(
-            new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Up });
-        FrameworkElement.TabKeyCombos.Add(
-            new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Down });
-
-        return GumService.Default;
-    }
-
-    
-    
-    public static void RemoveScreenOfType<T>() where T : FrameworkElement
-    {
-        var screen = ScreenDictionary.Values.FirstOrDefault(s => s is T);
-        if (screen != null)
+        
+        
+        public static void RemoveScreenOfType<T>() where T : FrameworkElement
         {
-            RemoveScreenFromRoot(screen);
+            var screen = ScreenDictionary.Values.FirstOrDefault(s => s is T);
+            if (screen != null)
+            {
+                RemoveScreenFromRoot(screen);
+            }
         }
-    }
 
-    public static void RemoveScreenFromRoot(FrameworkElement Screen)
-    {
-        Screen.RemoveFromRoot();
-        ScreenDictionary.Remove(ScreenDictionary.First(kvp => kvp.Value == Screen).Key);
-    }
-
-    public static void Wipe()
-    {
-        foreach (var screen in ScreenDictionary.Values)
+        public static void RemoveScreenFromRoot(FrameworkElement Screen)
         {
-            screen.RemoveFromRoot();
-            ScreenDictionary.Remove(screen.ToString());
+            Screen.RemoveFromRoot();
+            ScreenDictionary.Remove(ScreenDictionary.First(kvp => kvp.Value == Screen).Key);
         }
-    }
 
-
-    public static void UpdateScreenLayout()
-    {
-        foreach (FrameworkElement screen in ScreenDictionary.Values)
+        public static void Wipe()
         {
-            screen.Visual.UpdateLayout();
+            foreach (var screen in ScreenDictionary.Values)
+            {
+                screen.RemoveFromRoot();
+                ScreenDictionary.Remove(screen.ToString());
+            }
+        }
+
+
+        public static void UpdateScreenLayout()
+        {
+            foreach (FrameworkElement screen in ScreenDictionary.Values)
+            {
+                screen.Visual.UpdateLayout();
+            }
         }
     }
 }

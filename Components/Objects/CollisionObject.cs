@@ -1,72 +1,72 @@
 using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
-using ConstructEngine.Object;
 using ConstructEngine.Area;
 using Microsoft.Xna.Framework;
 
-namespace ConstructEngine.Objects;
-
-public class CollisionObject : ConstructObject, ConstructObject.IObject
+namespace ConstructEngine.Objects
 {
-    
-    public bool Collidable { get; set; }
-    
-    public bool OneWay { get; set; }
-    
-    public Area2D Collider { get; set; }
-
-    public CollisionObject()
+    public class CollisionObject : ConstructObject, ConstructObject.IObject
     {
-
-    }
-    
-    public CollisionObject(Rectangle rect, bool collidable, bool oneway)
-    {
-        OneWay = oneway;
-        Collidable = collidable;
-        Rectangle = rect;
-        Collider = new Area2D(Rectangle, Collidable, this);
         
-    }
+        public bool Collidable { get; set; }
+        
+        public bool OneWay { get; set; }
+        
+        public Area2D Collider { get; set; }
 
-    public override void Load()
-    {
-        if (Values.ContainsKey("Collision"))
+        public CollisionObject()
         {
-            if (Values["Collision"] as bool? == true)
-            {
-                Collidable = true;
-            }
+
+        }
+        
+        public CollisionObject(Rectangle rect, bool collidable, bool oneway)
+        {
+            OneWay = oneway;
+            Collidable = collidable;
+            Rectangle = rect;
+            Collider = new Area2D(Rectangle, Collidable, this);
+            
         }
 
-        if (Values.ContainsKey("OneWay"))
+        public override void Load()
         {
-            if (Values["OneWay"] as bool? == true)
+            if (Values.ContainsKey("Collision"))
             {
-                OneWay = true;
-                Collidable = false;
+                if (Values["Collision"] as bool? == true)
+                {
+                    Collidable = true;
+                }
             }
+
+            if (Values.ContainsKey("OneWay"))
+            {
+                if (Values["OneWay"] as bool? == true)
+                {
+                    OneWay = true;
+                    Collidable = false;
+                }
+            }
+
+            Collider = new Area2D(Rectangle, Collidable, this);
         }
 
-        Collider = new Area2D(Rectangle, Collidable, this);
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-
-        if (OneWay)
+        public override void Update(GameTime gameTime)
         {
-            bool playerAbove = Player.KinematicBase.Collider.Rect.Bottom <= Collider.Rect.Top;
-            bool movingDown = Player.KinematicBase.Velocity.Y >= 0;
 
-            if (playerAbove && movingDown)
+            if (OneWay)
             {
-                Collider.Enabled = true;
-            }
-            else
-            {
-                Collider.Enabled = false;
+                bool playerAbove = Player.KinematicBase.Collider.Rect.Bottom <= Collider.Rect.Top;
+                bool movingDown = Player.KinematicBase.Velocity.Y >= 0;
+
+                if (playerAbove && movingDown)
+                {
+                    Collider.Enabled = true;
+                }
+                else
+                {
+                    Collider.Enabled = false;
+                }
             }
         }
     }

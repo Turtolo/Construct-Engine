@@ -2,129 +2,128 @@ using System;
 using System.Net.NetworkInformation;
 using Microsoft.Xna.Framework;
 
-namespace ConstructEngine.Util.Tween;
-
-public class Tween
+namespace ConstructEngine.Util.Tween
 {
-    public float StartValue { get; set; }
-    public float EndValue { get; set; }
-    public float Duration { get; set; }
-    
-    private float _elapsedTime;
-    
-    private int LoopTimes { get; set; }
-    
-    public Func<float, float> EasingFunction { get; set; } = EasingFunctions.Linear;
-    
-    public Tween(float start, float end, float duration, Func<float, float> easingFunction)
+    public class Tween
     {
-        EasingFunction = easingFunction;
-        StartValue = start;
-        EndValue = end;
-        Duration = duration;
-        _elapsedTime = 0f;
-    }
-    
-    public void Update(float deltaTime, float? startValue = null, float? endValue = null, float? duration = null)
-    {
-        _elapsedTime += deltaTime;
-        StartValue = startValue ?? StartValue;
-        EndValue = endValue ?? EndValue;
-        Duration = duration ?? Duration;
-    }
-
-
-
-    public float GetCurrentValue(Func<float> progressFunction)
-    {
-        float progress = progressFunction();
-        float easedProgress = EasingFunction?.Invoke(progress) ?? progress;
-        return StartValue + (EndValue - StartValue) * easedProgress;
-    }
-
-    
-    public float GetLoopedValue(float deltaTime, int loopTimes = -1)
-    {
-        _elapsedTime += deltaTime;
+        public float StartValue { get; set; }
+        public float EndValue { get; set; }
+        public float Duration { get; set; }
+        private float _elapsedTime;
         
-        int loopsDone = 0;
-
-        while (_elapsedTime >= Duration && (loopTimes == -1 || loopsDone < loopTimes))
+        private int LoopTimes { get; set; }
+        
+        public Func<float, float> EasingFunction { get; set; } = EasingFunctions.Linear;
+        
+        public Tween(float start, float end, float duration, Func<float, float> easingFunction)
         {
-            _elapsedTime -= Duration;
-            loopsDone++;
+            EasingFunction = easingFunction;
+            StartValue = start;
+            EndValue = end;
+            Duration = duration;
+            _elapsedTime = 0f;
         }
         
-        if (loopTimes != -1 && loopsDone >= loopTimes)
+        public void Update(float deltaTime, float? startValue = null, float? endValue = null, float? duration = null)
         {
-            _elapsedTime = Duration;
+            _elapsedTime += deltaTime;
+            StartValue = startValue ?? StartValue;
+            EndValue = endValue ?? EndValue;
+            Duration = duration ?? Duration;
         }
 
-        float progress = Math.Clamp(_elapsedTime / Duration, 0f, 1f);
-        float easedProgress = EasingFunction(progress);
-        return StartValue + (EndValue - StartValue) * easedProgress;
-    }
-    
-
-
-    public float Normal()
-    {
-        return Math.Clamp(_elapsedTime / Duration, 0f, 1f);
-    }
-
-    public float Loop(int loopTimes = -1)
-    {
-        int loopsDone = 0;
-
-        while (_elapsedTime >= Duration && (loopTimes == -1 || loopsDone < loopTimes))
+        public float GetCurrentValue(Func<float> progressFunction)
         {
-            _elapsedTime -= Duration;
-            loopsDone++;
+            float progress = progressFunction();
+            float easedProgress = EasingFunction?.Invoke(progress) ?? progress;
+            return StartValue + (EndValue - StartValue) * easedProgress;
+        }
+
+        
+        public float GetLoopedValue(float deltaTime, int loopTimes = -1)
+        {
+            _elapsedTime += deltaTime;
+            
+            int loopsDone = 0;
+
+            while (_elapsedTime >= Duration && (loopTimes == -1 || loopsDone < loopTimes))
+            {
+                _elapsedTime -= Duration;
+                loopsDone++;
+            }
+            
+            if (loopTimes != -1 && loopsDone >= loopTimes)
+            {
+                _elapsedTime = Duration;
+            }
+
+            float progress = Math.Clamp(_elapsedTime / Duration, 0f, 1f);
+            float easedProgress = EasingFunction(progress);
+            return StartValue + (EndValue - StartValue) * easedProgress;
         }
         
-        if (loopTimes != -1 && loopsDone >= loopTimes)
+
+
+        public float Normal()
         {
-            _elapsedTime = Duration;
+            return Math.Clamp(_elapsedTime / Duration, 0f, 1f);
         }
 
-        return Math.Clamp(_elapsedTime / Duration, 0f, 1f);
+        public float Loop(int loopTimes = -1)
+        {
+            int loopsDone = 0;
+
+            while (_elapsedTime >= Duration && (loopTimes == -1 || loopsDone < loopTimes))
+            {
+                _elapsedTime -= Duration;
+                loopsDone++;
+            }
+            
+            if (loopTimes != -1 && loopsDone >= loopTimes)
+            {
+                _elapsedTime = Duration;
+            }
+
+            return Math.Clamp(_elapsedTime / Duration, 0f, 1f);
+            
+        }
+
+        public float PingPong(int loopTimes = -1)
+        {
+            float totalCycleDuration = Duration * 2f;
+            int cyclesDone = (int)(_elapsedTime / totalCycleDuration);
+            if (loopTimes != -1 && cyclesDone >= loopTimes) 
+            {
+                return EndValue;
+            }
+
+            float cycleTime = _elapsedTime % totalCycleDuration;
+            float progress;  
+
+            if (cycleTime <= Duration)
+            {
+                progress = cycleTime / Duration;          // going forward
+            }
+            else
+            {
+                progress = (totalCycleDuration - cycleTime) / Duration; // going backward
+            }
+
+            float eased = EasingFunction(progress);
+            return StartValue + (EndValue - StartValue) * eased;
+        }
+
+
+
+
+        public bool IsFinished()
+        {
+            return _elapsedTime >= Duration;
+        }
+        
+
+        
         
     }
 
-    public float PingPong(int loopTimes = -1)
-    {
-        float totalCycleDuration = Duration * 2f;
-        int cyclesDone = (int)(_elapsedTime / totalCycleDuration);
-        if (loopTimes != -1 && cyclesDone >= loopTimes) 
-        {
-            return EndValue;
-        }
-
-        float cycleTime = _elapsedTime % totalCycleDuration;
-        float progress;  
-
-        if (cycleTime <= Duration)
-        {
-            progress = cycleTime / Duration;          // going forward
-        }
-        else
-        {
-            progress = (totalCycleDuration - cycleTime) / Duration; // going backward
-        }
-
-        float eased = EasingFunction(progress);
-        return StartValue + (EndValue - StartValue) * eased;
-    }
-
-
-
-
-    public bool IsFinished()
-    {
-        return _elapsedTime >= Duration;
-    }
-    
-
-    
-    
 }

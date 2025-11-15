@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
 
-namespace ConstructEngine.UI;
-
-public interface IGumUpdatable
+namespace ConstructEngine.UI
 {
-    void Update(GameTime gameTime);
+    public interface IGumUpdatable
+    {
+        void Update(GameTime gameTime);
+    }
 }
