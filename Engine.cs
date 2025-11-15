@@ -6,15 +6,15 @@ using Microsoft.Xna.Framework.Input;
 
 using ConstructEngine.Input;
 using ConstructEngine.Graphics;
+using ConstructEngine.UI;
+using ConstructEngine.Area;
+using ConstructEngine.Object;
 using ConstructEngine.Components.Entity;
 using ConstructEngine.Util;
-using ConstructEngine.UI;
-using ConstructEngine.Object;
-using ConstructEngine.Area;
 
-using RenderingLibrary;
 using Gum.Wireframe;
-using Gum.DataTypes;
+using RenderingLibrary;
+using MonoGameGum;
 
 namespace ConstructEngine;
 
@@ -24,138 +24,146 @@ public class Engine : Game
 
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static new GraphicsDevice GraphicsDevice { get; private set; }
-    public static SpriteBatch SpriteBatch { get; private set; }
     public static new ContentManager Content { get; private set; }
-    public static InputManager Input { get; private set; }
+    public static SpriteBatch SpriteBatch { get; private set; }
+
+    public static SpriteFont Font { get; private set; }
     public static SceneManager SceneManager { get; private set; }
-    public static SpriteFont Font { get; set; }
+    public static InputManager Input { get; private set; }
 
     public static float DeltaTime { get; private set; }
-    public static bool ExitOnEscape { get; set; }
-    public static bool ExitRequested { get; set; }
-
-    public static int ResolutionWidth { get; private set; }
-    public static int ResolutionHeight { get; private set; }
-    public static int VirtualWidth { get; private set; }
-    public static int VirtualHeight { get; private set; }
+    public static bool ExitOnEscape { get; set; } = true;
 
     public static RenderTarget2D RenderTarget { get; private set; }
 
     public Effect PostProcessingShader { get; set; }
 
-    public bool IntegerScaling = true;
-    public int finalWidth;
-    public int finalHeight;
-    public int offsetX;
-    public int offsetY;
-    private float currentScale;
-    bool isFullscreen = false;
+    public static int VirtualWidth { get; private set; }
+    public static int VirtualHeight { get; private set; }
 
-    public Engine(
-        string title = "Construct Engine - Unnamed project",
-        int virtualWidth = 360,
-        int virtualHeight = 640,
-        bool fullScreen = false,
-        int resolutionWidth = 320,
-        int resolutionHeight = 180,
-        string fontPath = null)
+    public bool IntegerScaling { get; private set; }
+
+    private int finalWidth, finalHeight;
+    private int offsetX, offsetY;
+    private float currentScale;
+
+    private bool isFullscreen;
+    private static bool quit;
+
+    public GumService GumUI { get; private set; }
+    private EngineConfig Config;
+
+    public Engine(EngineConfig config)
     {
         if (Instance != null)
-            throw new InvalidOperationException("Only a single Engine instance can be created");
+            throw new InvalidOperationException("Only one Engine instance can exist.");
 
         Instance = this;
 
-        VirtualWidth = virtualWidth;
-        VirtualHeight = virtualHeight;
-        ResolutionWidth = resolutionWidth;
-        ResolutionHeight = resolutionHeight;
+        Config = config;
+
+        VirtualWidth = config.VirtualWidth;
+        VirtualHeight = config.VirtualHeight;
+        IntegerScaling = config.IntegerScaling;
+        isFullscreen = config.Fullscreen;
 
         Graphics = new GraphicsDeviceManager(this)
         {
-            IsFullScreen = fullScreen
+            IsFullScreen = isFullscreen
         };
 
         Content = base.Content;
         Content.RootDirectory = "Content";
 
-        if (fontPath != null)
-            Font = Content.Load<SpriteFont>(fontPath);
-
-        Window.Title = title;
+        Window.Title = config.Title ?? "Construct Engine - Unnamed Project";
         IsMouseVisible = true;
-    }
 
-    public Engine(
-        string title,
-        int virtualWidth,
-        int virtualHeight,
-        bool fullScreen,
-        string fontPath)
-        : this(title, virtualWidth, virtualHeight, fullScreen, 320, 180, fontPath)
-    {
-    }
+        Window.AllowUserResizing = true;
+        Window.ClientSizeChanged += (_, _) =>
+        {
+            UpdateRenderTargetTransform();
+            UpdateGumCamera();
+        };
 
+        Window.AllowUserResizing = config.AllowUserResizing;
+        Window.IsBorderless = config.IsBorderless;
+
+        Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+        IsFixedTimeStep = config.IsFixedTimeStep;
+        Graphics.SynchronizeWithVerticalRetrace = config.SynchronizeWithVerticalRetrace;
+        Graphics.ApplyChanges();
+
+        Window.Position = new Point(0, 0);
+    }
 
     protected override void Initialize()
     {
         SceneManager = new SceneManager();
         Input = new InputManager();
+        Input.InitializeBinds(DefaultInput.Binds);
 
         base.Initialize();
 
         GraphicsDevice = base.GraphicsDevice;
         SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-        Graphics.PreferredBackBufferWidth = ResolutionWidth;
-        Graphics.PreferredBackBufferHeight = ResolutionHeight;
-        Graphics.ApplyChanges();
+        if (!string.IsNullOrEmpty(Config.FontPath))
+            Font = Content.Load<SpriteFont>(Config.FontPath);
+
+        if (!string.IsNullOrEmpty(Config.GumProject))
+            InitializeGum(Config.GumProject);
 
         LoadRenderTarget();
-
-        Window.ClientSizeChanged += (_, _) =>
-        {
-            UpdateRenderTargetTransform();
-            UpdateGumCamera();
-        };
+        UpdateRenderTargetTransform();
     }
 
     protected override void Update(GameTime gameTime)
     {
         DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
         Input.Update(gameTime);
 
-        if ((ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape)) || ExitRequested)
+        if ((ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape)) || quit)
             Exit();
+
+        SceneManager.UpdateCurrentScene(gameTime);
+        GumManager.UpdateAll(gameTime);
+        GumUI?.Update(this, gameTime);
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        SetRenderTarget();
+
+        GraphicsDevice.Clear(Color.DarkSlateGray);
+        SceneManager.DrawCurrentScene(SpriteBatch);
+
         GraphicsDevice.SetRenderTarget(null);
         GraphicsDevice.Clear(Color.Black);
 
         SpriteBatch.Begin(
             SpriteSortMode.Immediate,
-            BlendState.Additive,
+            BlendState.AlphaBlend,
             SamplerState.PointClamp,
-            effect: PostProcessingShader
-        );
+            effect: PostProcessingShader);
 
-        SpriteBatch.Draw(RenderTarget,
+        SpriteBatch.Draw(
+            RenderTarget,
             new Rectangle(offsetX, offsetY, finalWidth, finalHeight),
             Color.White);
 
         SpriteBatch.End();
 
+        GumUI?.Draw();
+
         base.Draw(gameTime);
     }
 
-    public void SetRenderTarget()
-    {
+    public void SetRenderTarget() =>
         GraphicsDevice.SetRenderTarget(RenderTarget);
-    }
 
     public void LoadRenderTarget()
     {
@@ -165,17 +173,7 @@ public class Engine : Game
             VirtualHeight,
             false,
             SurfaceFormat.Color,
-            DepthFormat.None,
-            0,
-            RenderTargetUsage.DiscardContents
-        );
-    }
-
-    public void ToggleFullscreen()
-    {
-        isFullscreen = !isFullscreen;
-        Graphics.IsFullScreen = isFullscreen;
-        Graphics.ApplyChanges();
+            DepthFormat.None);
     }
 
     public void UpdateRenderTargetTransform()
@@ -184,14 +182,11 @@ public class Engine : Game
 
         currentScale = Math.Min(
             pp.BackBufferWidth / (float)VirtualWidth,
-            pp.BackBufferHeight / (float)VirtualHeight);
+            pp.BackBufferHeight / (float)VirtualHeight
+        );
 
         if (IntegerScaling)
-        {
-            currentScale = MathF.Floor(currentScale);
-            if (currentScale < 1f)
-                currentScale = 1f;
-        }
+            currentScale = Math.Max(1, MathF.Floor(currentScale));
 
         finalWidth = (int)(VirtualWidth * currentScale);
         finalHeight = (int)(VirtualHeight * currentScale);
@@ -200,17 +195,33 @@ public class Engine : Game
         offsetY = (pp.BackBufferHeight - finalHeight) / 2;
     }
 
+    public void InitializeGum(string gumProject)
+    {
+        GumUI = GumHelper.GumInitialize(this, gumProject);
+        UpdateRenderTargetTransform();
+        UpdateGumCamera();
+    }
+
     public void UpdateGumCamera()
     {
-        var camera = SystemManagers.Default.Renderer.Camera;
-        camera.Zoom = currentScale;
-        camera.X = -offsetX / currentScale;
-        camera.Y = -offsetY / currentScale;
+        if (GumUI == null) return;
+
+        var cam = SystemManagers.Default.Renderer.Camera;
+        cam.Zoom = currentScale;
+        cam.X = -offsetX / currentScale;
+        cam.Y = -offsetY / currentScale;
 
         GraphicalUiElement.CanvasWidth = VirtualWidth;
         GraphicalUiElement.CanvasHeight = VirtualHeight;
 
         GumHelper.UpdateScreenLayout();
+    }
+
+    public void ToggleFullscreen()
+    {
+        isFullscreen = !isFullscreen;
+        Graphics.IsFullScreen = isFullscreen;
+        Graphics.ApplyChanges();
     }
 
     public static void ClearAllLists()
@@ -222,4 +233,6 @@ public class Engine : Game
         ConstructObject.ObjectList.Clear();
         Ray2D.RayList.Clear();
     }
+
+    public static void Quit() => quit = true;
 }

@@ -10,11 +10,18 @@ namespace ConstructEngine
         public int VirtualWidth;
         public int VirtualHeight;
 
-        public bool Fullscreen;
-        public bool IntegerScaling;
-
+        public bool Fullscreen = true;
+        public bool IntegerScaling = true;
+        public bool AllowUserResizing = true;
+        public bool IsBorderless = true;
+        public bool IsFixedTimeStep = false;
+        public bool SynchronizeWithVerticalRetrace = true; 
         public string FontPath;
         public string GumProject;
+
+        public EngineConfig()
+        {
+        }
     }
 
     public static class DefaultInput
