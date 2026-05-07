@@ -1,4 +1,4 @@
-namespace Monolith.Prefs
+namespace Amethyst.Prefs
 {
   public class AudioPrefs : IPrefSection
   {

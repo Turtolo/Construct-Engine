@@ -1,4 +1,4 @@
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   public class Signal : BaseObject
   {

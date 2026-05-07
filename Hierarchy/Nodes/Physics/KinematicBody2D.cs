@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Params;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class KinematicBody2D : PhysicsBody2D
   {

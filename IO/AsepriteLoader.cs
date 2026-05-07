@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Graphics;
+using Amethyst.Geometry;
+using Amethyst.Graphics;
 
-namespace Monolith.IO
+namespace Amethyst.IO
 {
   public static class AsepriteLoader
   {
@@ -53,13 +53,13 @@ namespace Monolith.IO
           count++;
         }
       }
-      
+
       animations.Add("Main", new Animation
       {
         Frames = frames,
         Delay = TimeSpan.FromMilliseconds(100)
       });
-      
+
       return animations;
     }
 

@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
-using Monolith.Params;
+using Amethyst.Params;
 
-namespace Monolith
+namespace Amethyst
 {
   ///<summary>
   /// The absolute abstract base class that all others inherit.

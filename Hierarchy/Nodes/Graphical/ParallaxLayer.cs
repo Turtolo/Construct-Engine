@@ -1,13 +1,13 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Graphics;
-using Monolith.Managers;
-using Monolith.Hierarchy;
-using Monolith.Params;
-using Monolith.Util;
+using Amethyst.Graphics;
+using Amethyst.Managers;
+using Amethyst.Hierarchy;
+using Amethyst.Params;
+using Amethyst.Util;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public enum LoopAxis
   {

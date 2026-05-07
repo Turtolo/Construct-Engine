@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Runtime
+namespace Amethyst.Runtime
 {
   public readonly struct TimeContext
   {

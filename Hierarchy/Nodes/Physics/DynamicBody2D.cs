@@ -1,10 +1,10 @@
 
 using System;
 using Microsoft.Xna.Framework;
-using Monolith.Params;
-using Monolith.Util;
+using Amethyst.Params;
+using Amethyst.Util;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class DynamicBody2D : PhysicsBody2D
   {

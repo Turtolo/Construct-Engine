@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Params;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class Path2D : Node2D
   {

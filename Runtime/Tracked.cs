@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Monolith.Managers;
-using Monolith.Params;
-using Monolith.Runtime;
+using Amethyst.Managers;
+using Amethyst.Params;
+using Amethyst.Runtime;
 
-namespace Monolith
+namespace Amethyst
 {
   ///<summary>
   /// The absolute abstract class for other classes.

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Monolith.Hierarchy;
+using Amethyst.Hierarchy;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public class SceneTree : BaseObject
   {

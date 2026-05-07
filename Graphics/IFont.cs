@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public interface IFont
   {

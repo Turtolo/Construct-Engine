@@ -1,7 +1,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   ///<summary>
   /// The interface for all shapes.

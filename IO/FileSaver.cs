@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.IO
+namespace Amethyst.IO
 {
   /// <summary>
   /// Filetype enum.

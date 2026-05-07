@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   ///<summary>
   /// WIP, prob not going to end up in final product.

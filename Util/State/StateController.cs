@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   public class StateController : BaseObject
   {

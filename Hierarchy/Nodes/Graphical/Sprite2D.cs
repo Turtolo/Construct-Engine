@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Hierarchy;
-using Monolith.Graphics;
-using Monolith;
+using Amethyst.Hierarchy;
+using Amethyst.Graphics;
+using Amethyst;
 using System;
-using Monolith.Params;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
 
   public class Sprite2D : Node2D

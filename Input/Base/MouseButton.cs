@@ -1,4 +1,4 @@
-namespace Monolith.Input
+namespace Amethyst.Input
 {
   public enum MouseButton
   {

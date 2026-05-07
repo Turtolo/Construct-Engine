@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public class Tileset : BaseObject
   {

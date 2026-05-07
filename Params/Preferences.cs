@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Monolith.Prefs;
+using Amethyst.Prefs;
 
-namespace Monolith
+namespace Amethyst
 {
   public class Preferences
   {

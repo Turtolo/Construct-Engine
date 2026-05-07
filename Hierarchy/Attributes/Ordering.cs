@@ -1,13 +1,13 @@
 using System;
-using Monolith.Managers;
+using Amethyst.Managers;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public readonly record struct Ordering : IProperty<Ordering>
   {
     public int Depth { get; init; }
     public bool RelativeDepth { get; init; }
-    
+
     public DrawLayer DrawLayer { get; init; }
 
     public static readonly Ordering Identity =

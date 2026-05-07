@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using System.Text.Json;
-using Monolith.Graphics;
+using Amethyst.Graphics;
 
-namespace Monolith.IO
+namespace Amethyst.IO
 {
   public class PipelineLoader : IContentProvider
   {

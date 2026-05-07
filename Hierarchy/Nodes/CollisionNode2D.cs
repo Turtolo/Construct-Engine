@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Params;
-using Monolith.Tools;
+using Amethyst.Geometry;
+using Amethyst.Params;
+using Amethyst.Tools;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
 
   public class CollisionNode2D : Node2D

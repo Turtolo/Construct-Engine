@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   ///<summary>
   /// A property which has two instances, one global and one local. 

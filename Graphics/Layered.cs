@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public abstract class Layered : BaseObject
   {

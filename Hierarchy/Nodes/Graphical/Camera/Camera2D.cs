@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Managers;
-using Monolith.Params;
+using Amethyst.Managers;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class Camera2D : Node2D
   {

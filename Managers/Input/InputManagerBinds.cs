@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Monolith.Tools;
-using Monolith.Input;
+using Amethyst.Tools;
+using Amethyst.Input;
 using Microsoft.Xna.Framework.Input;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public partial class InputManager
   {

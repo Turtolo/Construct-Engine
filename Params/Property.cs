@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Monolith.Hierarchy;
-using Monolith.Managers;
-using Monolith.Tools;
+using Amethyst.Hierarchy;
+using Amethyst.Managers;
+using Amethyst.Tools;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public interface IProperty<TSelf>
       where TSelf : struct

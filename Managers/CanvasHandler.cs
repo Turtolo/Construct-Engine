@@ -1,13 +1,13 @@
-using Monolith.Graphics;
+using Amethyst.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Monolith.Params;
-using Monolith.Geometry;
+using Amethyst.Params;
+using Amethyst.Geometry;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public enum DrawLayer
   {
@@ -27,6 +27,9 @@ namespace Monolith.Managers
     internal Extent RenderSize { get; set; } = new Extent(640, 360);
     internal bool IntScaling { get; set; } = true;
     internal Rectangle Destination { get; set; }
+    internal Color CanvasColor { get; set; } = Color.CornflowerBlue;
+
+    internal Effect PostProcessingShader { get; set; }
 
     public RenderTarget2D RenderTarget { get; internal set; }
 
@@ -54,7 +57,6 @@ namespace Monolith.Managers
     /// </summary>
     public void SetMatrix(Matrix transform) => _matrix = transform;
 
-
     /// <summary>
     /// Queues a call directly.
     /// </summary>
@@ -69,7 +71,6 @@ namespace Monolith.Managers
     /// </summary>
     public Rectangle GetWorldViewRectangle()
     {
-
       Matrix inverse = Matrix.Invert(_matrix);
 
       Vector2 topLeft = Vector2.Transform(Vector2.Zero, inverse);
@@ -84,6 +85,27 @@ namespace Monolith.Managers
           (int)(bottomRight.X - topLeft.X),
           (int)(bottomRight.Y - topLeft.Y)
       );
+    }
+
+    public void Draw(SpriteBatch spriteBatch)
+    {
+      Core.GraphicsDevice.SetRenderTarget(RenderTarget);
+      Core.GraphicsDevice.Clear(CanvasColor);
+      
+      Flush();
+
+      Core.GraphicsDevice.SetRenderTarget(null);
+      Core.GraphicsDevice.Clear(Color.Black);
+
+      spriteBatch.Begin(
+          SpriteSortMode.Immediate,
+          BlendState.AlphaBlend,
+          SamplerState.PointClamp,
+          effect: PostProcessingShader);
+
+      spriteBatch.Draw(RenderTarget, Destination, Color.White);
+
+      spriteBatch.End();
     }
 
     /// <summary>

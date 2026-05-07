@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public record struct CanvasParams
   {

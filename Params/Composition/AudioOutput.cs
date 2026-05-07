@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public class AudioOutput : BaseObject
   {

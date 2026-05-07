@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Geometry;
-using Monolith.Graphics;
-using Monolith.Tools;
-using Monolith.Managers;
-using Monolith.Params;
+using Amethyst.Geometry;
+using Amethyst.Graphics;
+using Amethyst.Tools;
+using Amethyst.Managers;
+using Amethyst.Params;
 using System.IO.Compression;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
 
   public class Node2D : CanvasNode

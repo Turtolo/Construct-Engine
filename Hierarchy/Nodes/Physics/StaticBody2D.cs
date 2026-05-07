@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Managers;
+using Amethyst.Geometry;
+using Amethyst.Managers;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class StaticBody2D : PhysicsBody2D
   {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   public static class ArrayExtension
   {

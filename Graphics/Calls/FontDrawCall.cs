@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Params;
+using Amethyst.Params;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public sealed class FontDrawCall : Layered, IDrawCall
   {

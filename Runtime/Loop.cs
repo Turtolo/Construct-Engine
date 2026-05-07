@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Monolith.Hierarchy;
-using Monolith.Util;
+using Amethyst.Hierarchy;
+using Amethyst.Util;
 
-namespace Monolith.Runtime
+namespace Amethyst.Runtime
 {
   public abstract class Loop : BaseObject
   {

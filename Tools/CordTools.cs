@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Hierarchy;
+using Amethyst.Geometry;
+using Amethyst.Hierarchy;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   public static class CordTools
   {

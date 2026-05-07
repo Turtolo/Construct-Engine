@@ -278,11 +278,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/nilslauvstad/Git/Monolith/Monolith.csproj",
-      "projectName": "Monolith",
-      "projectPath": "/Users/nilslauvstad/Git/Monolith/Monolith.csproj",
+      "projectUniqueName": "/Users/nilslauvstad/Git/Amethyst/Amethyst.csproj",
+      "projectName": "Amethyst",
+      "projectPath": "/Users/nilslauvstad/Git/Amethyst/Amethyst.csproj",
       "packagesPath": "/Users/nilslauvstad/.nuget/packages/",
-      "outputPath": "/Users/nilslauvstad/Git/Monolith/obj/",
+      "outputPath": "/Users/nilslauvstad/Git/Amethyst/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/nilslauvstad/.nuget/NuGet/NuGet.Config"

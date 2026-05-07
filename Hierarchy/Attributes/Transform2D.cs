@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public readonly record struct Transform2D : IProperty<Transform2D>
   {

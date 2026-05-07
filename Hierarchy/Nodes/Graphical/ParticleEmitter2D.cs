@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Params;
-using Monolith.Graphics;
-using Monolith.Tools;
+using Amethyst.Params;
+using Amethyst.Graphics;
+using Amethyst.Tools;
 using System;
 using System.Collections.Generic;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class ParticleEmitter2D : Node2D
   {

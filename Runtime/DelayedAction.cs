@@ -1,7 +1,7 @@
 using System;
-using Monolith.Managers;
+using Amethyst.Managers;
 
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   ///<summary>
   /// A struct keeping information for a timer.

@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public sealed class BitmapFont : BaseObject, IFont
   {

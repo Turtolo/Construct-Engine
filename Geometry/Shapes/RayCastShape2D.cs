@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Monolith.Graphics;
-using Monolith.Managers;
-using Monolith.Params;
+using Amethyst.Graphics;
+using Amethyst.Managers;
+using Amethyst.Params;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   public class RayCastShape2D
   {

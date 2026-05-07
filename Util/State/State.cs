@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   public interface IState
   {

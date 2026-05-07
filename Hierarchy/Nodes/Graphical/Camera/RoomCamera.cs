@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Params;
-using Monolith.Tools;
-using Monolith.Util;
+using Amethyst.Params;
+using Amethyst.Tools;
+using Amethyst.Util;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public enum CameraSide
   {

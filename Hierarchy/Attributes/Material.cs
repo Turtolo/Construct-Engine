@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public readonly record struct Material : IProperty<Material>
   {

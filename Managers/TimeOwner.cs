@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Monolith.Runtime;
-using Monolith.Util;
+using Amethyst.Runtime;
+using Amethyst.Util;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public sealed class TimeOwner : BaseObject
   {

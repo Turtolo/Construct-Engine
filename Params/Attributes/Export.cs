@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
   public sealed class ExportAttribute : Attribute { }

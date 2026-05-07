@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Geometry;
-using Monolith.Params;
+using Amethyst.Geometry;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class CollisionShape2D : Node2D
   {

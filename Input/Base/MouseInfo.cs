@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Monolith.Input
+namespace Amethyst.Input
 {
   public class MouseInfo
   {

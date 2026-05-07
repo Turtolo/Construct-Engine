@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Hierarchy;
-using Monolith.Params;
+using Amethyst.Geometry;
+using Amethyst.Hierarchy;
+using Amethyst.Params;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
-  public static class RegionTools 
+  public static class RegionTools
   {
     public static RectangleShape2D ToShape(this Rectangle normRect)
     {
@@ -41,43 +41,43 @@ namespace Monolith.Tools
 
     public static List<Rectangle> HorizontalSplit(this Rectangle rect, int segments)
     {
-        if (segments <= 0)
-            throw new ArgumentException("Segments must be greater than 0.", nameof(segments));
+      if (segments <= 0)
+        throw new ArgumentException("Segments must be greater than 0.", nameof(segments));
 
-        var result = new List<Rectangle>(segments);
+      var result = new List<Rectangle>(segments);
 
-        int baseWidth = rect.Width / segments;
-        int remainder = rect.Width % segments;
+      int baseWidth = rect.Width / segments;
+      int remainder = rect.Width % segments;
 
-        int x = rect.X;
+      int x = rect.X;
 
-        for (int i = 0; i < segments; i++)
-        {
-            int width = baseWidth;
+      for (int i = 0; i < segments; i++)
+      {
+        int width = baseWidth;
 
-            if (i < remainder)
-                width += 1;
+        if (i < remainder)
+          width += 1;
 
-            result.Add(new Rectangle(
-                x,
-                rect.Y,
-                width,
-                rect.Height
-            ));
+        result.Add(new Rectangle(
+            x,
+            rect.Y,
+            width,
+            rect.Height
+        ));
 
-            x += width;
-        }
+        x += width;
+      }
 
-        return result;
+      return result;
     }
-      
+
     public static CollisionShape2D ToCollisionShape(this Rectangle rect)
     {
       var position = rect.Location.ToVector2();
 
       var rectShape = rect.ToShape();
 
-      return new CollisionShape2D().Set(n => 
+      return new CollisionShape2D().Set(n =>
       {
         n.LocalPosition = position;
         n.Shape = rectShape;

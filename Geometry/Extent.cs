@@ -3,7 +3,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   ///<summary>
   /// A struct with a width and height, used primarily for geometrical shapes without a location.

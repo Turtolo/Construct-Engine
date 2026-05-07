@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Graphics;
-using Monolith.Params;
+using Amethyst.Graphics;
+using Amethyst.Params;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public interface IDrawCall
   {

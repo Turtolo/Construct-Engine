@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using Monolith.Graphics;
-using Monolith.Util;
-using Monolith.Managers;
-using Monolith.Params;
-using Monolith.Hierarchy;
+using Amethyst.Graphics;
+using Amethyst.Util;
+using Amethyst.Managers;
+using Amethyst.Params;
+using Amethyst.Hierarchy;
 
-namespace Monolith
+namespace Amethyst
 {
   public class Core : Game
   {
@@ -21,7 +21,6 @@ namespace Monolith
     public static SpriteBatch SpriteBatch { get; private set; }
     public static SpriteFont Font { get; private set; }
     public static BitmapFont BitmapFont { get; private set; }
-    public static Effect PostProcessingShader { get; set; }
     public static MTexture Pixel { get; private set; }
 
     public static Preferences Prefs { get; set; }
@@ -88,9 +87,9 @@ namespace Monolith
       base.LoadContent();
 
       var assembly = typeof(Core).Assembly;
-      using var stream = assembly.GetManifestResourceStream("Monolith.Graphics.Font.bitmap_font.png");
+      using var stream = assembly.GetManifestResourceStream("Amethyst.Graphics.Font.bitmap_font.png");
       if (stream == null)
-        throw new InvalidOperationException("Embedded resource not found: Monolith.Graphics.Font.bitmap_font.png");
+        throw new InvalidOperationException("Embedded resource not found: Amethyst.Graphics.Font.bitmap_font.png");
 
       var texture = Texture2D.FromStream(GraphicsDevice, stream);
       BitmapFont = new BitmapFont(texture, 6, 10);
@@ -133,23 +132,7 @@ namespace Monolith
 
     protected override void Draw(GameTime gameTime)
     {
-      GraphicsDevice.SetRenderTarget(Canvas.RenderTarget);
-      GraphicsDevice.Clear(Color.Black);
-
-      Canvas.Flush();
-
-      GraphicsDevice.SetRenderTarget(null);
-      GraphicsDevice.Clear(Color.Black);
-
-      SpriteBatch.Begin(
-          SpriteSortMode.Immediate,
-          BlendState.AlphaBlend,
-          SamplerState.PointClamp,
-          effect: PostProcessingShader);
-
-      SpriteBatch.Draw(Canvas.RenderTarget, Canvas.Destination, Color.White);
-
-      SpriteBatch.End();
+      Canvas.Draw(SpriteBatch);
 
       base.Draw(gameTime);
     }

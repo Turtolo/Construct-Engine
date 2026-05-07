@@ -1,11 +1,11 @@
 using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Monolith.Hierarchy;
-using Monolith.Runtime;
-using Monolith.Tools;
+using Amethyst.Hierarchy;
+using Amethyst.Runtime;
+using Amethyst.Tools;
 
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   public class Tween<T> : Tracked, IProcess
   {

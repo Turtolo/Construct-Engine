@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Graphics;
-using Monolith.IO;
-using Monolith.Managers;
-using Monolith.Params;
+using Amethyst.Graphics;
+using Amethyst.IO;
+using Amethyst.Managers;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class Tilemap : Node2D
   {

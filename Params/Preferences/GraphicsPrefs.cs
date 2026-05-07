@@ -1,7 +1,8 @@
-using Monolith.Geometry;
-using Monolith.Prefs;
+using Amethyst.Geometry;
+using Amethyst.Prefs;
+using Microsoft.Xna.Framework;
 
-namespace Monolith
+namespace Amethyst
 {
 
   public class GraphicsPrefs : IPrefSection
@@ -20,6 +21,13 @@ namespace Monolith
     {
       get => renderSize;
       set => tracker.Set(ref renderSize, value);
+    }
+    
+    private Color canvasColor = Color.CornflowerBlue;
+    public Color CanvasColor 
+    { 
+      get => canvasColor;
+      set => tracker.Set(ref canvasColor, value);
     }
 
     public bool IsDirty => tracker.IsDirty;

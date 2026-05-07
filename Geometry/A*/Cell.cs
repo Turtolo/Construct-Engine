@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   public class Cell : BaseObject
   {

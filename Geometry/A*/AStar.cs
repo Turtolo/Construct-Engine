@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Tools;
+using Amethyst.Tools;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   public static class AStar
   {

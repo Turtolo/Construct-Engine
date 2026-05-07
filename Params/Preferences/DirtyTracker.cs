@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Monolith.Prefs
+namespace Amethyst.Prefs
 {
   public class DirtyTracker
   {

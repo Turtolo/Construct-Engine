@@ -2,10 +2,10 @@
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Tools;
+using Amethyst.Geometry;
+using Amethyst.Tools;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   ///<summary>
   /// The class for all bodies which posses phsyics and are required to be queued from the server.

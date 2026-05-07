@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   public static class PathTools
   {

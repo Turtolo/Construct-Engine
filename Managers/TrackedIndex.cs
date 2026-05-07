@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Monolith.Hierarchy;
-using Monolith.Runtime;
-using Monolith.Tools;
-using Monolith.Util;
+using Amethyst.Geometry;
+using Amethyst.Graphics;
+using Amethyst.Hierarchy;
+using Amethyst.Params;
+using Amethyst.Runtime;
+using Amethyst.Tools;
+using Amethyst.Util;
+using Microsoft.Xna.Framework;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public class TrackedIndex : Loop
   {
@@ -186,6 +190,9 @@ namespace Monolith.Managers
         i._SubmitCall();
         Flush();
       }
+
+      if (Core.Prefs.General.ShowCollision)
+        DrawShapes();
     }
 
     public override void _PhysicsUpdate(TimeSpan delta)
@@ -196,6 +203,46 @@ namespace Monolith.Managers
       {
         i._PhysicsUpdate((float)delta.TotalSeconds);
         Flush();
+      }
+    }
+
+    internal void DrawShapes()
+    {
+      foreach (var shape in GetAll<CollisionShape2D>())
+      {
+        Color color;
+        if (shape.Disabled)
+          color = Color.Gray;
+        else
+          color = Color.Blue;
+        
+        if (shape.Shape is RectangleShape2D rs)
+        {
+          Core.Canvas.Call(new TextureDrawCall
+          {
+            Texture = Core.Pixel,
+            Params = CanvasParams.Identity with 
+            {
+              Scale = new Vector2(rs.Size.Width, rs.Size.Height),
+              Color = color * 0.5f,
+              Position = shape.Transform.Global.Position
+            }
+          });
+        }
+
+        if (shape.Shape is CircleShape2D cs)
+        {
+          Core.Canvas.Call(new TextureDrawCall
+          {
+            Texture = GraphicsE.CreateCircle(cs.Radius),
+            Params = CanvasParams.Identity with 
+            {
+              Scale = new Vector2(1),
+              Color = color * 0.5f,
+              Position = shape.Transform.Global.Position
+            }
+          });
+        }
       }
     }
 

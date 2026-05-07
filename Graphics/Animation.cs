@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public class Animation : BaseObject
   {

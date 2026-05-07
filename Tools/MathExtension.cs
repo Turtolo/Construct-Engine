@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   public static class MathE
   {

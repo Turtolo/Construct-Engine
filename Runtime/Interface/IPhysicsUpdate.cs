@@ -1,5 +1,5 @@
 
-namespace Monolith.Runtime
+namespace Amethyst.Runtime
 {
   public interface IPhysicsUpdate
   {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public static class ClassDB
   {

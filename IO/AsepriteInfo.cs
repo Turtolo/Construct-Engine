@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Monolith.IO
+namespace Amethyst.IO
 {
   public class AsepriteFrameRect
   {

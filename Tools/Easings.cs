@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   /// <summary>
   /// Provides a collection of easing functions used to interpolate values over time.

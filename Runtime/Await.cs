@@ -1,6 +1,6 @@
 using System;
 
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   public static class Await
   {

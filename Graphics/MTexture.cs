@@ -1,9 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Geometry;
+using Amethyst.Geometry;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   /// <summary>
   /// Represents a texture or a rectangular region of a texture.

@@ -1,9 +1,9 @@
 
 
 using System.Numerics;
-using Monolith.Input;
+using Amethyst.Input;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public partial class InputManager
   {

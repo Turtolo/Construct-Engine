@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Util
+namespace Amethyst.Util
 {
   public interface ITimer
   {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
-using Monolith.Managers;
-using Monolith.Runtime;
+using Amethyst.Managers;
+using Amethyst.Runtime;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class Node : Tracked,
     IEnterTree,

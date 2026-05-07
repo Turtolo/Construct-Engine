@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public readonly record struct SpriteBatchParams : IEquatable<SpriteBatchParams>
   {

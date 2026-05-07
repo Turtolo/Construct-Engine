@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Monolith.Graphics
+namespace Amethyst.Graphics
 {
   public class MonoFont : BaseObject, IFont
   {

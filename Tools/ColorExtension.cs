@@ -1,7 +1,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   public class ColorExtension
   {

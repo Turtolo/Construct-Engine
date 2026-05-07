@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
-using Monolith.Tools;
+using Amethyst.Tools;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public readonly record struct Visibility : IProperty<Visibility>
   {

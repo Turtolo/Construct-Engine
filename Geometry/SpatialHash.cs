@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   public class SpatialHash<T> where T : IHashAble
   {

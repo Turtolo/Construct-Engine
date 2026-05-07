@@ -1,7 +1,7 @@
-using Monolith.Input;
+using Amethyst.Input;
 using Microsoft.Xna.Framework.Input;
 
-namespace Monolith.Input
+namespace Amethyst.Input
 {
   public enum InputType
   {

@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Graphics;
+using Amethyst.Graphics;
 
-namespace Monolith.Tools
+namespace Amethyst.Tools
 {
   public static class GraphicsE
   {
@@ -49,6 +49,30 @@ namespace Monolith.Tools
     public static Texture2D ToTexture(this MTexture texture)
     {
       return texture.Texture;
+    }
+
+    public static MTexture CreateCircle(int radius)
+    {
+        int diameter = radius * 2;
+        Texture2D texture = new Texture2D(Core.GraphicsDevice, diameter, diameter);
+        Color[] data = new Color[diameter * diameter];
+
+        for (int y = 0; y < diameter; y++)
+        {
+            for (int x = 0; x < diameter; x++)
+            {
+                int index = x + y * diameter;
+                Vector2 pos = new Vector2(x - radius, y - radius);
+
+                if (pos.Length() <= radius)
+                    data[index] = Color.White;
+                else
+                    data[index] = Color.Transparent;
+            }
+        }
+
+        texture.SetData(data);
+        return texture.ToMTexture();
     }
   }
 }

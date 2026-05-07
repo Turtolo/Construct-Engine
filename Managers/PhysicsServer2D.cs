@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
-using Monolith.Geometry;
-using Monolith.Hierarchy;
+using Amethyst.Geometry;
+using Amethyst.Hierarchy;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public class PhysicsServer2D : BaseObject
   {

@@ -1,8 +1,8 @@
 
 using Microsoft.Xna.Framework;
-using Monolith.Graphics;
+using Amethyst.Graphics;
 
-namespace Monolith.Params
+namespace Amethyst.Params
 {
   public record struct ParticleParams
   {

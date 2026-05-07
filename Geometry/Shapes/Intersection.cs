@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monolith.Geometry
+namespace Amethyst.Geometry
 {
   public static class Intersection
   {

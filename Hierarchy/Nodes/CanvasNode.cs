@@ -3,10 +3,10 @@ using System.IO.Compression;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Monolith.Managers;
-using Monolith.Params;
+using Amethyst.Managers;
+using Amethyst.Params;
 
-namespace Monolith.Hierarchy
+namespace Amethyst.Hierarchy
 {
   public class CanvasNode : Node
   {
@@ -78,10 +78,10 @@ namespace Monolith.Hierarchy
     ///<remarks>
     /// For the moment, this is not passed down.
     ///</remarks>
-    public DrawLayer LocalDrawLayer 
+    public DrawLayer LocalDrawLayer
     {
       get => Ordering.Local.DrawLayer;
-      set 
+      set
       {
         Ordering.Local = Ordering.Local with { DrawLayer = value };
       }

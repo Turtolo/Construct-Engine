@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
-using Monolith.IO;
+using Amethyst.IO;
 
-namespace Monolith.Managers
+namespace Amethyst.Managers
 {
   public class ResourceManager : BaseObject
   {
