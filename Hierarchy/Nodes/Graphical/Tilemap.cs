@@ -129,7 +129,7 @@ namespace Amethyst.Hierarchy
 
           Vector2 worldTilePos = localTilePos + Transform.Global.Position;
 
-          Core.Canvas.Call(new TextureDrawCall
+          Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = tile,
             Params = CanvasParams.Identity with
@@ -142,11 +142,11 @@ namespace Amethyst.Hierarchy
               Effects = Material.Global.SpriteEffects,
             },
             Depth = Ordering.Global.Depth,
-            BatchParams = SpriteBatchParams.Default with
+            Key = BatchKey.Default with
             {
               Effect = Material.Global.Shader
             }
-          }, Ordering.Global.DrawLayer);
+          });
         }
       }
     }

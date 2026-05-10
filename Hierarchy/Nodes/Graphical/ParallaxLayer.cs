@@ -107,7 +107,7 @@ namespace Amethyst.Hierarchy
           );
 
 
-          Core.Canvas.Call(new TextureDrawCall
+          Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = this.Texture,
             Params = CanvasParams.Identity with
@@ -116,7 +116,7 @@ namespace Amethyst.Hierarchy
               Color = Color.White
             },
             Depth = Ordering.Global.Depth,
-          }, Ordering.Global.DrawLayer);
+          });
         }
       }
     }

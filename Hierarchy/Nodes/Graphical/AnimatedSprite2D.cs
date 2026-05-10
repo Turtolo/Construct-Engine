@@ -107,7 +107,7 @@ namespace Amethyst.Hierarchy
 
       if (CurrentAnimation == null || Visibility.Global.Visibile == false) return;
 
-      Core.Canvas.Call(new TextureDrawCall
+      Core.Canvas.Submit(new TextureDrawCall
       {
         Texture = CurrentFrame,
         Params = CanvasParams.Identity with
@@ -120,11 +120,11 @@ namespace Amethyst.Hierarchy
           Effects = Material.Global.SpriteEffects,
         },
         Depth = Ordering.Global.Depth,
-        BatchParams = SpriteBatchParams.Default with
+        Key = BatchKey.Default with
         {
           Effect = Material.Global.Shader
         }
-      }, Ordering.Global.DrawLayer);
+      });
     }
   }
 }

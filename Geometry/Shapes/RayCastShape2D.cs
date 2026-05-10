@@ -59,7 +59,7 @@ namespace Amethyst.Geometry
       int depth = 99;
       int thickness = 2;
 
-      Core.Canvas.Call(
+      Core.Canvas.Submit(
           new TextureDrawCall
           {
             Params = CanvasParams.Identity with
@@ -72,13 +72,12 @@ namespace Amethyst.Geometry
             },
             Texture = Core.Pixel,
             Depth = depth
-          },
-          DrawLayer.Middleground
+          }
       );
 
       if (HasHit)
       {
-        Core.Canvas.Call(
+        Core.Canvas.Submit(
             new TextureDrawCall
             {
               Params = CanvasParams.Identity with
@@ -89,8 +88,7 @@ namespace Amethyst.Geometry
               },
               Texture = Core.Pixel,
               Depth = depth + 1
-            },
-            DrawLayer.Middleground
+            }
         );
       }
     }

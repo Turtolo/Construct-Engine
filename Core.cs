@@ -8,6 +8,7 @@ using Amethyst.Util;
 using Amethyst.Managers;
 using Amethyst.Params;
 using Amethyst.Hierarchy;
+using Monolith.Managers;
 namespace Amethyst
 {
   public class Core : Game
@@ -27,7 +28,7 @@ namespace Amethyst
     public static TimeOwner Time { get; private set; }
     public static TrackedIndex Index { get; private set; }
     public static ResourceManager Resource { get; private set; }
-    public static CanvasHandler Canvas { get; private set; }
+    public static Canvas2D Canvas { get; private set; }
     public static SceneTree Tree { get; private set; }
     public static InputManager Input { get; private set; }
     public static PhysicsServer2D Physics { get; private set; }
@@ -76,7 +77,7 @@ namespace Amethyst
       SpriteBatch = new SpriteBatch(GraphicsDevice);
       Pixel = new MTexture(1, 1, new[] { Color.White });
 
-      Canvas = new CanvasHandler(SpriteBatch);
+      Canvas = new Canvas2D();
 
       Canvas.Initialize();
     }

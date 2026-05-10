@@ -72,7 +72,7 @@ namespace Amethyst.Hierarchy
 
       Rectangle sourceRect = SourceRect;
 
-      Core.Canvas.Call(new TextureDrawCall
+      Core.Canvas.Submit(new TextureDrawCall
       {
         Texture = Texture,
         SourceRectangle = sourceRect,
@@ -94,12 +94,12 @@ namespace Amethyst.Hierarchy
 
         Depth = Ordering.Global.Depth,
 
-        BatchParams = SpriteBatchParams.Default with
+        Key = BatchKey.Default with
         {
           Effect = Material.Global.Shader
         }
 
-      }, Ordering.Global.DrawLayer);
+      });
     }
   }
 }

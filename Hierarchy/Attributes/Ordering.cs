@@ -8,12 +8,10 @@ namespace Amethyst.Params
     public int Depth { get; init; }
     public bool RelativeDepth { get; init; }
 
-    public DrawLayer DrawLayer { get; init; }
-
     public static readonly Ordering Identity =
-        new(0, true, DrawLayer.Middleground);
+        new(0, true);
 
-    public Ordering(int depth, bool relativeDepth, DrawLayer drawLayer)
+    public Ordering(int depth, bool relativeDepth)
     {
       Depth = depth;
       RelativeDepth = relativeDepth;
@@ -22,7 +20,7 @@ namespace Amethyst.Params
     public static Ordering Combine(in Ordering parent, in Ordering child)
     {
       int depth = child.RelativeDepth ? parent.Depth + child.Depth : child.Depth;
-      return new Ordering(depth, child.RelativeDepth, child.DrawLayer);
+      return new Ordering(depth, child.RelativeDepth);
     }
   }
 }

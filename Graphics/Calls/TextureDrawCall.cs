@@ -24,6 +24,10 @@ namespace Amethyst.Graphics
           ?? Texture.SourceRectangle
           ?? new Rectangle(0, 0, Texture.Texture.Width, Texture.Texture.Height);
 
+      Console.WriteLine(
+        $"[TextureDrawCall] Depth={Depth}, InternalDepth={InternalDepth}, " +
+        $"Pos={Params.Position}, Color={Params.Color}");
+
       sb.Draw(
           Texture.Texture,
           Params.Position,
@@ -33,7 +37,7 @@ namespace Amethyst.Graphics
           Params.Origin,
           Params.Scale,
           Params.Effects,
-          InternalDepth
+          layerDepth: InternalDepth
       );
     }
   }

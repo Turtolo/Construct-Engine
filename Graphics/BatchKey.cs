@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Amethyst.Graphics
 {
-  public readonly struct BatchKey : IEquatable<BatchKey>
+  public struct BatchKey : IEquatable<BatchKey>
   {
-      public readonly SpriteSortMode SortMode;
-      public readonly BlendState BlendState;
-      public readonly SamplerState SamplerState;
-      public readonly DepthStencilState DepthStencilState;
-      public readonly RasterizerState RasterizerState;
-      public readonly Effect Effect;
+      public SpriteSortMode SortMode { get; set; } 
+      public BlendState BlendState { get; set; }
+      public SamplerState SamplerState { get; set; }
+      public DepthStencilState DepthStencilState { get; set; }
+      public RasterizerState RasterizerState { get; set; }
+      public Effect Effect { get; set; }
 
       public BatchKey(
           SpriteSortMode sortMode,
@@ -28,9 +28,8 @@ namespace Amethyst.Graphics
           Effect = effect;
       }
 
-
       public static BatchKey Default => new(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp,
-          DepthStencilState.None, RasterizerState.CullCounterClockwise, null)
+          DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
 
       public bool Equals(BatchKey other)
       {

@@ -72,21 +72,6 @@ namespace Amethyst.Hierarchy
       }
     }
 
-    ///<summary>
-    /// The self contained draw layer of this node.
-    ///</summary>
-    ///<remarks>
-    /// For the moment, this is not passed down.
-    ///</remarks>
-    public DrawLayer LocalDrawLayer
-    {
-      get => Ordering.Local.DrawLayer;
-      set
-      {
-        Ordering.Local = Ordering.Local with { DrawLayer = value };
-      }
-    }
-
     /// <summary>
     /// The self contained sprite effects of this node.
     /// </summary>

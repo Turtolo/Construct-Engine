@@ -102,7 +102,7 @@ namespace Amethyst.Graphics
 
     public void Draw()
     {
-      Core.Canvas.Call(new TextureDrawCall
+      Core.Canvas.Submit(new TextureDrawCall
       {
         Texture = _initialData.Texture,
         Params = CanvasParams.Identity with

@@ -218,7 +218,7 @@ namespace Amethyst.Managers
         
         if (shape.Shape is RectangleShape2D rs)
         {
-          Core.Canvas.Call(new TextureDrawCall
+          Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = Core.Pixel,
             Params = CanvasParams.Identity with 
@@ -232,7 +232,7 @@ namespace Amethyst.Managers
 
         if (shape.Shape is CircleShape2D cs)
         {
-          Core.Canvas.Call(new TextureDrawCall
+          Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = GraphicsE.CreateCircle(cs.Radius),
             Params = CanvasParams.Identity with 
