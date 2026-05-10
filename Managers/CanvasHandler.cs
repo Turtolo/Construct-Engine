@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Amethyst.Params;
 using Amethyst.Geometry;
 
@@ -140,7 +139,9 @@ namespace Amethyst.Managers
           var calls = kvp.Value;
 
           if (calls.Count > 1)
+          {
             calls.Sort((a, b) => a.Depth.CompareTo(b.Depth));
+          }
 
           Matrix transform = (layer != DrawLayer.UI)
               ? _matrix
@@ -160,7 +161,6 @@ namespace Amethyst.Managers
               config.Effect,
               transform
           );
-
 
           for (int i = 0; i < calls.Count; i++)
             calls[i].Draw(sb);

@@ -10,7 +10,7 @@ namespace Amethyst.Graphics
   {
     CanvasParams Params { get; }
 
-    SpriteBatchParams BatchParams { get; }
+    BatchKey Key { get; }
 
     int Depth { get; }
 

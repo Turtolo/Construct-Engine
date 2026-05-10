@@ -8,7 +8,6 @@ using Amethyst.Util;
 using Amethyst.Managers;
 using Amethyst.Params;
 using Amethyst.Hierarchy;
-
 namespace Amethyst
 {
   public class Core : Game

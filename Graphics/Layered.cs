@@ -32,7 +32,7 @@ namespace Amethyst.Graphics
     {
       get
       {
-        return 1f - (_depth - Min) / (float)(Max - Min);
+        return (_depth - Min) / (float)(Max - Min);
       }
     }
   }

@@ -12,7 +12,7 @@ namespace Amethyst.Graphics
 
     public CanvasParams Params { get; set; } = CanvasParams.Identity;
 
-    public SpriteBatchParams BatchParams { get; init; } = SpriteBatchParams.Default;
+    public BatchKey Key { get; init; } = BatchKey.Default;
 
     public void Draw(SpriteBatch sb)
     {

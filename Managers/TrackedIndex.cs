@@ -237,9 +237,8 @@ namespace Amethyst.Managers
             Texture = GraphicsE.CreateCircle(cs.Radius),
             Params = CanvasParams.Identity with 
             {
-              Scale = new Vector2(1),
               Color = color * 0.5f,
-              Position = shape.Transform.Global.Position
+              Position = shape.Transform.Global.Position - new Vector2(cs.Radius)
             }
           });
         }

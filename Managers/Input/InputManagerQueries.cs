@@ -5,7 +5,7 @@ using Amethyst.Input;
 
 namespace Amethyst.Managers
 {
-  public partial class InputManager
+  public partial class InputManager : BaseObject
   {
 
     /// <summary>

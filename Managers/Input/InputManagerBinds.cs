@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Amethyst.Managers
 {
-  public partial class InputManager
+  public partial class InputManager : BaseObject
   {
     public void AddBind(params InputAction[] inputActions)
     {
