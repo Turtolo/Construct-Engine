@@ -9,6 +9,8 @@ namespace Amethyst.Graphics
     public required IFont Font { get; init; }
     public string Text { get; init; }
 
+    public Effect Effect { get; set; }
+
     public CanvasParams Params { get; set; } = CanvasParams.Identity;
 
     public BatchKey Key { get; init; } = BatchKey.Default;

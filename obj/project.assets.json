@@ -2,11 +2,10 @@
   "version": 3,
   "targets": {
     "net9.0": {
-      "MonoGame.Framework.DesktopGL/3.8.4.1": {
+      "MonoGame.Framework.DesktopGL/3.8.2.1105": {
         "type": "package",
         "dependencies": {
-          "MonoGame.Library.OpenAL": "1.24.3.2",
-          "MonoGame.Library.SDL": "2.32.2.1",
+          "MonoGame.Library.SDL": "2.26.5.5",
           "NVorbis": "0.10.4"
         },
         "compile": {
@@ -21,65 +20,34 @@
         },
         "build": {
           "build/MonoGame.Framework.DesktopGL.targets": {}
-        }
-      },
-      "MonoGame.Library.OpenAL/1.24.3.2": {
-        "type": "package",
+        },
         "runtimeTargets": {
-          "runtimes/android-arm/native/libopenal.so": {
-            "assetType": "native",
-            "rid": "android-arm"
-          },
-          "runtimes/android-arm64/native/libopenal.so": {
-            "assetType": "native",
-            "rid": "android-arm64"
-          },
-          "runtimes/android-x64/native/libopenal.so": {
-            "assetType": "native",
-            "rid": "android-x64"
-          },
-          "runtimes/android-x86/native/libopenal.so": {
-            "assetType": "native",
-            "rid": "android-x86"
-          },
-          "runtimes/ios-arm64/native/libopenal.a": {
-            "assetType": "native",
-            "rid": "ios-arm64"
-          },
-          "runtimes/iossimulator-arm64/native/libopenal.a": {
-            "assetType": "native",
-            "rid": "iossimulator-arm64"
-          },
-          "runtimes/iossimulator-x64/native/libopenal.a": {
-            "assetType": "native",
-            "rid": "iossimulator-x64"
-          },
-          "runtimes/linux-arm64/native/libopenal.so": {
-            "assetType": "native",
-            "rid": "linux-arm64"
-          },
-          "runtimes/linux-x64/native/libopenal.so": {
+          "runtimes/linux-x64/native/libopenal.so.1": {
             "assetType": "native",
             "rid": "linux-x64"
           },
-          "runtimes/osx/native/libopenal.dylib": {
+          "runtimes/osx/native/libopenal.1.dylib": {
             "assetType": "native",
             "rid": "osx"
           },
-          "runtimes/win-x64/native/openal.dll": {
+          "runtimes/win-x64/native/soft_oal.dll": {
             "assetType": "native",
             "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/soft_oal.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
           }
         }
       },
-      "MonoGame.Library.SDL/2.32.2.1": {
+      "MonoGame.Library.SDL/2.26.5.5": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/linux-x64/native/libSDL2-2.0.so.0": {
             "assetType": "native",
             "rid": "linux-x64"
           },
-          "runtimes/osx/native/libSDL2-2.0.0.dylib": {
+          "runtimes/osx/native/libSDL2.dylib": {
             "assetType": "native",
             "rid": "osx"
           },
@@ -127,61 +95,36 @@
     }
   },
   "libraries": {
-    "MonoGame.Framework.DesktopGL/3.8.4.1": {
-      "sha512": "YybxIIT5+Ky78E/XdkS0glyluMr2EeDZwx2LqXULAOCqiKt1+aDrjPZaqLL5qpNgBcMEHUeZJ4YjWe4TAZlWLw==",
+    "MonoGame.Framework.DesktopGL/3.8.2.1105": {
+      "sha512": "QwjhmpyMZ9js4zqoYN/0cz//nYZ1u5yB8KWJ1P7nbViqfUyzuFDvGqgUEXFLp+n0Rx4z9PuKfwL5nQpp9LrXhg==",
       "type": "package",
-      "path": "monogame.framework.desktopgl/3.8.4.1",
+      "path": "monogame.framework.desktopgl/3.8.2.1105",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "README-packages.md",
         "build/MonoGame.Framework.DesktopGL.targets",
         "lib/net8.0/MonoGame.Framework.dll",
         "lib/net8.0/MonoGame.Framework.xml",
-        "monogame.framework.desktopgl.3.8.4.1.nupkg.sha512",
-        "monogame.framework.desktopgl.nuspec"
+        "monogame.framework.desktopgl.3.8.2.1105.nupkg.sha512",
+        "monogame.framework.desktopgl.nuspec",
+        "runtimes/linux-x64/native/libopenal.so.1",
+        "runtimes/osx/native/libopenal.1.dylib",
+        "runtimes/win-x64/native/soft_oal.dll",
+        "runtimes/win-x86/native/soft_oal.dll"
       ]
     },
-    "MonoGame.Library.OpenAL/1.24.3.2": {
-      "sha512": "nGRsXQXs+NSUC3C5w90hFQfyKdZPpBnHnyg2w+Dw/2pUH7s+CoRWTJNYbzzdJf3+aeUvfvG4rTbFvMKDDj5olA==",
+    "MonoGame.Library.SDL/2.26.5.5": {
+      "sha512": "wSbYCCLeT3p3GZtU8GaYA5+XTjt4kM01yIvik3qm3sjU53jf/w0Pp0GBvOTCHgKxEGwb/IinHIASMcLuVnmgCA==",
       "type": "package",
-      "path": "monogame.library.openal/1.24.3.2",
+      "path": "monogame.library.sdl/2.26.5.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "Icon.png",
-        "LICENSE",
-        "README.md",
-        "monogame.library.openal.1.24.3.2.nupkg.sha512",
-        "monogame.library.openal.nuspec",
-        "runtimes/android-arm/native/libopenal.so",
-        "runtimes/android-arm64/native/libopenal.so",
-        "runtimes/android-x64/native/libopenal.so",
-        "runtimes/android-x86/native/libopenal.so",
-        "runtimes/ios-arm64/native/libopenal.a",
-        "runtimes/iossimulator-arm64/native/libopenal.a",
-        "runtimes/iossimulator-x64/native/libopenal.a",
-        "runtimes/linux-arm64/native/libopenal.so",
-        "runtimes/linux-x64/native/libopenal.so",
-        "runtimes/osx/native/libopenal.dylib",
-        "runtimes/win-x64/native/openal.dll"
-      ]
-    },
-    "MonoGame.Library.SDL/2.32.2.1": {
-      "sha512": "T4E2ppGlSTC2L9US1rxtdg3qTbarRzNId31xZoumUW9cf9Nq8nRQPMu9GzvZGrhfSySf0+UWPEj1rlicps+P/w==",
-      "type": "package",
-      "path": "monogame.library.sdl/2.32.2.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.txt",
-        "README.md",
-        "monogame.library.sdl.2.32.2.1.nupkg.sha512",
+        "monogame.library.sdl.2.26.5.5.nupkg.sha512",
         "monogame.library.sdl.nuspec",
         "runtimes/linux-x64/native/libSDL2-2.0.so.0",
-        "runtimes/osx/native/libSDL2-2.0.0.dylib",
+        "runtimes/osx/native/libSDL2.dylib",
         "runtimes/win-x64/native/SDL2.dll"
       ]
     },
@@ -269,7 +212,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "MonoGame.Framework.DesktopGL >= 3.8.*"
+      "MonoGame.Framework.DesktopGL >= 3.8.2.1105"
     ]
   },
   "packageFolders": {
@@ -319,7 +262,7 @@
           "MonoGame.Framework.DesktopGL": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[3.8.*, )"
+            "version": "[3.8.2.1105, )"
           }
         },
         "imports": [

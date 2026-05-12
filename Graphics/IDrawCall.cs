@@ -10,6 +10,8 @@ namespace Amethyst.Graphics
   {
     CanvasParams Params { get; }
 
+    public Effect Effect { get; }
+
     BatchKey Key { get; }
 
     int Depth { get; }

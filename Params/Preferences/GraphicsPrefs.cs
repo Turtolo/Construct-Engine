@@ -22,10 +22,10 @@ namespace Amethyst
       get => renderSize;
       set => tracker.Set(ref renderSize, value);
     }
-    
+
     private Color canvasColor = Color.CornflowerBlue;
-    public Color CanvasColor 
-    { 
+    public Color CanvasColor
+    {
       get => canvasColor;
       set => tracker.Set(ref canvasColor, value);
     }

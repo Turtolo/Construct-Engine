@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Amethyst;
 using Amethyst.Geometry;
 using Amethyst.Graphics;
@@ -10,7 +11,7 @@ namespace Monolith.Managers
 {
   public class Canvas2D : BaseObject
   {
-    private List<IDrawCall> _queue = new();
+    private Dictionary<int, List<IDrawCall>> _depthBucket = new();
 
     private Matrix _currentMatrix;
 
@@ -22,11 +23,6 @@ namespace Monolith.Managers
     internal Effect PostProcessingShader { get; set; }
 
     public RenderTarget2D RenderTarget { get; internal set; }
-
-    private int _beginCount;
-    private int _endCount;
-    private int _drawCount;
-    private BatchKey? _lastKey;
 
     public void Initialize()
     {
@@ -43,11 +39,18 @@ namespace Monolith.Managers
       Core.Tracked.Window.ClientSizeChanged += (_, _) => UpdateTransform();
       UpdateTransform();
     }
-    
+
     public void Submit(IDrawCall call)
     {
       if (call == null) throw new ArgumentNullException(nameof(call));
-      _queue.Add(call);
+
+      if (!_depthBucket.TryGetValue(call.Depth, out var list))
+      {
+        list = new List<IDrawCall>();
+        _depthBucket[call.Depth] = list;
+      }
+
+      list.Add(call);
     }
 
     public void SetMatrix(Matrix matrix)
@@ -78,11 +81,6 @@ namespace Monolith.Managers
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      _beginCount = 0;
-    _endCount = 0;
-      _drawCount = 0;
-      _lastKey = null;
-
       Core.GraphicsDevice.SetRenderTarget(RenderTarget);
       Core.GraphicsDevice.Clear(CanvasColor);
 
@@ -100,62 +98,66 @@ namespace Monolith.Managers
       spriteBatch.Draw(RenderTarget, Destination, Color.White);
 
       spriteBatch.End();
-
-      Console.WriteLine(
-        $"[Canvas2D] Batches={_beginCount}, Ends={_endCount}, Draws={_drawCount}, Queue={_queue.Count}");
-
-      _queue.Clear();
     }
 
     public void Flush(SpriteBatch spriteBatch)
     {
-      if (_queue.Count == 0)
+      if (_depthBucket.Count == 0)
         return;
 
-      BatchKey? currentKey = null;
+      var sortedDepth = _depthBucket.Keys
+        .OrderBy(d => d)
+        .ToList();
 
-      for (int i = 0; i < _queue.Count; i++)
+      foreach (var depth in sortedDepth)
       {
-        var call = _queue[i];
-        var key = call.Key;
+        var bucket = _depthBucket[depth];
 
-        if (!_lastKey.HasValue || !_lastKey.Value.Equals(key))
-        {
-          Console.WriteLine($"[Canvas2D] BatchKey switch at {i}: {key.SortMode}");
+        DrawBucket(spriteBatch, bucket);
+      }
+      _depthBucket.Clear();
+    }
 
-          _lastKey = key;
-        }
+    private void DrawBucket(SpriteBatch spriteBatch, List<IDrawCall> bucket)
+    {
+      BatchKey? currentKey = null;
+      Effect? currentEffect = null;
 
-        if (currentKey == null || !currentKey.Value.Equals(key))
+      for (int i = 0; i < bucket.Count; i++)
+      {
+        var call = bucket[i];
+
+        var nextKey = call.Key;
+        var nextEffect = call.Effect ?? null;
+
+        bool stateChanged =
+            currentKey == null ||
+            !currentKey.Value.Equals(nextKey) ||
+            currentEffect != nextEffect;
+
+        if (stateChanged)
         {
           if (currentKey != null)
-          {
             spriteBatch.End();
-            _endCount++;
-          }
 
           spriteBatch.Begin(
-              key.SortMode,
-              key.BlendState,
-              key.SamplerState,
-              key.DepthStencilState,
-              key.RasterizerState,
-              key.Effect,
+              nextKey.SortMode,
+              nextKey.BlendState,
+              nextKey.SamplerState,
+              nextKey.DepthStencilState,
+              nextKey.RasterizerState,
+              nextEffect,
               _currentMatrix
           );
 
-          _beginCount++;
-          currentKey = key;
+          currentKey = nextKey;
+          currentEffect = nextEffect;
         }
 
-        _drawCount++;
         call.Draw(spriteBatch);
       }
 
       spriteBatch.End();
-      _endCount++;
-
-      _queue.Clear();
     }
 
     internal void UpdateTransform()

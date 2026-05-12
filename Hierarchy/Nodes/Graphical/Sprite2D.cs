@@ -93,12 +93,7 @@ namespace Amethyst.Hierarchy
         },
 
         Depth = Ordering.Global.Depth,
-
-        Key = BatchKey.Default with
-        {
-          Effect = Material.Global.Shader
-        }
-
+        Effect = Material.Global.Shader
       });
     }
   }

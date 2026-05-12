@@ -34,8 +34,6 @@ namespace Amethyst.Managers
     {
       var inst = new T();
 
-      //AddTracked(inst);
-
       return inst;
     }
 
@@ -215,13 +213,14 @@ namespace Amethyst.Managers
           color = Color.Gray;
         else
           color = Color.Blue;
-        
+
         if (shape.Shape is RectangleShape2D rs)
         {
           Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = Core.Pixel,
-            Params = CanvasParams.Identity with 
+            Depth = 99,
+            Params = CanvasParams.Identity with
             {
               Scale = new Vector2(rs.Size.Width, rs.Size.Height),
               Color = color * 0.5f,
@@ -235,7 +234,8 @@ namespace Amethyst.Managers
           Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = GraphicsE.CreateCircle(cs.Radius),
-            Params = CanvasParams.Identity with 
+            Depth = 99,
+            Params = CanvasParams.Identity with
             {
               Color = color * 0.5f,
               Position = shape.Transform.Global.Position - new Vector2(cs.Radius)
