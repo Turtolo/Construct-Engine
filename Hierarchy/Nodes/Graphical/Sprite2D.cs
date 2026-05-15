@@ -67,7 +67,7 @@ namespace Amethyst.Hierarchy
 
     public override void _SubmitCall()
     {
-      if (Texture == null)
+      if (Texture == null || Visibility.Global.Visibile == false)
         return;
 
       Rectangle sourceRect = SourceRect;

@@ -37,6 +37,7 @@ namespace Amethyst
       Core.Graphics.IsFullScreen = Fullscreen;
 
       Core.Canvas.RenderSize = RenderSize;
+      Core.Canvas.CanvasColor = CanvasColor;
 
       Core.Canvas.UpdateTransform();
       Core.Graphics.ApplyChanges();

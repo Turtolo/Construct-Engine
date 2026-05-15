@@ -95,7 +95,14 @@ namespace Monolith.Managers
           SamplerState.PointClamp,
           effect: PostProcessingShader);
 
-      spriteBatch.Draw(RenderTarget, Destination, Color.White);
+      var dest = new Rectangle(
+          (int)MathF.Round(Destination.X),
+          (int)MathF.Round(Destination.Y),
+          Destination.Width,
+          Destination.Height
+      );
+
+      spriteBatch.Draw(RenderTarget, dest, Color.White);
 
       spriteBatch.End();
     }
