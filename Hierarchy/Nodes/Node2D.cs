@@ -14,8 +14,6 @@ namespace Amethyst.Hierarchy
 
   public class Node2D : CanvasNode
   {
-    public Dual<Transform2D> Transform { get; private set; }
-
     /// <summary>
     /// The self contained position of this node, updates child nodes' position.
     /// </summary>
@@ -55,51 +53,11 @@ namespace Amethyst.Hierarchy
       }
     }
 
-    /// <summary>
-    /// Signal for when the transform changes.
-    /// </summary>
-    public event Action<Transform2D> OnTransformChanged;
-
 
     /// <summary>
     /// Creates a new Node2D using a SpatialNodeConfig.
     /// </summary>
-    public Node2D()
-    {
-      Transform = new(Transform2D.Identity);
-      Transform.OnChanged += UpdateGlobalTransform;
-
-      UpdateGlobalTransform();
-      OnParentChanged += (node) =>
-      {
-        UpdateGlobalTransform();
-      };
-    }
-
-    /// <summary>
-    /// Recompute global transform based on parent.
-    /// Automatically ProcessProcessProcess_Processs children.
-    /// </summary>
-    internal void UpdateGlobalTransform()
-    {
-      if (GetParent() is Node2D parent2D)
-      {
-        Transform.Global = Transform2D.Combine(parent2D.Transform.Global, Transform.Local);
-      }
-      else
-      {
-        Transform.Global = Transform.Local;
-      }
-
-      OnTransformChanged?.Invoke(Transform.Global);
-
-
-      foreach (var child in Children)
-      {
-        if (child is Node2D c2d)
-          c2d.UpdateGlobalTransform();
-      }
-    }
+    public Node2D() {}
 
     /// <summary>
     /// An offset function for adding onto the node's LocalPosition with a Vector2.

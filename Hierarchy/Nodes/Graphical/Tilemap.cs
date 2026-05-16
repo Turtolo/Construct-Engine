@@ -135,7 +135,7 @@ namespace Amethyst.Hierarchy
             Params = CanvasParams.Identity with
             {
               Position = worldTilePos,
-              Color = Visibility.Global.Modulate,
+              Color = Material.Global.Modulate,
               Rotation = Transform.Global.Rotation,
               Origin = Vector2.Zero,
               Scale = Transform.Global.Scale,

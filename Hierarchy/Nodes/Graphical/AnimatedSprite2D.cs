@@ -105,7 +105,7 @@ namespace Amethyst.Hierarchy
     {
       base._SubmitCall();
 
-      if (CurrentAnimation == null || Visibility.Global.Visibile == false) return;
+      if (CurrentAnimation == null || Material.Global.Visibility == false) return;
 
       Core.Canvas.Submit(new TextureDrawCall
       {
@@ -113,7 +113,7 @@ namespace Amethyst.Hierarchy
         Params = CanvasParams.Identity with
         {
           Position = Transform.Global.Position,
-          Color = Visibility.Global.Modulate,
+          Color = Material.Global.Modulate,
           Rotation = Transform.Global.Rotation,
           Origin = CurrentFrame.Center,
           Scale = Transform.Global.Scale,

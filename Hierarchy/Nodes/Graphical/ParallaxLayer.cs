@@ -64,7 +64,7 @@ namespace Amethyst.Hierarchy
 
     public override void _SubmitCall()
     {
-      if (!Visibility.Global.Visibile)
+      if (!Material.Global.Visibility)
         return;
 
       Rectangle view = Core.Canvas.GetWorldViewRectangle();

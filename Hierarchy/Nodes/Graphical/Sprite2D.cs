@@ -67,7 +67,7 @@ namespace Amethyst.Hierarchy
 
     public override void _SubmitCall()
     {
-      if (Texture == null || Visibility.Global.Visibile == false)
+      if (Texture == null || Material.Global.Visibility == false)
         return;
 
       Rectangle sourceRect = SourceRect;
@@ -80,7 +80,7 @@ namespace Amethyst.Hierarchy
         Params = CanvasParams.Identity with
         {
           Position = Transform.Global.Position,
-          Color = Visibility.Global.Modulate,
+          Color = Material.Global.Modulate,
           Rotation = Transform.Global.Rotation,
 
           Origin = new Vector2(

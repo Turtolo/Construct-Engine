@@ -1,24 +1,27 @@
+#nullable enable
+
 using System;
-using System.IO.Compression;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Managers;
 using Amethyst.Params;
 
 namespace Amethyst.Hierarchy
 {
   public class CanvasNode : Node
   {
-
-    [Export]
-    public Dual<Visibility> Visibility { get; private set; }
-
     [Export]
     public Dual<Ordering> Ordering { get; private set; }
 
     [Export]
     public Dual<Material> Material { get; private set; }
+
+    [Export]
+    public Dual<Transform2D> Transform { get; private set; }
+
+    /// <summary>
+    /// Signal for when the transform changes.
+    /// </summary>
+    public event Action<Transform2D> OnTransformChanged;
 
     /// <summary>
     /// The self contained visibility of this node. 
@@ -26,10 +29,10 @@ namespace Amethyst.Hierarchy
     [Export]
     public bool LocalVisible
     {
-      get => Visibility.Local.Visibile;
+      get => Material.Local.Visibility;
       set
       {
-        Visibility.Local = Visibility.Local with { Visibile = value };
+        Material.Local = Material.Local with { Visibility = value };
       }
     }
 
@@ -39,10 +42,10 @@ namespace Amethyst.Hierarchy
     [Export]
     public Color LocalModulate
     {
-      get => Visibility.Local.Modulate;
+      get => Material.Local.Modulate;
       set
       {
-        Visibility.Local = Visibility.Local with { Modulate = value };
+        Material.Local = Material.Local with { Modulate = value };
       }
     }
 
@@ -87,13 +90,13 @@ namespace Amethyst.Hierarchy
 
     public CanvasNode()
     {
-      Visibility = new Dual<Visibility>(Params.Visibility.Identity);
       Ordering = new Dual<Ordering>(Params.Ordering.Identity);
       Material = new Dual<Material>(Params.Material.Identity);
+      Transform = new Dual<Transform2D>(Params.Transform2D.Identity);
 
-      Visibility.OnChanged += UpdateAttributes;
       Ordering.OnChanged += UpdateAttributes;
       Material.OnChanged += UpdateAttributes;
+      Transform.OnChanged += UpdateAttributes;
 
       UpdateAttributes();
       OnParentChanged += (node) =>
@@ -109,16 +112,18 @@ namespace Amethyst.Hierarchy
     {
       if (GetParent() is CanvasNode parent)
       {
-        Visibility.Global = Params.Visibility.Combine(parent.Visibility.Global, Visibility.Local);
         Ordering.Global = Params.Ordering.Combine(parent.Ordering.Global, Ordering.Local);
         Material.Global = Params.Material.Combine(parent.Material.Global, Material.Local);
+        Transform.Global = Transform2D.Combine(parent.Transform.Global, Transform.Local);
       }
       else
       {
-        Visibility.Global = Visibility.Local;
         Ordering.Global = Ordering.Local;
         Material.Global = Material.Local;
+        Transform.Global = Transform.Local;
       }
+
+      OnTransformChanged?.Invoke(Transform.Global);
 
       foreach (var child in Children)
       {
@@ -127,5 +132,4 @@ namespace Amethyst.Hierarchy
       }
     }
   }
-
 }
