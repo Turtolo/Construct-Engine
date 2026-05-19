@@ -109,7 +109,7 @@ namespace Amethyst.Hierarchy
         action?.Invoke();
 
 
-      var cameraXTween = Core.Index.CreateTween(t => LocalPosition = t, Transform.Global.Position, targetPos, 0.5f, Vector2.Lerp, EasingFunctions.Linear);
+      var cameraXTween = Core.Index.CreateTween(t => Position = t, Transform.Global.Position, targetPos, 0.5f, Vector2.Lerp, EasingFunctions.Linear);
 
       cameraXTween.SetCallbackAction
       (
@@ -126,7 +126,7 @@ namespace Amethyst.Hierarchy
     {
       if (TargetNode is KinematicBody2D body)
       {
-        body.Offset(5 * _dir, 0);
+        body.Position += new Vector2(5 * _dir, 0);
       }
     }
 

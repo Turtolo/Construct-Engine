@@ -18,7 +18,7 @@ namespace Amethyst.Hierarchy
     /// The self contained position of this node, updates child nodes' position.
     /// </summary>
     [Export]
-    public Vector2 LocalPosition
+    public Vector2 Position
     {
       get => Transform.Local.Position;
       set
@@ -31,7 +31,7 @@ namespace Amethyst.Hierarchy
     /// The self contained rotation of this node, updates child node's rotation.
     /// </summary>
     [Export]
-    public float LocalRotation
+    public float Rotation
     {
       get => Transform.Local.Rotation;
       set
@@ -44,7 +44,7 @@ namespace Amethyst.Hierarchy
     /// The self contained scale of this node, updates child node's scale.
     /// </summary>
     [Export]
-    public Vector2 LocalScale
+    public Vector2 Scale
     {
       get => Transform.Local.Scale;
       set
@@ -53,31 +53,10 @@ namespace Amethyst.Hierarchy
       }
     }
 
-
     /// <summary>
     /// Creates a new Node2D using a SpatialNodeConfig.
     /// </summary>
-    public Node2D() {}
-
-    /// <summary>
-    /// An offset function for adding onto the node's LocalPosition with a Vector2.
-    /// Acts the same as +=.
-    /// </summary>
-    /// <param name="delta"></param>
-    public void Offset(Vector2 delta)
-    {
-      LocalPosition += delta;
-    }
-
-    /// <summary>
-    /// An offset function for adding onto the node's LocalPosition.
-    /// Acts the same as +=.
-    /// </summary>
-    /// <param name="delta"></param>
-    public void Offset(float x, float y)
-    {
-      Offset(new Vector2(x, y));
-    }
+    public Node2D() { }
 
     public override void _EnterTree()
     {

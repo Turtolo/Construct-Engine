@@ -22,7 +22,7 @@ namespace Amethyst.Hierarchy
     {
       base._PhysicsUpdate(delta);
 
-      LocalPosition += Velocity * delta;
+      Position += Velocity * delta;
     }
 
     public override void _Process(float delta)

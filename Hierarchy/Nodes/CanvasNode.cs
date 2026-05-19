@@ -27,7 +27,7 @@ namespace Amethyst.Hierarchy
     /// The self contained visibility of this node. 
     /// </summary>
     [Export]
-    public bool LocalVisible
+    public bool Visibility
     {
       get => Material.Local.Visibility;
       set
@@ -40,7 +40,7 @@ namespace Amethyst.Hierarchy
     /// The self contained modulate of this node.
     /// </summary>
     [Export]
-    public Color LocalModulate
+    public Color Modulate
     {
       get => Material.Local.Modulate;
       set
@@ -53,7 +53,7 @@ namespace Amethyst.Hierarchy
     /// The self contained depth of this node.
     /// </summary>
     [Export]
-    public int LocalDepth
+    public int Depth
     {
       get => Ordering.Local.Depth;
       set
@@ -66,7 +66,7 @@ namespace Amethyst.Hierarchy
     /// The self contained shader of this node.
     /// </summary>
     [Export]
-    public Effect LocalShader
+    public Effect Shader
     {
       get => Material.Local.Shader;
       set
@@ -79,7 +79,7 @@ namespace Amethyst.Hierarchy
     /// The self contained sprite effects of this node.
     /// </summary>
     [Export]
-    public SpriteEffects LocalSpriteEffects
+    public SpriteEffects SpriteEffects
     {
       get => Material.Local.SpriteEffects;
       set

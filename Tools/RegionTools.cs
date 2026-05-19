@@ -79,7 +79,7 @@ namespace Amethyst.Tools
 
       return new CollisionShape2D().Set(n =>
       {
-        n.LocalPosition = position;
+        n.Position = position;
         n.Shape = rectShape;
       });
     }

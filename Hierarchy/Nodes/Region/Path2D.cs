@@ -58,11 +58,11 @@ namespace Amethyst.Hierarchy
         segmentProcess = MathHelper.Clamp(segmentProcess, 0f, 1f);
       }
 
-      Target.LocalPosition = Vector2.Lerp(start, end, segmentProcess);
+      Target.Position = Vector2.Lerp(start, end, segmentProcess);
 
       if (segmentProcess >= 1f)
       {
-        Target.LocalPosition = end;
+        Target.Position = end;
         segmentProcess = 0f;
         currentTargetIndex++;
       }

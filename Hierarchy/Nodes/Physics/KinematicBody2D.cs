@@ -47,14 +47,14 @@ namespace Amethyst.Hierarchy
       if (_isOnFloor && _floorBody != null)
       {
         Vector2 platformDelta = _floorBody.Transform.Global.Position - _lastFloorGlobalPosition;
-        LocalPosition += platformDelta;
+        Position += platformDelta;
         _lastFloorGlobalPosition = _floorBody.Transform.Global.Position;
       }
 
       if (_isOnWall && _wallBody != null)
       {
         Vector2 wallDelta = _wallBody.Transform.Global.Position - _lastWallGlobalPosition;
-        LocalPosition += wallDelta;
+        Position += wallDelta;
         _lastWallGlobalPosition = _wallBody.Transform.Global.Position;
       }
 
@@ -68,7 +68,7 @@ namespace Amethyst.Hierarchy
       _wallBody = null;
 
       Vector2 horizontalMovement = new Vector2(movement.X, 0);
-      LocalPosition += horizontalMovement;
+      Position += horizontalMovement;
 
       var nearby = Core.Physics.Query(Bounds);
 
@@ -82,7 +82,7 @@ namespace Amethyst.Hierarchy
 
           WallNormal = movement.X > 0 ? new Vector2(-1, 0) : new Vector2(1, 0);
 
-          LocalPosition -= horizontalMovement;
+          Position -= horizontalMovement;
           Velocity = new Vector2(0, Velocity.Y);
           break;
         }
@@ -110,7 +110,7 @@ namespace Amethyst.Hierarchy
       }
 
       Vector2 verticalMovement = new Vector2(0, movement.Y);
-      LocalPosition += verticalMovement;
+      Position += verticalMovement;
 
       nearby = Core.Physics.Query(Bounds);
 
@@ -156,12 +156,12 @@ namespace Amethyst.Hierarchy
           if (fromTop)
           {
             float penetration = (a.Bottom - b.Top);
-            LocalPosition -= new Vector2(0, penetration);
+            Position -= new Vector2(0, penetration);
           }
           else
           {
             float penetration = (b.Bottom - a.Top);
-            LocalPosition += new Vector2(0, penetration);
+            Position += new Vector2(0, penetration);
           }
         }
     }
@@ -189,13 +189,13 @@ namespace Amethyst.Hierarchy
 
             if (minX < minY)
             {
-              LocalPosition += new Vector2(
+              Position += new Vector2(
                   moveRight < moveLeft ? moveRight : -moveLeft,
                   0);
             }
             else
             {
-              LocalPosition += new Vector2(
+              Position += new Vector2(
                   0,
                   moveDown < moveUp ? moveDown : -moveUp);
             }
