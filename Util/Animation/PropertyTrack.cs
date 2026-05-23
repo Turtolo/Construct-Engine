@@ -56,21 +56,21 @@ namespace Amethyst.Util
     {
       if (Length <= 0)
         return 0;
-      
+
       switch (WrapMode)
       {
         case TrackWrapMode.Loop:
           return time % Length;
         case TrackWrapMode.PingPong:
-        {
-          float cycle = Length * 2f;
-          float t = time % cycle;
+          {
+            float cycle = Length * 2f;
+            float t = time % cycle;
 
-          if (t > Length)
-             t = Length - (t - Length);
+            if (t > Length)
+              t = Length - (t - Length);
 
-          return t;
-        }
+            return t;
+          }
         default:
           return Math.Clamp(time, 0, Length);
       }

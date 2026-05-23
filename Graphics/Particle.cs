@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Amethyst.Params;
+using Amethyst.Hierarchy;
 
 namespace Amethyst.Graphics
 {
@@ -112,6 +113,10 @@ namespace Amethyst.Graphics
           Rotation = 0f,
           Origin = _info.Origin,
           Scale = new Vector2(_info.Scale),
+        },
+        Key = BatchKey.Default with
+        {
+          Matrix = Core.Index.Get<Camera2D>().GetTransform()
         },
         Depth = 99
       });

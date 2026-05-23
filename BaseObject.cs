@@ -10,8 +10,6 @@ namespace Amethyst
   ///</summary>
   public abstract class BaseObject
   {
-    private Type _selfType;
-
     ///<summary>
     /// Action for when a dynamic setter fails.
     ///</summary>
@@ -30,19 +28,6 @@ namespace Amethyst
     public BaseObject()
     {
       _id = Interlocked.Increment(ref _nextId);
-
-      _selfType = GetType();
-    }
-
-    public T Build<T>() where T : BaseObject
-    {
-      if (_selfType != typeof(T))
-      {
-        Debug.WriteLine($"Cannot build as {typeof(T).Name}. Actual type is {_selfType.Name}");
-        return null;
-      }
-
-      return (T)this;
     }
 
     ///<summary>

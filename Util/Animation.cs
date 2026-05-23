@@ -15,7 +15,7 @@ namespace Amethyst.Util
     {
       Tracks.Add(track);
     }
-    
+
     public void Add(ITrack track)
     {
       Tracks.Add(track);

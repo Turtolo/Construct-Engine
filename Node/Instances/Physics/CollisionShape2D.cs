@@ -59,6 +59,21 @@ namespace Amethyst.Hierarchy
     {
       if (!OneWay || Shape == null)
         return;
+
+      foreach (KinematicBody2D kb in Core.Index.GetAll<KinematicBody2D>())
+      {
+        foreach (var c in kb.CollisionShapes)
+        {
+          if (!OneWay)
+            continue;
+
+          if (kb.Velocity.Y < 0)
+            Disabled = true;
+
+          else if (!Intersects(c))
+            Disabled = false;
+        }
+      }
     }
 
     public bool Intersects(CollisionShape2D other)

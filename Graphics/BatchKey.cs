@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Amethyst.Graphics
@@ -10,23 +11,26 @@ namespace Amethyst.Graphics
     public SamplerState SamplerState { get; set; }
     public DepthStencilState DepthStencilState { get; set; }
     public RasterizerState RasterizerState { get; set; }
+    public Matrix? Matrix { get; set; }
 
     public BatchKey(
         SpriteSortMode sortMode,
         BlendState blendState,
         SamplerState samplerState,
         DepthStencilState depthStencilState,
-        RasterizerState rasterizerState)
+        RasterizerState rasterizerState,
+        Matrix? matrix)
     {
       SortMode = sortMode;
       BlendState = blendState;
       SamplerState = samplerState;
       DepthStencilState = depthStencilState;
       RasterizerState = rasterizerState;
+      Matrix = matrix;
     }
 
     public static BatchKey Default => new(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp,
-        DepthStencilState.None, RasterizerState.CullCounterClockwise);
+        DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
 
     public bool Equals(BatchKey other)
     {
@@ -34,7 +38,8 @@ namespace Amethyst.Graphics
              BlendState == other.BlendState &&
              SamplerState == other.SamplerState &&
              DepthStencilState == other.DepthStencilState &&
-             RasterizerState == other.RasterizerState;
+             RasterizerState == other.RasterizerState &&
+             Matrix == other.Matrix;
     }
 
     public override bool Equals(object obj)
@@ -47,7 +52,8 @@ namespace Amethyst.Graphics
           BlendState,
           SamplerState,
           DepthStencilState,
-          RasterizerState);
+          RasterizerState,
+          Matrix);
     }
   }
 }

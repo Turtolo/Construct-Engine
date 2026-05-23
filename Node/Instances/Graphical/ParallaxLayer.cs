@@ -58,16 +58,15 @@ namespace Amethyst.Hierarchy
       Vector2 camDelta = camera.Transform.Global.Position - lastCameraPos;
       lastCameraPos = camera.Transform.Global.Position;
 
-      foreach (var child in GetAll<ParallaxLayer>())
-        child.ApplyCameraDelta(camDelta);
+      ApplyCameraDelta(camDelta);
     }
 
     public override void _SubmitCall()
     {
-      if (!Material.Global.Visibility)
+      if (!Material.Global.Visible)
         return;
 
-      Rectangle view = Core.Canvas.GetWorldViewRectangle();
+      Rectangle view = Core.Index.Get<Camera2D>().GetWorldViewRectangle();
 
       int texW = Texture.Bounds.Width;
       int texH = Texture.Bounds.Height;
@@ -113,9 +112,17 @@ namespace Amethyst.Hierarchy
             Params = CanvasParams.Identity with
             {
               Position = pos,
-              Color = Color.White
+              Color = Material.Global.Modulate,
+              Rotation = Transform.Global.Rotation,
+              Scale = Transform.Global.Scale,
+              Effects = Material.Global.SpriteEffects,
+            },
+            Key = BatchKey.Default with
+            {
+              Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
             },
             Depth = Ordering.Global.Depth,
+            Effect = Material.Global.Shader
           });
         }
       }

@@ -114,16 +114,27 @@ namespace Amethyst.Geometry
     /// <returns></returns>
     public List<T> Query(List<Rectangle> bounds)
     {
-      _queryCache.Clear();
+        _queryCache.Clear();
 
-      foreach (var cell in GetCellsForBounds(bounds))
-      {
-        if (_cells.TryGetValue(cell, out var list))
-          foreach (var obj in list)
+        var seen = new HashSet<T>();
+
+        foreach (var cell in GetCellsForBounds(bounds))
+        {
+            if (_cells.TryGetValue(cell, out var list))
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    seen.Add(list[i]);
+                }
+            }
+        }
+
+        _queryCache.Clear();
+
+        foreach (var obj in seen)
             _queryCache.Add(obj);
-      }
 
-      return _queryCache.ToList();
+        return _queryCache.ToList();
     }
 
     /// <summary>

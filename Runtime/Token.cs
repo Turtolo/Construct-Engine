@@ -11,7 +11,7 @@ namespace Amethyst
   ///<summary>
   /// The absolute abstract class for other classes.
   ///</summary>
-  public abstract class Tracked : BaseObject
+  public abstract class Token : BaseObject
   {
     ///<summary>
     /// The name of this instance.
@@ -22,7 +22,7 @@ namespace Amethyst
     [Export]
     public string Name { get; set; }
 
-    public Tracked()
+    public Token()
     {
       Core.Index.QueueAdd(this);
     }

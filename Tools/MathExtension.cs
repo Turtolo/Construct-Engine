@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace Amethyst.Tools
 {
@@ -10,5 +11,19 @@ namespace Amethyst.Tools
     {
       return (float)(Random.NextDouble() * (max - min)) + min;
     }
+
+    public static int Lerp(int start, int end, float t)
+    {
+      return (int)MathF.Round(start + (end - start) * t);
+    }
+
+    public static Point Lerp(Point start, Point end, float t)
+    {
+      return new Point(
+          (int)MathF.Round(start.X + (end.X - start.X) * t),
+          (int)MathF.Round(start.Y + (end.Y - start.Y) * t)
+      );
+    }
+
   }
 }

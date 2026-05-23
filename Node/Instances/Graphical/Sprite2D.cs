@@ -67,7 +67,7 @@ namespace Amethyst.Hierarchy
 
     public override void _SubmitCall()
     {
-      if (Texture == null || Material.Global.Visibility == false)
+      if (Texture == null || Material.Global.Visible == false)
         return;
 
       Rectangle sourceRect = SourceRect;
@@ -82,16 +82,17 @@ namespace Amethyst.Hierarchy
           Position = Transform.Global.Position,
           Color = Material.Global.Modulate,
           Rotation = Transform.Global.Rotation,
-
           Origin = new Vector2(
             sourceRect.Width / 2f,
             sourceRect.Height / 2f
           ),
-
           Scale = Transform.Global.Scale,
           Effects = Material.Global.SpriteEffects,
         },
-
+        Key = BatchKey.Default with
+        {
+          Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
+        },
         Depth = Ordering.Global.Depth,
         Effect = Material.Global.Shader
       });

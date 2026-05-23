@@ -34,9 +34,27 @@ namespace Amethyst.Hierarchy
     [Export]
     public Vector2 Offset { get; set; } = Vector2.Zero;
 
-    public Camera2D()
+    public Camera2D() { }
+    
+    /// <summary>
+    /// Returns the rectangle of world space currently visible by this camera
+    /// </summary>
+    public Rectangle GetWorldViewRectangle()
     {
-      Core.Canvas.SetMatrix(GetTransform());
+      Matrix inverse = Matrix.Invert(GetTransform());
+
+      Vector2 topLeft = Vector2.Transform(Vector2.Zero, inverse);
+      Vector2 bottomRight = Vector2.Transform(
+          new Vector2(Core.Canvas.RenderTarget.Width, Core.Canvas.RenderTarget.Height),
+          inverse
+      );
+
+      return new Rectangle(
+          (int)topLeft.X,
+          (int)topLeft.Y,
+          (int)(bottomRight.X - topLeft.X),
+          (int)(bottomRight.Y - topLeft.Y)
+      );
     }
 
     /// <summary>
@@ -45,28 +63,23 @@ namespace Amethyst.Hierarchy
     /// </summary>
     public Matrix GetTransform()
     {
-      Vector2 canvasCenter =
-        new Vector2(
-            Core.Canvas.RenderTarget.Width / Zoom.X,
-            Core.Canvas.RenderTarget.Height / Zoom.Y
-        ) * 0.5f;
+      Vector2 canvasCenter = new(
+          Core.Canvas.RenderTarget.Width * 0.5f,
+          Core.Canvas.RenderTarget.Height * 0.5f
+      );
 
-      Matrix transform =
-          Matrix.CreateScale(Zoom.X, Zoom.Y, 1f)
+      return
+        Matrix.CreateTranslation(
+            new Vector3(-(Transform.Global.Position + Offset), 0f)
+        )
           * Matrix.CreateRotationZ(Transform.Global.Rotation)
-          * Matrix.CreateTranslation(
-              new Vector3(-(Transform.Global.Position + Offset), 0f)
-          )
+          * Matrix.CreateScale(Zoom.X, Zoom.Y, 1f)
           * Matrix.CreateTranslation(new Vector3(canvasCenter, 0f));
-
-      return transform;
     }
 
     public override void _Process(float delta)
     {
       base._Process(delta);
-
-      Core.Canvas.SetMatrix(GetTransform());
     }
   }
 }

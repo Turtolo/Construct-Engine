@@ -1,3 +1,4 @@
+using Amethyst.Hierarchy;
 using Amethyst.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,29 +10,32 @@ namespace Amethyst.Params
     public Effect Shader { get; init; }
     public SpriteEffects SpriteEffects { get; init; }
 
-    public bool Visibility { get; init; }
+    public bool Visible { get; init; }
     public Color Modulate { get; init; }
 
-    public static readonly Material Identity =
-        new(true, Color.White, null, SpriteEffects.None);
+    public bool Separated { get; init; }
 
-    public Material(bool visibility, Color modulate, Effect shader, SpriteEffects spriteEffects)
+    public static readonly Material Identity =
+        new(true, Color.White, null, SpriteEffects.None, false);
+
+    public Material(bool visible, Color modulate, Effect shader, SpriteEffects spriteEffects, bool separated)
     {
-      Visibility = visibility;
+      Visible = visible;
       Modulate = modulate;
       Shader = shader;
       SpriteEffects = spriteEffects;
+      Separated = separated;
     }
 
     public static Material Combine(in Material parent, in Material child)
     {
       return new Material(
-          parent.Visibility && child.Visibility,
+          parent.Visible && child.Visible,
           ColorExtension.Multiply(parent.Modulate, child.Modulate),
           child.Shader ?? parent.Shader,
-          child.SpriteEffects
+          child.SpriteEffects,
+          child.Separated
       );
-
     }
   }
 }

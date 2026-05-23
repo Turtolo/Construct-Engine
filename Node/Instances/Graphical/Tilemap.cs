@@ -108,7 +108,7 @@ namespace Amethyst.Hierarchy
     {
       base._SubmitCall();
 
-      if (_tiles == null || Tileset == null)
+      if (_tiles == null || Tileset == null || !Material.Global.Visible)
         return;
 
       for (int y = 0; y < rows; y++)
@@ -140,6 +140,10 @@ namespace Amethyst.Hierarchy
               Origin = Vector2.Zero,
               Scale = Transform.Global.Scale,
               Effects = Material.Global.SpriteEffects,
+            },
+            Key = BatchKey.Default with
+            {
+              Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
             },
             Depth = Ordering.Global.Depth,
             Effect = Material.Global.Shader

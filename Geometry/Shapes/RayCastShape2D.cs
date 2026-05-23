@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Amethyst.Graphics;
 using Amethyst.Managers;
 using Amethyst.Params;
+using Amethyst.Hierarchy;
 
 namespace Amethyst.Geometry
 {
@@ -20,7 +21,7 @@ namespace Amethyst.Geometry
     public float Length =>
         TargetOffset.Length();
 
-    private bool _hasHit;
+    public bool _hasHit;
     private Vector2 _hitPoint;
 
     public bool HasHit => _hasHit;
@@ -71,7 +72,11 @@ namespace Amethyst.Geometry
               Origin = new Vector2(0f, 0.5f)
             },
             Texture = Core.Pixel,
-            Depth = depth
+            Depth = depth,
+            Key = BatchKey.Default with
+            {
+              Matrix = Core.Index.Get<Camera2D>().GetTransform()
+            }
           }
       );
 

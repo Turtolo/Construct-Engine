@@ -2,6 +2,7 @@
 
 using System.Numerics;
 using Amethyst.Input;
+using Microsoft.Xna.Framework;
 
 namespace Amethyst.Managers
 {
@@ -138,12 +139,12 @@ namespace Amethyst.Managers
       return 0;
     }
 
-    public Vector2 GetAxis(string xNegativeAction, string xPositiveAction, string yNegativeAction, string yPositiveAction)
+    public Point GetAxis(string xNegativeAction, string xPositiveAction, string yNegativeAction, string yPositiveAction)
     {
       int xAxis = GetAxis(xNegativeAction, xPositiveAction);
       int yAxis = GetAxis(yNegativeAction, yPositiveAction);
 
-      return new Vector2(xAxis, yAxis);
+      return new Point(xAxis, yAxis);
     }
   }
 }

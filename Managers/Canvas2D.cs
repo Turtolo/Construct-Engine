@@ -11,9 +11,7 @@ namespace Monolith.Managers
 {
   public class Canvas2D : BaseObject
   {
-    private Dictionary<int, List<IDrawCall>> _depthBucket = new();
-
-    private Matrix _currentMatrix;
+    private Dictionary<RenderBucketKey, List<IDrawCall>> _buckets = new();
 
     internal Extent RenderSize { get; set; } = new Extent(640, 360);
     internal bool IntScaling { get; set; } = true;
@@ -44,40 +42,18 @@ namespace Monolith.Managers
     {
       if (call == null) throw new ArgumentNullException(nameof(call));
 
-      if (!_depthBucket.TryGetValue(call.Depth, out var list))
+      var key = new RenderBucketKey(call.Depth, call.Key, call.Effect);
+        
+      if (!_buckets.TryGetValue(key, out var list))
       {
         list = new List<IDrawCall>();
-        _depthBucket[call.Depth] = list;
+        _buckets[key] = list;
       }
 
       list.Add(call);
     }
 
-    public void SetMatrix(Matrix matrix)
-    {
-      _currentMatrix = matrix;
-    }
 
-    /// <summary>
-    /// Returns the rectangle of world space currently visible by this camera
-    /// </summary>
-    public Rectangle GetWorldViewRectangle()
-    {
-      Matrix inverse = Matrix.Invert(_currentMatrix);
-
-      Vector2 topLeft = Vector2.Transform(Vector2.Zero, inverse);
-      Vector2 bottomRight = Vector2.Transform(
-          new Vector2(RenderTarget.Width, RenderTarget.Height),
-          inverse
-      );
-
-      return new Rectangle(
-          (int)topLeft.X,
-          (int)topLeft.Y,
-          (int)(bottomRight.X - topLeft.X),
-          (int)(bottomRight.Y - topLeft.Y)
-      );
-    }
 
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -94,7 +70,7 @@ namespace Monolith.Managers
           BlendState.AlphaBlend,
           SamplerState.PointClamp,
           effect: PostProcessingShader);
-
+      
       var dest = new Rectangle(
           (int)MathF.Round(Destination.X),
           (int)MathF.Round(Destination.Y),
@@ -109,20 +85,16 @@ namespace Monolith.Managers
 
     public void Flush(SpriteBatch spriteBatch)
     {
-      if (_depthBucket.Count == 0)
-        return;
+        if (_buckets.Count == 0)
+            return;
 
-      var sortedDepth = _depthBucket.Keys
-        .OrderBy(d => d)
-        .ToList();
+        foreach (var kvp in _buckets
+            .OrderBy(x => x.Key.Depth))
+        {
+            DrawBucket(spriteBatch, kvp.Value);
+        }
 
-      foreach (var depth in sortedDepth)
-      {
-        var bucket = _depthBucket[depth];
-
-        DrawBucket(spriteBatch, bucket);
-      }
-      _depthBucket.Clear();
+        _buckets.Clear();
     }
 
     private void DrawBucket(SpriteBatch spriteBatch, List<IDrawCall> bucket)
@@ -154,7 +126,7 @@ namespace Monolith.Managers
               nextKey.DepthStencilState,
               nextKey.RasterizerState,
               nextEffect,
-              _currentMatrix
+              nextKey.Matrix
           );
 
           currentKey = nextKey;

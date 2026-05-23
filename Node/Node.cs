@@ -7,7 +7,7 @@ using Amethyst.Runtime;
 
 namespace Amethyst.Hierarchy
 {
-  public class Node : Tracked,
+  public class Node : Token,
     IEnterTree,
     IPhysicsUpdate,
     IProcess,

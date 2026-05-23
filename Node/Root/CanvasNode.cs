@@ -21,18 +21,18 @@ namespace Amethyst.Hierarchy
     /// <summary>
     /// Signal for when the transform changes.
     /// </summary>
-    public event Action<Transform2D> OnTransformChanged;
+    public event Action<Transform2D>? OnTransformChanged;
 
     /// <summary>
     /// The self contained visibility of this node. 
     /// </summary>
     [Export]
-    public bool Visibility
+    public bool Visible
     {
-      get => Material.Local.Visibility;
+      get => Material.Local.Visible;
       set
       {
-        Material.Local = Material.Local with { Visibility = value };
+        Material.Local = Material.Local with { Visible = value };
       }
     }
 
@@ -74,6 +74,21 @@ namespace Amethyst.Hierarchy
         Material.Local = Material.Local with { Shader = value };
       }
     }
+    
+    /// <summary>
+    /// Whether this node should be one a seperated plane.
+    /// In layman-terms–this could regarded as a top-level ordering.
+    /// </summary>
+    [Export]
+    public bool Seperated
+    {
+      get => Material.Global.Separated;
+      set
+      {
+        Material.Local = Material.Local with { Separated = value };
+      }
+    }
+
 
     /// <summary>
     /// The self contained sprite effects of this node.

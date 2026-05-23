@@ -15,7 +15,7 @@ namespace Amethyst.Managers
 
     public PhysicsServer2D()
     {
-      _broadphase = new SpatialHash<PhysicsBody2D>();
+      _broadphase = new SpatialHash<PhysicsBody2D>(16);
     }
 
     /// <summary>

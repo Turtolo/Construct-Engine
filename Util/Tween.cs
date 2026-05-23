@@ -7,7 +7,7 @@ using Amethyst.Tools;
 
 namespace Amethyst.Util
 {
-  public class Tween<T> : Tracked, IProcess
+  public class Tween<T> : Token, IProcess
   {
     public float Duration { get; private set; }
     public Func<float, float> EasingFunction { get; private set; }

@@ -105,7 +105,7 @@ namespace Amethyst.Hierarchy
     {
       base._SubmitCall();
 
-      if (CurrentAnimation == null || Material.Global.Visibility == false) return;
+      if (CurrentAnimation == null || Material.Global.Visible == false) return;
 
       Core.Canvas.Submit(new TextureDrawCall
       {
@@ -118,6 +118,10 @@ namespace Amethyst.Hierarchy
           Origin = CurrentFrame.Center,
           Scale = Transform.Global.Scale,
           Effects = Material.Global.SpriteEffects,
+        },
+        Key = BatchKey.Default with
+        {
+          Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
         },
         Depth = Ordering.Global.Depth,
         Effect = Material.Global.Shader

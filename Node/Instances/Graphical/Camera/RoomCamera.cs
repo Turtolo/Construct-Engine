@@ -60,7 +60,7 @@ namespace Amethyst.Hierarchy
 
       var pos = TargetNode.Transform.Global.Position;
 
-      var camera = Core.Canvas.GetWorldViewRectangle();
+      var camera = GetWorldViewRectangle();
 
       CameraSide side = CameraSide.None;
 
@@ -100,7 +100,7 @@ namespace Amethyst.Hierarchy
     {
       _dir = dir;
 
-      var camera = Core.Canvas.GetWorldViewRectangle();
+      var camera = GetWorldViewRectangle();
 
       Vector2 targetPos = new Vector2(Transform.Global.Position.X + camera.Width * dir, Transform.Global.Position.Y);
 
