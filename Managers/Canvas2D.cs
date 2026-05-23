@@ -43,7 +43,7 @@ namespace Monolith.Managers
       if (call == null) throw new ArgumentNullException(nameof(call));
 
       var key = new RenderBucketKey(call.Depth, call.Key, call.Effect);
-        
+
       if (!_buckets.TryGetValue(key, out var list))
       {
         list = new List<IDrawCall>();
@@ -70,7 +70,7 @@ namespace Monolith.Managers
           BlendState.AlphaBlend,
           SamplerState.PointClamp,
           effect: PostProcessingShader);
-      
+
       var dest = new Rectangle(
           (int)MathF.Round(Destination.X),
           (int)MathF.Round(Destination.Y),
@@ -85,16 +85,16 @@ namespace Monolith.Managers
 
     public void Flush(SpriteBatch spriteBatch)
     {
-        if (_buckets.Count == 0)
-            return;
+      if (_buckets.Count == 0)
+        return;
 
-        foreach (var kvp in _buckets
-            .OrderBy(x => x.Key.Depth))
-        {
-            DrawBucket(spriteBatch, kvp.Value);
-        }
+      foreach (var kvp in _buckets
+          .OrderBy(x => x.Key.Depth))
+      {
+        DrawBucket(spriteBatch, kvp.Value);
+      }
 
-        _buckets.Clear();
+      _buckets.Clear();
     }
 
     private void DrawBucket(SpriteBatch spriteBatch, List<IDrawCall> bucket)

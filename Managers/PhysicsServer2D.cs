@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Amethyst.Geometry;
 using Amethyst.Hierarchy;
@@ -11,7 +8,6 @@ namespace Amethyst.Managers
   public class PhysicsServer2D : BaseObject
   {
     private readonly SpatialHash<PhysicsBody2D> _broadphase;
-    private readonly Dictionary<PhysicsBody2D, List<Rectangle>> _bounds = new();
 
     public PhysicsServer2D()
     {
@@ -21,47 +17,33 @@ namespace Amethyst.Managers
     /// <summary>
     /// Registers a physics body to the server.
     /// </summary>
-    /// <param name="body">The body in question.</param>
     public void RegisterBody(PhysicsBody2D body)
     {
-      if (_bounds.ContainsKey(body))
-        return;
-
-      var bounds = body.Bounds;
-      _bounds[body] = bounds;
       _broadphase.Insert(body);
     }
 
-    ///<summary>
-    /// Unregisters a body from the server, this effectively disables other bodies searching for it.
-    ///</summary>
-    ///<param name="body">The body in question.</param>
+    /// <summary>
+    /// Removes a physics body from the server.
+    /// </summary>
     public void UnregisterBody(PhysicsBody2D body)
     {
-      if (_bounds.TryGetValue(body, out var oldBounds))
-      {
-        _broadphase.Remove(body);
-        _bounds.Remove(body);
-      }
+      _broadphase.Remove(body);
     }
 
+    /// <summary>
+    /// Notify the broadphase that a body moved.
+    /// </summary>
     public void NotifyMoved(PhysicsBody2D body)
     {
-      if (!_bounds.TryGetValue(body, out var oldBounds))
-        return;
-
-      var newBounds = body.Bounds;
-
-      if (newBounds != oldBounds)
-      {
-        _broadphase.Update(body, oldBounds);
-        _bounds[body] = newBounds;
-      }
+      _broadphase.Update(body);
     }
 
+    /// <summary>
+    /// Queries all bodies intersecting the given area.
+    /// </summary>
     public List<PhysicsBody2D> Query(List<Rectangle> area)
     {
-      return _broadphase.Query(area);
+      return _broadphase.Query(area.ToArray());
     }
   }
 }

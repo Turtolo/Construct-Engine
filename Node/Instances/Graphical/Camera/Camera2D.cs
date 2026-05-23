@@ -35,7 +35,7 @@ namespace Amethyst.Hierarchy
     public Vector2 Offset { get; set; } = Vector2.Zero;
 
     public Camera2D() { }
-    
+
     /// <summary>
     /// Returns the rectangle of world space currently visible by this camera
     /// </summary>

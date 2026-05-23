@@ -74,7 +74,7 @@ namespace Amethyst.Hierarchy
         Material.Local = Material.Local with { Shader = value };
       }
     }
-    
+
     /// <summary>
     /// Whether this node should be one a seperated plane.
     /// In layman-terms–this could regarded as a top-level ordering.

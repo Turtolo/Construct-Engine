@@ -1,170 +1,181 @@
-
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 
 namespace Amethyst.Geometry
 {
   public class SpatialHash<T> where T : IHashAble
   {
-    private readonly Dictionary<Point, List<T>> _cells = new();
-    private readonly HashSet<T> _queryCache = new();
-    private float _cellSize;
+    private readonly Dictionary<long, List<T>> _cells = new();
+
+    private readonly Dictionary<T, List<long>> _objectCells = new();
+    private readonly List<T> _queryResults = new(256);
+
+    private readonly float _cellSize;
+    private readonly float _inverseCellSize;
 
     public SpatialHash(float cellSize = 64f)
     {
       _cellSize = cellSize;
+      _inverseCellSize = 1f / cellSize;
     }
 
-    /// <summary>
-    /// Gets the cell a rectangle intersects.
-    /// </summary>
-    /// <param name="bounds"></param>
-    /// <returns></returns>
-    private IEnumerable<Point> GetCellsForBounds(Rectangle bounds)
+    private static long GetKey(int x, int y)
     {
-      int minX = (int)Math.Floor(bounds.Left / _cellSize);
-      int maxX = (int)Math.Floor(bounds.Right / _cellSize);
-      int minY = (int)Math.Floor(bounds.Top / _cellSize);
-      int maxY = (int)Math.Floor(bounds.Bottom / _cellSize);
-
-      for (int x = minX; x <= maxX; x++)
-        for (int y = minY; y <= maxY; y++)
-          yield return new Point(x, y);
+      return ((long)x << 32) | (uint)y;
     }
 
-    private IEnumerable<Point> GetCellsForBounds(IEnumerable<Rectangle> boundsList)
+    private int GetCellsForBounds(Rectangle[] bounds, List<long> results)
     {
-      var seen = new HashSet<Point>();
+      int count = 0;
 
-      foreach (var bounds in boundsList)
+      for (int i = 0; i < bounds.Length; i++)
       {
-        int minX = (int)Math.Floor(bounds.Left / _cellSize);
-        int maxX = (int)Math.Floor(bounds.Right / _cellSize);
-        int minY = (int)Math.Floor(bounds.Top / _cellSize);
-        int maxY = (int)Math.Floor(bounds.Bottom / _cellSize);
+        Rectangle b = bounds[i];
+
+        int minX = (int)Math.Floor(b.Left * _inverseCellSize);
+        int maxX = (int)Math.Floor(b.Right * _inverseCellSize);
+
+        int minY = (int)Math.Floor(b.Top * _inverseCellSize);
+        int maxY = (int)Math.Floor(b.Bottom * _inverseCellSize);
 
         for (int x = minX; x <= maxX; x++)
         {
           for (int y = minY; y <= maxY; y++)
           {
-            var p = new Point(x, y);
-            if (seen.Add(p))
-              yield return p;
+            results.Add(GetKey(x, y));
+            count++;
           }
         }
       }
+
+      return count;
     }
 
-    /// <summary>
-    /// Inserts an object.
-    /// </summary>
-    /// <param name="obj"></param>
     public void Insert(T obj)
     {
-      foreach (var cell in GetCellsForBounds(obj.Bounds))
+      var cells = new List<long>(32);
+      GetCellsForBounds(obj.Bounds.ToArray(), cells);
+
+      _objectCells[obj] = cells;
+
+      for (int i = 0; i < cells.Count; i++)
       {
-        if (!_cells.TryGetValue(cell, out var list))
+        long key = cells[i];
+
+        if (!_cells.TryGetValue(key, out var list))
         {
-          list = new List<T>();
-          _cells[cell] = list;
+          list = new List<T>(4);
+          _cells[key] = list;
         }
+
         list.Add(obj);
       }
     }
 
-    /// <summary>
-    /// Removes an object.
-    /// </summary>
-    /// <param name="obj"></param>
     public void Remove(T obj)
     {
-      foreach (var cell in GetCellsForBounds(obj.Bounds))
+      if (!_objectCells.TryGetValue(obj, out var cells))
+        return;
+
+      for (int i = 0; i < cells.Count; i++)
       {
-        if (_cells.TryGetValue(cell, out var list))
+        long key = cells[i];
+
+        if (_cells.TryGetValue(key, out var list))
         {
           list.Remove(obj);
 
           if (list.Count == 0)
-            _cells.Remove(cell);
+            _cells.Remove(key);
         }
       }
+
+      _objectCells.Remove(obj);
     }
 
-    /// <summary>
-    /// Removes an object from old cells.
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <param name="oldBounds"></param>
-    private void RemoveFromOldCells(T obj, List<Rectangle> oldBounds)
+    public void Update(T obj)
     {
-      foreach (var cell in GetCellsForBounds(oldBounds))
+      if (!_objectCells.TryGetValue(obj, out var oldCells))
       {
-        if (_cells.TryGetValue(cell, out var list))
-          list.Remove(obj);
+        Insert(obj);
+        return;
       }
-    }
 
-    /// <summary>
-    /// Gets the cells a rectangle intersects.
-    /// </summary>
-    /// <param name="bounds"></param>
-    /// <returns></returns>
-    public List<T> Query(List<Rectangle> bounds)
-    {
-        _queryCache.Clear();
+      var newCells = new List<long>(oldCells.Count + 8);
+      GetCellsForBounds(obj.Bounds.ToArray(), newCells);
 
-        var seen = new HashSet<T>();
+      // remove old not in new
+      for (int i = 0; i < oldCells.Count; i++)
+      {
+        long cell = oldCells[i];
 
-        foreach (var cell in GetCellsForBounds(bounds))
+        if (!newCells.Contains(cell))
         {
-            if (_cells.TryGetValue(cell, out var list))
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    seen.Add(list[i]);
-                }
-            }
+          if (_cells.TryGetValue(cell, out var list))
+          {
+            list.Remove(obj);
+            if (list.Count == 0)
+              _cells.Remove(cell);
+          }
         }
+      }
 
-        _queryCache.Clear();
+      // add new not in old
+      for (int i = 0; i < newCells.Count; i++)
+      {
+        long cell = newCells[i];
 
-        foreach (var obj in seen)
-            _queryCache.Add(obj);
+        if (!oldCells.Contains(cell))
+        {
+          if (!_cells.TryGetValue(cell, out var list))
+          {
+            list = new List<T>(4);
+            _cells[cell] = list;
+          }
 
-        return _queryCache.ToList();
+          list.Add(obj);
+        }
+      }
+
+      _objectCells[obj] = newCells;
     }
 
-    /// <summary>
-    /// Updates hashes.
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <param name="oldBounds"></param>
-    public void Update(T obj, List<Rectangle> oldBounds)
+    public List<T> Query(Rectangle[] bounds)
     {
-      var oldCells = GetCellsForBounds(oldBounds).ToHashSet();
-      var newCells = GetCellsForBounds(obj.Bounds).ToHashSet();
+      _queryResults.Clear();
 
-      foreach (var cell in oldCells.Except(newCells))
-      {
-        if (_cells.TryGetValue(cell, out var list))
-          list.Remove(obj);
-      }
+      var queryCells = new List<long>(32);
+      GetCellsForBounds(bounds, queryCells);
 
-      foreach (var cell in newCells.Except(oldCells))
+      var seen = new HashSet<T>();
+
+      for (int i = 0; i < queryCells.Count; i++)
       {
-        if (!_cells.TryGetValue(cell, out var list))
+        long key = queryCells[i];
+
+        if (_cells.TryGetValue(key, out var list))
         {
-          list = new List<T>();
-          _cells[cell] = list;
+          for (int j = 0; j < list.Count; j++)
+          {
+            T obj = list[j];
+
+            if (seen.Add(obj))
+              _queryResults.Add(obj);
+          }
         }
-        list.Add(obj);
       }
+
+      return _queryResults;
+    }
+
+    public void Clear()
+    {
+      _cells.Clear();
+      _objectCells.Clear();
+      _queryResults.Clear();
     }
   }
-
 
   public interface IHashAble
   {
