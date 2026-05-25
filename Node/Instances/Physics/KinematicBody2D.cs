@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Amethyst.Params;
+using System.Collections.Generic;
 
 namespace Amethyst.Hierarchy
 {
@@ -37,13 +38,32 @@ namespace Amethyst.Hierarchy
 
     public KinematicBody2D() { }
 
-    private void Move(float delta)
+    public void MoveAndSlide(float delta)
     {
       if (CollisionShapes.Count == 0)
         return;
 
       Vector2 movement = Velocity * delta;
 
+      ResolvePlatforms();
+      
+      var nearby = Core.Physics.Query(Bounds);
+
+      ResolveStaticPenetration(nearby);
+
+      _isOnFloor = false;
+      _isOnRoof = false;
+      _isOnWall = false;
+      WallNormal = Vector2.Zero;
+      _floorBody = null;
+      _wallBody = null;
+
+      ResolveHorizontal(ref movement, nearby);
+      ResolveVertical(ref movement, nearby);
+    }
+    
+    private void ResolvePlatforms()
+    {
       if (_isOnFloor && _floorBody != null)
       {
         Vector2 platformDelta = _floorBody.Transform.Global.Position - _lastFloorGlobalPosition;
@@ -57,20 +77,12 @@ namespace Amethyst.Hierarchy
         Position += wallDelta;
         _lastWallGlobalPosition = _wallBody.Transform.Global.Position;
       }
+    }
 
-      ResolveStaticPenetration();
-
-      _isOnFloor = false;
-      _isOnRoof = false;
-      _isOnWall = false;
-      WallNormal = Vector2.Zero;
-      _floorBody = null;
-      _wallBody = null;
-
+    private void ResolveHorizontal(ref Vector2 movement, List<PhysicsBody2D> nearby)
+    {
       Vector2 horizontalMovement = new Vector2(movement.X, 0);
       Position += horizontalMovement;
-
-      var nearby = Core.Physics.Query(Bounds);
 
       foreach (var other in nearby.Where(b => b != this))
       {
@@ -108,11 +120,12 @@ namespace Amethyst.Hierarchy
           break;
         }
       }
+    }
 
+    private void ResolveVertical(ref Vector2 movement, List<PhysicsBody2D> nearby)
+    {
       Vector2 verticalMovement = new Vector2(0, movement.Y);
       Position += verticalMovement;
-
-      nearby = Core.Physics.Query(Bounds);
 
       foreach (var other in nearby.Where(b => b != this))
       {
@@ -166,10 +179,8 @@ namespace Amethyst.Hierarchy
         }
     }
 
-    private void ResolveStaticPenetration()
+    private void ResolveStaticPenetration(List<PhysicsBody2D> nearby)
     {
-      var nearby = Core.Physics.Query(Bounds);
-
       foreach (var other in nearby.Where(b => b != this))
       {
         if (!this.Intersects(other)) continue;
@@ -201,12 +212,6 @@ namespace Amethyst.Hierarchy
             }
           }
       }
-    }
-
-    public override void _PhysicsUpdate(float delta)
-    {
-      base._PhysicsUpdate(delta);
-      Move(delta);
     }
 
     public void ApplyImpulse(Vector2 impulse)

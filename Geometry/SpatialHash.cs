@@ -11,6 +11,9 @@ namespace Amethyst.Geometry
     private readonly Dictionary<T, List<long>> _objectCells = new();
     private readonly List<T> _queryResults = new(256);
 
+    private readonly List<long> _queryCells = new(32);
+    private readonly HashSet<T> _seen = new();
+
     private readonly float _cellSize;
     private readonly float _inverseCellSize;
 
@@ -105,7 +108,6 @@ namespace Amethyst.Geometry
       var newCells = new List<long>(oldCells.Count + 8);
       GetCellsForBounds(obj.Bounds.ToArray(), newCells);
 
-      // remove old not in new
       for (int i = 0; i < oldCells.Count; i++)
       {
         long cell = oldCells[i];
@@ -121,7 +123,6 @@ namespace Amethyst.Geometry
         }
       }
 
-      // add new not in old
       for (int i = 0; i < newCells.Count; i++)
       {
         long cell = newCells[i];
@@ -144,15 +145,14 @@ namespace Amethyst.Geometry
     public List<T> Query(Rectangle[] bounds)
     {
       _queryResults.Clear();
+      _queryCells.Clear();
+      _seen.Clear();
 
-      var queryCells = new List<long>(32);
-      GetCellsForBounds(bounds, queryCells);
+      GetCellsForBounds(bounds, _queryCells);
 
-      var seen = new HashSet<T>();
-
-      for (int i = 0; i < queryCells.Count; i++)
+      for (int i = 0; i < _queryCells.Count; i++)
       {
-        long key = queryCells[i];
+        long key = _queryCells[i];
 
         if (_cells.TryGetValue(key, out var list))
         {
@@ -160,7 +160,7 @@ namespace Amethyst.Geometry
           {
             T obj = list[j];
 
-            if (seen.Add(obj))
+            if (_seen.Add(obj))
               _queryResults.Add(obj);
           }
         }
