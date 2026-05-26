@@ -72,6 +72,9 @@ namespace Amethyst.Hierarchy
 
       Rectangle sourceRect = SourceRect;
 
+      Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
+      Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
+      
       Core.Canvas.Submit(new TextureDrawCall
       {
         Texture = Texture,
@@ -79,14 +82,14 @@ namespace Amethyst.Hierarchy
 
         Params = CanvasParams.Identity with
         {
-          Position = Transform.Global.Position,
+          Position = pos,
           Color = Material.Global.Modulate,
           Rotation = Transform.Global.Rotation,
           Origin = new Vector2(
             sourceRect.Width / 2f,
             sourceRect.Height / 2f
           ),
-          Scale = Transform.Global.Scale,
+          Scale = scale,
           Effects = Material.Global.SpriteEffects,
         },
         Key = BatchKey.Default with

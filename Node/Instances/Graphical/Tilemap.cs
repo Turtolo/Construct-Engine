@@ -129,6 +129,9 @@ namespace Amethyst.Hierarchy
 
           Vector2 worldTilePos = localTilePos + Transform.Global.Position;
 
+          Vector2 pos = Rounded ? Vector2.Floor(worldTilePos) : worldTilePos;
+          Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
+
           Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = tile,
@@ -138,7 +141,7 @@ namespace Amethyst.Hierarchy
               Color = Material.Global.Modulate,
               Rotation = Transform.Global.Rotation,
               Origin = Vector2.Zero,
-              Scale = Transform.Global.Scale,
+              Scale = scale,
               Effects = Material.Global.SpriteEffects,
             },
             Key = BatchKey.Default with

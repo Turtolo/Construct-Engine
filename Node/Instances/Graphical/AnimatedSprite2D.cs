@@ -107,16 +107,19 @@ namespace Amethyst.Hierarchy
 
       if (CurrentAnimation == null || Material.Global.Visible == false) return;
 
+      Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
+      Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
+
       Core.Canvas.Submit(new TextureDrawCall
       {
         Texture = CurrentFrame,
         Params = CanvasParams.Identity with
         {
-          Position = Transform.Global.Position,
+          Position = pos,
           Color = Material.Global.Modulate,
           Rotation = Transform.Global.Rotation,
           Origin = CurrentFrame.Center,
-          Scale = Transform.Global.Scale,
+          Scale = scale,
           Effects = Material.Global.SpriteEffects,
         },
         Key = BatchKey.Default with

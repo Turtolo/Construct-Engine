@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Graphics;
+using Amethyst.Params;
 
 namespace Amethyst.Tools
 {
@@ -73,6 +74,28 @@ namespace Amethyst.Tools
 
       texture.SetData(data);
       return texture.ToMTexture();
+    }
+
+    public static TextureDrawCall Line(Vector2 start, Vector2 end, Color color, int thickness)
+    {
+      Vector2 edge = start - end;
+
+      float angle = MathF.Atan2(edge.Y, edge.X);
+      float length = edge.Length();
+
+      var call = new TextureDrawCall
+      {
+        Texture = Core.Pixel,
+        Params = CanvasParams.Identity with
+        {
+          Position = start,
+          Color = color,
+          Rotation = angle,
+          Scale = new Vector2(length, thickness)
+        }
+      };
+
+      return call;
     }
   }
 }

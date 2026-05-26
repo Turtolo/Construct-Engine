@@ -105,16 +105,19 @@ namespace Amethyst.Hierarchy
               y * texH + basePos.Y
           );
 
+          
+          Vector2 modPos = Rounded ? Vector2.Floor(pos) : pos;
+          Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
           Core.Canvas.Submit(new TextureDrawCall
           {
             Texture = this.Texture,
             Params = CanvasParams.Identity with
             {
-              Position = pos,
+              Position = modPos,
               Color = Material.Global.Modulate,
               Rotation = Transform.Global.Rotation,
-              Scale = Transform.Global.Scale,
+              Scale = scale,
               Effects = Material.Global.SpriteEffects,
             },
             Key = BatchKey.Default with
