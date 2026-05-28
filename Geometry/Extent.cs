@@ -19,6 +19,11 @@ namespace Amethyst.Geometry
     /// The height of this extent.
     ///</summary>
     public int Height { get; }
+    
+    ///<summary>
+    /// A defualt struct, with empty values.
+    ///</summary>
+    public static Extent Empty => new Extent(0, 0);
 
     /// <summary>
     /// Creates a new extent with specified <see cref="Width"/> and <see cref="Height"/>.

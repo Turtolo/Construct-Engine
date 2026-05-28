@@ -105,7 +105,7 @@ namespace Amethyst.Hierarchy
               y * texH + basePos.Y
           );
 
-          
+
           Vector2 modPos = Rounded ? Vector2.Floor(pos) : pos;
           Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 

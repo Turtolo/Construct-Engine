@@ -33,6 +33,11 @@ namespace Amethyst.Tools
       return new Point(baseData.X / cellWidth, baseData.Y / cellHeight);
     }
 
+    public static int Dot(Point p1, Point p2)
+    {
+      return p1.X * p2.X + p1.Y * p2.Y;
+    }
+
 
     public static List<Point> ToWorldCords(this List<Point> baseData, int cellWidth, int cellHeight)
     {

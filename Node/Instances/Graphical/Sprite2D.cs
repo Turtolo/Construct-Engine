@@ -74,7 +74,7 @@ namespace Amethyst.Hierarchy
 
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
-      
+
       Core.Canvas.Submit(new TextureDrawCall
       {
         Texture = Texture,

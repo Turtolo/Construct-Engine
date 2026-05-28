@@ -18,10 +18,10 @@ namespace Amethyst.Geometry
         {
           _vertices = new Point[]
           {
-                        new Point(0, 0),
-                        new Point(Width, 0),
-                        new Point(Width, Height),
-                        new Point(0, Height)
+            new Point(0, 0),
+            new Point(Width, 0),
+            new Point(Width, Height),
+            new Point(0, Height)
           };
         }
         return _vertices;

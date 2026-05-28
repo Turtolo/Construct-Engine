@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Graphics;
 using Amethyst.Params;
+using Amethyst.Hierarchy;
 
 namespace Amethyst.Tools
 {
@@ -78,7 +79,7 @@ namespace Amethyst.Tools
 
     public static TextureDrawCall Line(Vector2 start, Vector2 end, Color color, int thickness)
     {
-      Vector2 edge = start - end;
+      Vector2 edge = end - start;
 
       float angle = MathF.Atan2(edge.Y, edge.X);
       float length = edge.Length();
@@ -91,8 +92,13 @@ namespace Amethyst.Tools
           Position = start,
           Color = color,
           Rotation = angle,
-          Scale = new Vector2(length, thickness)
-        }
+          Scale = new Vector2(length, thickness),
+        },
+        Key = BatchKey.Default with
+        {
+          Matrix = Core.Index.Get<Camera2D>().GetTransform()
+        },
+        Depth = 99
       };
 
       return call;

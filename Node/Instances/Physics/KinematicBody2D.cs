@@ -46,7 +46,7 @@ namespace Amethyst.Hierarchy
       Vector2 movement = Velocity * delta;
 
       ResolvePlatforms();
-      
+
       var nearby = Core.Physics.Query(Bounds);
 
       ResolveStaticPenetration(nearby);
@@ -61,7 +61,7 @@ namespace Amethyst.Hierarchy
       ResolveHorizontal(ref movement, nearby);
       ResolveVertical(ref movement, nearby);
     }
-    
+
     private void ResolvePlatforms()
     {
       if (_isOnFloor && _floorBody != null)
