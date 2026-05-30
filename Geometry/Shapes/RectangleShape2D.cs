@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using Microsoft.Xna.Framework;
 
@@ -10,22 +12,19 @@ namespace Amethyst.Geometry
 
     private Point[] _vertices;
 
-    public Point[] Vertices
+    public ReadOnlySpan<Point> GetVertices()
     {
-      get
+      if (_vertices == null)
       {
-        if (_vertices == null)
+        _vertices = new Point[]
         {
-          _vertices = new Point[]
-          {
             new Point(0, 0),
             new Point(Width, 0),
             new Point(Width, Height),
             new Point(0, Height)
-          };
-        }
-        return _vertices;
+        };
       }
+      return _vertices;
     }
 
     public Extent Size
@@ -86,7 +85,7 @@ namespace Amethyst.Geometry
 
     public Rectangle GetAABB(Point position)
     {
-      if (Vertices == null || Vertices.Length == 0)
+      if (GetVertices() == null || GetVertices().Length == 0)
         return Rectangle.Empty;
 
       int minX = int.MaxValue;
@@ -94,7 +93,7 @@ namespace Amethyst.Geometry
       int maxX = int.MinValue;
       int maxY = int.MinValue;
 
-      foreach (var v in Vertices)
+      foreach (var v in GetVertices())
       {
         var world = v + position;
 

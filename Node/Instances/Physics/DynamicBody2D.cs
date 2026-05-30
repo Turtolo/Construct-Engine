@@ -1,4 +1,6 @@
 
+#nullable disable
+
 using System;
 using Microsoft.Xna.Framework;
 using Amethyst.Params;

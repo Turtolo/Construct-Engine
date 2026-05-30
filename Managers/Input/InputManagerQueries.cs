@@ -1,5 +1,7 @@
 
 
+#nullable disable
+
 using System.Numerics;
 using Amethyst.Input;
 using Microsoft.Xna.Framework;

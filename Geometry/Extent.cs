@@ -1,4 +1,3 @@
-#nullable enable
 
 using System;
 using Microsoft.Xna.Framework;
@@ -82,7 +81,29 @@ namespace Amethyst.Geometry
     {
       return HashCode.Combine(Width, Height);
     }
-
+    
+    ///<summary>
+    /// A convenience function for turning an extent into a point. The x and y values being width and height, respectfully.
+    ///</summary>
+    public Point ToPoint()
+    {
+      return new Point(Width, Height);
+    }
+    
+    ///<summary>
+    /// A convenience function for turning an extent into a rectangle.
+    ///</summary>
+    ///<remarks>
+    /// Be wary, since extent is a struct representing width and height, this rectangle will have a Point.Zero as the location.
+    ///</remarks>
+    public Rectangle ToRectangle()
+    {
+      return new Rectangle(
+          0,
+          0,
+          Width,
+          Height);
+    }
 
     ///<summary>
     /// Turns this into a printable string.

@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,7 +54,7 @@ namespace Amethyst.Hierarchy
     public override void _PhysicsUpdate(float delta)
     {
       base._PhysicsUpdate(delta);
-      //CheckOneWay();
+      CheckOneWay();
     }
 
     private void CheckOneWay()
@@ -64,9 +66,6 @@ namespace Amethyst.Hierarchy
       {
         foreach (var c in kb.CollisionShapes)
         {
-          if (!OneWay)
-            continue;
-
           if (kb.Velocity.Y < 0)
             Disabled = true;
 

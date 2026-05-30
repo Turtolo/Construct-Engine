@@ -1,4 +1,7 @@
 
+#nullable disable
+
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -13,7 +16,7 @@ namespace Amethyst.Geometry
     /// The vertices of this shape.
     /// E.g a rectangle has four vertices, a triangle has three.
     ///</summary>
-    Point[] Vertices { get; }
+    ReadOnlySpan<Point> GetVertices();
 
     ///<summary>
     /// The width and height of this rectangle.

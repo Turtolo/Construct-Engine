@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace Amethyst.Input
 {
   public enum MouseButton

@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using Microsoft.Xna.Framework;
 
@@ -7,7 +9,10 @@ namespace Amethyst.Geometry
   {
     public int Radius { get; set; }
 
-    public Point[] Vertices => new Point[0];
+    public ReadOnlySpan<Point> GetVertices()
+    {
+      return new Point[0];
+    }
 
     public Extent Size
     {

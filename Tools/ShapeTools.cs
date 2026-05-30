@@ -16,7 +16,6 @@ namespace Amethyst.Tools
       return dx * dx + dy * dy;
     }
   
-    
     public static bool IsCircleIntersectingConvex(Vector2 circleCenter, float circleRadius, List<Vector2> vertices)
     {
       bool isInside = true;
@@ -26,8 +25,6 @@ namespace Amethyst.Tools
       {
         Vector2 pointA = vertices[i];
         Vector2 pointB = vertices[(i + 1) % count];
-
-        //Console.WriteLine
 
         Vector2 closestPoint = GetClosestPointOnSegment(pointA, pointB, circleCenter);
 

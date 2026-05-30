@@ -1,3 +1,5 @@
+#nullable disable
+
 using Amethyst.Util;
 using System;
 using System.Collections.Generic;

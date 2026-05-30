@@ -1,3 +1,5 @@
+#nullable disable
+
 using Amethyst.Hierarchy;
 using Amethyst.Tools;
 using Microsoft.Xna.Framework;
