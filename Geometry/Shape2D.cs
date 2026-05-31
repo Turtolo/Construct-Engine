@@ -21,7 +21,7 @@ namespace Amethyst.Geometry
     ///<summary>
     /// The width and height of this rectangle.
     ///</summary>
-    Extent Size { get; set; }
+    Extent Size { get; }
 
     ///<summary>
     /// Gets the axis aligned bounding box of this shape.

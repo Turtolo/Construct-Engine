@@ -12,7 +12,26 @@ namespace Amethyst.Geometry
   {
     private ConvexSegment2D[] _segments;
 
-    public Extent Size { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public Extent Size
+    {
+      get
+      {
+        var vertices = GetVertices().ToArray();
+
+        if (vertices == null || vertices.Length < 3)
+          return Extent.Empty;
+        
+        var min = new Point(
+            vertices.Min(v => v.X),
+            vertices.Min(v => v.Y));
+
+        var max = new Point(
+            vertices.Max(v => v.X),
+            vertices.Max(v => v.Y));
+
+        return new Extent(max.X - min.X, max.Y - min.Y);
+      }
+    }
 
     private Point[]? _vertices;
     

@@ -191,8 +191,6 @@ namespace Amethyst.Managers
         Flush();
       }
 
-      if (Core.Prefs.General.ShowCollision)
-        DrawShapes();
     }
 
     public override void _PhysicsUpdate(TimeSpan delta)
@@ -203,56 +201,6 @@ namespace Amethyst.Managers
       {
         i._PhysicsUpdate((float)delta.TotalSeconds);
         Flush();
-      }
-    }
-
-    internal void DrawShapes()
-    {
-      foreach (var shape in GetAll<CollisionShape2D>())
-      {
-        Color color;
-        if (shape.Disabled)
-          color = Color.Gray;
-        else
-          color = Color.Blue;
-
-        if (shape.Shape is RectangleShape2D rs)
-        {
-          Core.Canvas.Submit(new TextureDrawCall
-          {
-            Texture = Core.Pixel,
-            Depth = 99,
-            Params = CanvasParams.Identity with
-            {
-              Scale = new Vector2(rs.Size.Width, rs.Size.Height),
-              Color = color * 0.5f,
-              Position = shape.Transform.Global.Position
-            },
-            Key = BatchKey.Default with
-            {
-              Matrix = Get<Camera2D>().GetTransform()
-            }
-          });
-        }
-
-        if (shape.Shape is CircleShape2D cs)
-        {
-          Core.Canvas.Submit(new TextureDrawCall
-          {
-            Texture = GraphicsE.CreateCircle(cs.Radius),
-            Depth = 99,
-            Params = CanvasParams.Identity with
-            {
-              Color = color * 0.5f,
-              Position = shape.Transform.Global.Position - new Vector2(cs.Radius)
-            }
-          });
-        }
-
-        foreach (var ray in Core.Index.GetAll<RayCast2D>())
-        {
-          ray.Ray.Draw();
-        }
       }
     }
 

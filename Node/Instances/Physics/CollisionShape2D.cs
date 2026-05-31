@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Geometry;
 using Amethyst.Params;
+using Amethyst.Tools;
+using Amethyst.Graphics;
 
 namespace Amethyst.Hierarchy
 {
@@ -21,22 +23,12 @@ namespace Amethyst.Hierarchy
     public int Width
     {
       get => Shape?.Size.Width ?? 0;
-      set
-      {
-        if (Shape != null)
-          Shape.Size = new Extent(value, Height);
-      }
     }
 
     [Export]
     public int Height
     {
       get => Shape?.Size.Height ?? 0;
-      set
-      {
-        if (Shape != null)
-          Shape.Size = new Extent(Width, value);
-      }
     }
 
     public CollisionShape2D() { }
@@ -55,6 +47,57 @@ namespace Amethyst.Hierarchy
     {
       base._PhysicsUpdate(delta);
       CheckOneWay();
+    }
+
+    public override void _SubmitCall()
+    {
+      base._SubmitCall();
+
+      if (!Core.Prefs.General.ShowCollision)
+        return;
+
+      Color color;
+      if (Disabled)
+        color = Color.Gray;
+      else
+        color = Color.Blue;
+
+      if (Shape is RectangleShape2D rs)
+      {
+        Core.Canvas.Submit(new TextureDrawCall
+        {
+          Texture = Core.Pixel,
+          Depth = 99,
+          Params = CanvasParams.Identity with
+          {
+            Scale = new Vector2(rs.Size.Width, rs.Size.Height),
+            Color = color * 0.5f,
+            Position = Transform.Global.Position
+          },
+          Key = BatchKey.Default with
+          {
+            Matrix = Core.Index.Get<Camera2D>().GetTransform()
+          }
+        });
+      }
+
+      if (Shape is CircleShape2D cs)
+      {
+        Core.Canvas.Submit(new TextureDrawCall
+        {
+          Texture = GraphicsE.CreateCircle(cs.Radius),
+          Depth = 99,
+          Params = CanvasParams.Identity with
+          {
+            Color = color * 0.5f,
+            Position = Transform.Global.Position - new Vector2(cs.Radius)
+          },
+          Key = BatchKey.Default with
+          {
+            Matrix = Core.Index.Get<Camera2D>().GetTransform()
+          }
+        });
+      }
     }
 
     private void CheckOneWay()

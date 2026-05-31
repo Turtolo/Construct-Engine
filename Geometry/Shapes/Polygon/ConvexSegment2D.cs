@@ -37,13 +37,6 @@ namespace Amethyst.Geometry
 
         return new Extent(max.X - min.X, max.Y - min.Y);
       }
-      set
-      {
-        if (_vertices == null || !_vertices.Any())
-           return;
-
-        throw new NotImplementedException();
-      }
     }
 
     ///<summary>

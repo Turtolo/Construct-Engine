@@ -2,6 +2,8 @@
 
 using System;
 using Microsoft.Xna.Framework;
+using Amethyst.Tools;
+using System.Collections.Generic;
 
 namespace Amethyst.Geometry
 {
@@ -20,6 +22,7 @@ namespace Amethyst.Geometry
       set => Radius = value.Width / 2;
     }
 
+
     public CircleShape2D(int radius)
     {
       Radius = radius;
@@ -31,7 +34,8 @@ namespace Amethyst.Geometry
       {
         case CircleShape2D otherCircle:
           return CheckCircleIntersection(thisPosition, this, otherPosition, otherCircle);
-
+        case PolygonShape2D otherPoly:
+          return otherPoly.Intersect(this, thisPosition, otherPosition);   
         case RectangleShape2D otherRectangle:
           return CheckRectangleIntersectionWithCircle(thisPosition, this, otherPosition, otherRectangle);
 
