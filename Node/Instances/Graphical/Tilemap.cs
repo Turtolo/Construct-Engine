@@ -113,51 +113,38 @@ namespace Amethyst.Hierarchy
       if (_tiles == null || Tileset == null || !Material.Global.Visible)
         return;
 
-      for (int y = 0; y < rows; y++)
+      Vector2 worldTilePos =  Transform.Global.Position;
+
+      Vector2 pos = Rounded ? Vector2.Floor(worldTilePos) : worldTilePos;
+      Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
+
+      TileDrawCall call = DrawCallPool<TileDrawCall>.Get();
+
+      call.Tiles = _tiles;
+      call.Tileset = Tileset;
+      
+      call.Columns = Columns;
+      call.Rows = Rows;
+
+      call.Effect = Material.Global.Shader;
+      call.Depth = Ordering.Global.Depth;
+
+      call.Params = CanvasParams.Identity with
+      { 
+        Position = worldTilePos,
+        Color = Material.Global.Modulate,
+        Rotation = Transform.Global.Rotation,
+        Origin = Vector2.Zero,
+        Scale = scale,
+        Effects = Material.Global.SpriteEffects,
+      };
+
+      call.Key = BatchKey.Default with
       {
-        for (int x = 0; x < columns; x++)
-        {
-          int tileSetIndex = _tiles[x, y];
-          if (tileSetIndex < 0)
-            continue;
+        Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
+      };
 
-          MTexture tile = Tileset.GetTile(tileSetIndex);
-
-
-          Vector2 localTilePos = new Vector2(
-              x * Tileset.TileWidth,
-              y * Tileset.TileHeight
-          );
-
-          Vector2 worldTilePos = localTilePos + Transform.Global.Position;
-
-          Vector2 pos = Rounded ? Vector2.Floor(worldTilePos) : worldTilePos;
-          Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
-
-          TextureDrawCall call = DrawCallPool<TextureDrawCall>.Get();
-
-          call.Texture = tile;
-          call.Effect = Material.Global.Shader;
-          call.Depth = Ordering.Global.Depth;
-
-          call.Params = CanvasParams.Identity with
-          { 
-            Position = worldTilePos,
-            Color = Material.Global.Modulate,
-            Rotation = Transform.Global.Rotation,
-            Origin = Vector2.Zero,
-            Scale = scale,
-            Effects = Material.Global.SpriteEffects,
-          };
-
-          call.Key = BatchKey.Default with
-          {
-            Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
-          };
-
-          Core.Canvas.Submit(call);
-        }
-      }
+      Core.Canvas.Submit(call);
     }
   }
 }
