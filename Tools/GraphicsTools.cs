@@ -77,7 +77,7 @@ namespace Amethyst.Tools
       return texture.ToMTexture();
     }
 
-    public static TextureDrawCall Line(Vector2 start, Vector2 end, Color color, int thickness)
+    public static TextureDrawCall Line(Vector2 start, Vector2 end, int thickness)
     {
       Vector2 edge = end - start;
 
@@ -90,15 +90,9 @@ namespace Amethyst.Tools
         Params = CanvasParams.Identity with
         {
           Position = start,
-          Color = color,
           Rotation = angle,
           Scale = new Vector2(length, thickness),
         },
-        Key = BatchKey.Default with
-        {
-          Matrix = Core.Index.Get<Camera2D>().GetTransform()
-        },
-        Depth = 99
       };
 
       return call;

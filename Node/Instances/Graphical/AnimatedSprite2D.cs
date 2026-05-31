@@ -111,26 +111,30 @@ namespace Amethyst.Hierarchy
 
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
+      
+      var call = DrawCallPool<TextureDrawCall>.Get();
 
-      Core.Canvas.Submit(new TextureDrawCall
+      call.Texture = CurrentFrame;
+
+      call.Params = CanvasParams.Identity with
       {
-        Texture = CurrentFrame,
-        Params = CanvasParams.Identity with
-        {
-          Position = pos,
-          Color = Material.Global.Modulate,
-          Rotation = Transform.Global.Rotation,
-          Origin = CurrentFrame.Center,
-          Scale = scale,
-          Effects = Material.Global.SpriteEffects,
-        },
-        Key = BatchKey.Default with
-        {
-          Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
-        },
-        Depth = Ordering.Global.Depth,
-        Effect = Material.Global.Shader
-      });
+        Position = pos,
+        Color = Material.Global.Modulate,
+        Rotation = Transform.Global.Rotation,
+        Origin = CurrentFrame.Center,
+        Scale = scale,
+        Effects = Material.Global.SpriteEffects,
+      };
+
+      call.Key = BatchKey.Default with
+      {
+        Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
+      };
+
+      call.Depth = Ordering.Global.Depth;
+      call.Effect = Material.Global.Shader;
+
+      Core.Canvas.Submit(call);
     }
   }
 }

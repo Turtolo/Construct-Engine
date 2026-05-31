@@ -20,7 +20,7 @@ namespace Amethyst.Geometry
 
         if (vertices == null || vertices.Length < 3)
           return Extent.Empty;
-        
+
         var min = new Point(
             vertices.Min(v => v.X),
             vertices.Min(v => v.Y));
@@ -34,7 +34,7 @@ namespace Amethyst.Geometry
     }
 
     private Point[]? _vertices;
-    
+
     ///<summary>
     /// Returns this polygon's vertices, as a combined product of the segments.
     ///</summary>
@@ -55,13 +55,13 @@ namespace Amethyst.Geometry
       int offset = 0;
       foreach (var segment in _segments)
       {
-          segment.Vertices.CopyTo(_vertices.AsSpan(offset));
-          offset += segment.Vertices.Length;
+        segment.Vertices.CopyTo(_vertices.AsSpan(offset));
+        offset += segment.Vertices.Length;
       }
-      
+
       return _vertices;
     }
-    
+
     ///<summary>
     /// Creates a new polygon with params for <see cref="Point"/>.
     ///</summary>
@@ -105,7 +105,7 @@ namespace Amethyst.Geometry
     {
       _segments = segments.ToArray();
     }
-    
+
     ///<summary>
     /// Clones this polygon, the cloned polygon will have the same segments.
     ///</summary>
@@ -113,7 +113,7 @@ namespace Amethyst.Geometry
     {
       return new PolygonShape2D(_segments.ToArray());
     }
-    
+
     ///<summary>
     /// Checks if any of the segments contain the specified point, at a specified location.
     ///</summary>
@@ -136,13 +136,13 @@ namespace Amethyst.Geometry
 
       return false;
     }
-    
+
     ///<summary>
     /// Returns this polygon as an axis-aligned-bounding-box.
     ///</summary>
     public Rectangle GetAABB(Point position)
     {
-      if (GetVertices() == null || GetVertices().Length == 0)
+      if (GetVertices().IsEmpty || GetVertices().Length == 0)
         return Rectangle.Empty;
 
       int minX = int.MaxValue;
@@ -162,7 +162,7 @@ namespace Amethyst.Geometry
 
       return new Rectangle(minX, minY, maxX - minX, maxY - minY);
     }
-    
+
     ///<summary>
     /// Checks if this polygon intersects with another generic <see cref="IShape2D"/>, with an offset applied to <see cref="thisLocation"/>. 
     ///</summary>
@@ -174,7 +174,7 @@ namespace Amethyst.Geometry
     {
       return Intersect(other, thisLocation + offset, otherLocation);
     }
-    
+
     ///<summary>
     /// Checks if this polygon intersects with another generic <see cref="IShape2D"/>. 
     ///</summary>
@@ -196,18 +196,18 @@ namespace Amethyst.Geometry
           for (int j = 0; j < seg.Vertices.Length; j++)
           {
             var ver = seg.Vertices[j] + thisLocation;
-              vectorList.Add(ver.ToVector2());
+            vectorList.Add(ver.ToVector2());
           }
 
           var circleCenter = new Vector2(circle.Size.Width / 2, circle.Size.Height / 2) + otherLocation.ToVector2();
-          return ShapeT.IsCircleIntersectingConvex(circleCenter, circle.Radius, vectorList);   
+          return ShapeT.IsCircleIntersectingConvex(circleCenter, circle.Radius, vectorList);
         }
         else
         {
           var otherVertices = other.GetVertices();
 
           var otherAsPoly = new ConvexSegment2D(otherVertices);
-        
+
           if (seg.Intersect(otherAsPoly, thisLocation, otherLocation))
             return true;
           else
@@ -222,7 +222,7 @@ namespace Amethyst.Geometry
     {
       throw new System.NotImplementedException();
     }
-    
+
     ///<summary>
     /// Checks if the provided <see cref="vertices"/> -- make a convex polygon.
     /// It does this by checking how an edge trails off.
@@ -235,7 +235,7 @@ namespace Amethyst.Geometry
       int n = vertices.Length;
       if (vertices.Length < 4)
         return true;
-      
+
       float sign = 0;
 
       for (int i = 0; i < n; i++)
@@ -257,7 +257,7 @@ namespace Amethyst.Geometry
 
       return true;
     }
-    
+
     public static bool PointInTriangle(Point p, Point a, Point b, Point c)
     {
       float d1 = Cross(a, b, p);
@@ -279,13 +279,13 @@ namespace Amethyst.Geometry
       {
         bool earFound = false;
 
-        int n =  remainingVertices.Count;
+        int n = remainingVertices.Count;
 
         for (int i = 0; i < n; i++)
         {
           int prevIndex = (i - 1 + n) % n;
           int nextIndex = (i + 1) % n;
-          
+
           Point a = remainingVertices[prevIndex];
           Point b = remainingVertices[i];
           Point c = remainingVertices[nextIndex];
@@ -305,7 +305,7 @@ namespace Amethyst.Geometry
             {
               isEar = false;
               break;
-            } 
+            }
           }
 
           if (isEar)
@@ -326,8 +326,8 @@ namespace Amethyst.Geometry
 
     private static float Cross(Point a, Point b, Point c)
     {
-        return (b.X - a.X) * (c.Y - b.Y)
-             - (b.Y - a.Y) * (c.X - b.X);
+      return (b.X - a.X) * (c.Y - b.Y)
+           - (b.Y - a.Y) * (c.X - b.X);
     }
 
   }

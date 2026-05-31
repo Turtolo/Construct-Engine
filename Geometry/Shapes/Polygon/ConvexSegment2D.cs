@@ -13,7 +13,7 @@ namespace Amethyst.Geometry
     private readonly Point[] _vertices;
 
     public ReadOnlySpan<Point> Vertices { get => _vertices; }
-    
+
     ///<summary>
     /// The size of this polygon, in integer values.
     ///</summary>
@@ -26,7 +26,7 @@ namespace Amethyst.Geometry
       {
         if (_vertices == null || _vertices.Length < 3)
           return Extent.Empty;
-        
+
         var min = new Point(
             _vertices.Min(v => v.X),
             _vertices.Min(v => v.Y));
@@ -49,7 +49,7 @@ namespace Amethyst.Geometry
     {
       _vertices = vertices ?? Array.Empty<Point>();
     }
-    
+
     ///<summary>
     /// Creates a new convex-segment with a read-only-span of <see cref="Point"/>.
     ///</summary>
@@ -71,7 +71,7 @@ namespace Amethyst.Geometry
     {
       _vertices = vertices?.ToArray() ?? Array.Empty<Point>();
     }
-    
+
     ///<summary>
     /// Returns a list of the edges this polygon contains, instead of the regular pure points.
     ///</summary>
@@ -81,7 +81,7 @@ namespace Amethyst.Geometry
 
       if (_vertices.Length < 2)
         return edges;
-      
+
       for (int i = 0; i < _vertices.Length; i++)
       {
         Point a = _vertices[i];
@@ -89,16 +89,16 @@ namespace Amethyst.Geometry
 
         edges.Add((a, b));
       }
-      
+
       return edges;
     }
-    
+
     ///<summary>
     /// Returns this polygon as an axis-aligned-polygon.
     ///</summary>
     public Rectangle GetAABB(Point position)
     {
-      if (Vertices == null || _vertices.Length == 0)
+      if (Vertices.IsEmpty || _vertices.Length == 0)
         return Rectangle.Empty;
 
       int minX = int.MaxValue;
@@ -118,7 +118,7 @@ namespace Amethyst.Geometry
 
       return new Rectangle(minX, minY, maxX - minX, maxY - minY);
     }
-    
+
     ///<summary>
     /// Checks if this polygon contains a specified point, at a certain location.
     ///</summary>
@@ -155,7 +155,7 @@ namespace Amethyst.Geometry
 
       return true;
     }
-    
+
     ///<summary>
     /// Checks if this segmet intersects with another.
     ///</summary>
@@ -190,7 +190,7 @@ namespace Amethyst.Geometry
 
       foreach (var axis in axes)
       {
-        this.Project(thisLocation,axis, out float minA, out float maxA);
+        this.Project(thisLocation, axis, out float minA, out float maxA);
         other.Project(otherLocation, axis, out float minB, out float maxB);
 
         if (maxA < minB || maxB < minA)
@@ -199,7 +199,7 @@ namespace Amethyst.Geometry
 
       return true;
     }
-    
+
     ///<summary>
     /// Checks if this segment intersects with another.
     ///</summary>
@@ -242,7 +242,7 @@ namespace Amethyst.Geometry
     {
       throw new NotImplementedException();
     }
-    
+
     ///<summary>
     /// Clones this segment.
     ///</summary>

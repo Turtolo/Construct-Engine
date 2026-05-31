@@ -85,7 +85,7 @@ namespace Amethyst.Geometry
 
     public Rectangle GetAABB(Point position)
     {
-      if (GetVertices() == null || GetVertices().Length == 0)
+      if (GetVertices().IsEmpty || GetVertices().Length == 0)
         return Rectangle.Empty;
 
       int minX = int.MaxValue;

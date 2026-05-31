@@ -1,4 +1,4 @@
-#nullable disable
+#nullable enable 
 
 using System;
 using System.Collections.Generic;
@@ -20,9 +20,9 @@ namespace Monolith.Managers
     internal Rectangle Destination { get; set; }
     internal Color CanvasColor { get; set; } = Color.CornflowerBlue;
 
-    internal Effect PostProcessingShader { get; set; }
+    internal Effect? PostProcessingShader { get; set; }
 
-    public RenderTarget2D RenderTarget { get; internal set; }
+    public RenderTarget2D? RenderTarget { get; internal set; }
 
     public void Initialize()
     {
@@ -52,10 +52,8 @@ namespace Monolith.Managers
         _buckets[key] = list;
       }
 
-      list.Add(call);
+        list.Add(call);
     }
-
-
 
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -90,10 +88,18 @@ namespace Monolith.Managers
       if (_buckets.Count == 0)
         return;
 
-      foreach (var kvp in _buckets
-          .OrderBy(x => x.Key.Depth))
+      foreach (var kvp in _buckets.OrderBy(x => x.Key.Depth))
       {
         DrawBucket(spriteBatch, kvp.Value);
+      }
+
+      foreach (var kvp in _buckets)
+      {
+        var bucketList = kvp.Value;
+        for (int i = 0; i < bucketList.Count; i++)
+        {
+          bucketList[i].Recycle();
+        }
       }
 
       _buckets.Clear();
@@ -138,7 +144,8 @@ namespace Monolith.Managers
         call.Draw(spriteBatch);
       }
 
-      spriteBatch.End();
+      if (currentKey != null)
+        spriteBatch.End();
     }
 
     internal void UpdateTransform()

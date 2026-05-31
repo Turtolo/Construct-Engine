@@ -18,7 +18,7 @@ namespace Amethyst.Geometry
     /// The height of this extent.
     ///</summary>
     public int Height { get; }
-    
+
     ///<summary>
     /// A defualt struct, with empty values.
     ///</summary>
@@ -81,7 +81,7 @@ namespace Amethyst.Geometry
     {
       return HashCode.Combine(Width, Height);
     }
-    
+
     ///<summary>
     /// A convenience function for turning an extent into a point. The x and y values being width and height, respectfully.
     ///</summary>
@@ -89,7 +89,7 @@ namespace Amethyst.Geometry
     {
       return new Point(Width, Height);
     }
-    
+
     ///<summary>
     /// A convenience function for turning an extent into a rectangle.
     ///</summary>

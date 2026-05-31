@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Params;
@@ -9,14 +8,14 @@ namespace Amethyst.Graphics
 {
   public sealed class TextureDrawCall : Layered, IDrawCall
   {
-    public required MTexture Texture { get; init; }
-    public Rectangle? SourceRectangle { get; init; }
+    public MTexture Texture { get; set; }
+    public Rectangle? SourceRectangle { get; set; }
 
     public Effect Effect { get; set; }
 
     public CanvasParams Params { get; set; } = CanvasParams.Identity;
 
-    public BatchKey Key { get; init; } = BatchKey.Default;
+    public BatchKey Key { get; set; } = BatchKey.Default;
 
     public void Draw(SpriteBatch sb)
     {
@@ -39,6 +38,18 @@ namespace Amethyst.Graphics
           Params.Effects,
           InternalDepth
       );
+    }
+
+    public void Recycle()
+    {
+      Texture = null;
+      SourceRectangle = null;
+      Effect = null;
+      Params = CanvasParams.Identity;
+      Key = BatchKey.Default;
+      Depth = 0;
+
+      DrawCallPool<TextureDrawCall>.Return(this);
     }
   }
 }

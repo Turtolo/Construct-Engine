@@ -35,7 +35,7 @@ namespace Amethyst.Geometry
         case CircleShape2D otherCircle:
           return CheckCircleIntersection(thisPosition, this, otherPosition, otherCircle);
         case PolygonShape2D otherPoly:
-          return otherPoly.Intersect(this, thisPosition, otherPosition);   
+          return otherPoly.Intersect(this, thisPosition, otherPosition);
         case RectangleShape2D otherRectangle:
           return CheckRectangleIntersectionWithCircle(thisPosition, this, otherPosition, otherRectangle);
 

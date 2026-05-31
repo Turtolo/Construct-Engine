@@ -8,14 +8,14 @@ namespace Amethyst.Graphics
 {
   public sealed class FontDrawCall : Layered, IDrawCall
   {
-    public required IFont Font { get; init; }
-    public string Text { get; init; }
+    public IFont Font { get; set; }
+    public string Text { get; set; }
 
     public Effect Effect { get; set; }
 
     public CanvasParams Params { get; set; } = CanvasParams.Identity;
 
-    public BatchKey Key { get; init; } = BatchKey.Default;
+    public BatchKey Key { get; set; } = BatchKey.Default;
 
     public void Draw(SpriteBatch sb)
     {
@@ -33,6 +33,18 @@ namespace Amethyst.Graphics
           Params.Effects,
           InternalDepth
       );
+    }
+
+    public void Recycle()
+    {
+      Font = null;
+      Text = null;
+      Effect = null;
+      Params = CanvasParams.Identity;
+      Key = BatchKey.Default;
+      Depth = 0;
+
+      DrawCallPool<FontDrawCall>.Return(this);
     }
 
   }

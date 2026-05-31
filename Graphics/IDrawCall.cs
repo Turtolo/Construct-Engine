@@ -19,5 +19,7 @@ namespace Amethyst.Graphics
     int Depth { get; }
 
     void Draw(SpriteBatch sb);
+
+    void Recycle();
   }
 }

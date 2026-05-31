@@ -53,33 +53,14 @@ namespace Amethyst.Hierarchy
     {
       base._SubmitCall();
 
-      if (!Core.Prefs.General.ShowCollision)
-        return;
+      //if (!Core.Prefs.General.ShowCollision)
+      return;
 
       Color color;
       if (Disabled)
         color = Color.Gray;
       else
         color = Color.Blue;
-
-      if (Shape is RectangleShape2D rs)
-      {
-        Core.Canvas.Submit(new TextureDrawCall
-        {
-          Texture = Core.Pixel,
-          Depth = 99,
-          Params = CanvasParams.Identity with
-          {
-            Scale = new Vector2(rs.Size.Width, rs.Size.Height),
-            Color = color * 0.5f,
-            Position = Transform.Global.Position
-          },
-          Key = BatchKey.Default with
-          {
-            Matrix = Core.Index.Get<Camera2D>().GetTransform()
-          }
-        });
-      }
 
       if (Shape is CircleShape2D cs)
       {
@@ -97,6 +78,15 @@ namespace Amethyst.Hierarchy
             Matrix = Core.Index.Get<Camera2D>().GetTransform()
           }
         });
+      }
+      else
+      {
+        var vert = Shape.GetVertices();
+
+        for (int i = 0; i < Shape.GetVertices().Length - 1; i++)
+        {
+          //var call = GraphicsE.Line(vert[i].ToVector2(), vert[i + 1].ToVector2(), 1) w;
+        }
       }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Amethyst.Geometry
 {
-  public struct RectangleF 
+  public struct RectangleF
   {
   }
 }
