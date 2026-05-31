@@ -55,7 +55,7 @@ namespace Amethyst.Geometry
       if (IsConvex(vertices))
         _segments = new[] { new ConvexSegment2D(vertices) };
       else
-        _segments = Array.Empty<ConvexSegment2D>();
+        _segments = Triangulate(vertices).ToArray();
     }
 
     ///<summary>
@@ -72,7 +72,7 @@ namespace Amethyst.Geometry
       if (IsConvex(vert))
         _segments = new[] { new ConvexSegment2D(vert) };
       else
-        _segments = Array.Empty<ConvexSegment2D>();
+        _segments = Triangulate(vert).ToArray();
     }
 
     ///<summary>
@@ -80,7 +80,7 @@ namespace Amethyst.Geometry
     ///</summary>
     ///<remarks>
     /// As the user is the one providing the segments, not the engine -- these have to be convex.
-    /// That is to say, each interior angle has to be less than one-rad (180° degrees).
+    /// That is to say, each interior angle has to be less than π-rad (180° degrees).
     ///</remarks>
     public PolygonShape2D(IEnumerable<ConvexSegment2D> segments)
     {
@@ -209,7 +209,7 @@ namespace Amethyst.Geometry
     /// It does this by checking how an edge trails off.
     ///</summary>
     ///<remarks>
-    /// A convex polygon is a shape with no interior angles more one-rad (180° degrees).
+    /// A convex polygon is a shape with no interior angles more π-rad (180° degrees).
     ///</remarks>
     public bool IsConvex(Point[] vertices)
     {
@@ -227,7 +227,7 @@ namespace Amethyst.Geometry
 
         float cross = Cross(a, b, c);
 
-        if (cross == 0)
+        if (Math.Abs(cross) < 1e-6f)
           continue;
 
         if (sign == 0)
@@ -237,6 +237,72 @@ namespace Amethyst.Geometry
       }
 
       return true;
+    }
+    
+    public static bool PointInTriangle(Point p, Point a, Point b, Point c)
+    {
+      float d1 = Cross(a, b, p);
+      float d2 = Cross(b, c, p);
+      float d3 = Cross(c, a, p);
+
+      bool hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+      bool hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+      return !(hasNeg && hasPos);
+    }
+
+    private static List<ConvexSegment2D> Triangulate(Point[] vertices)
+    {
+      List<ConvexSegment2D> triangles = new();
+      List<Point> remainingVertices = vertices.ToList();
+
+      while (remainingVertices.Count > 3)
+      {
+        bool earFound = false;
+
+        int n =  remainingVertices.Count;
+
+        for (int i = 0; i < n; i++)
+        {
+          int prevIndex = (i - 1 + n) % n;
+          int nextIndex = (i + 1) % n;
+          
+          Point a = remainingVertices[prevIndex];
+          Point b = remainingVertices[i];
+          Point c = remainingVertices[nextIndex];
+
+          float cross = Cross(a, b, c);
+
+          if (cross <= 0)
+            continue;
+
+          bool isEar = true;
+          for (int j = 0; j < n; j++)
+          {
+            if (j == prevIndex || j == i || j == nextIndex)
+              continue;
+
+            if (PointInTriangle(remainingVertices[j], a, b, c))
+            {
+              isEar = false;
+              break;
+            } 
+          }
+
+          if (isEar)
+          {
+            triangles.Add(new ConvexSegment2D(a, b, c));
+            remainingVertices.RemoveAt(i);
+            earFound = true;
+            break;
+          }
+        }
+
+        if (!earFound)
+          break;
+      }
+
+      return triangles;
     }
 
     private static float Cross(Point a, Point b, Point c)

@@ -50,7 +50,7 @@ namespace Amethyst.Geometry
     /// Creates a new convex-segment with params of <see cref="Point"/>.
     ///</summary>
     ///<remarks>
-    /// Since this is a convex-segment it requires that no interior angles are above one-rad (180° degrees).
+    /// Since this is a convex-segment it requires that no interior angles are above π-rad (180° degrees).
     ///</remarks>
     public ConvexSegment2D(params Point[] vertices)
     {
@@ -61,7 +61,7 @@ namespace Amethyst.Geometry
     /// Creates a new convex-segment with a read-only-span of <see cref="Point"/>.
     ///</summary>
     ///<remarks>
-    /// Since this is a convex-segment it requires that no interior angles are above one-rad (180° degrees).
+    /// Since this is a convex-segment it requires that no interior angles are above π-rad (180° degrees).
     ///</remarks>
     public ConvexSegment2D(ReadOnlySpan<Point> vertices)
     {
@@ -72,7 +72,7 @@ namespace Amethyst.Geometry
     /// Creates a new convex-segment with an <see cref="IEnumerable{T}"/> of type <see cref="Point"/>.
     ///</summary>
     ///<remarks>
-    /// Since this is a convex-segment it requires that no interior angles are above one-rad (180° degrees).
+    /// Since this is a convex-segment it requires that no interior angles are above π-rad (180° degrees).
     ///</remarks>
     public ConvexSegment2D(IEnumerable<Point> vertices)
     {
