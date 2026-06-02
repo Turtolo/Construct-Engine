@@ -53,8 +53,8 @@ namespace Amethyst.Hierarchy
     {
       base._SubmitCall();
 
-      //if (!Core.Prefs.General.ShowCollision)
-      return;
+      if (!Core.Prefs.General.ShowCollision)
+        return;
 
       Color color;
       if (Disabled)
@@ -62,32 +62,40 @@ namespace Amethyst.Hierarchy
       else
         color = Color.Blue;
 
+      var call = DrawCallPool<TextureDrawCall>.Get();
+
+      if (Shape is RectangleShape2D rs)
+      {
+        call.Texture = Core.Pixel;
+        call.Depth = 99;
+        call.Params = CanvasParams.Identity with
+        {
+          Scale = new Vector2(rs.Size.Width, rs.Size.Height),
+          Color = color * 0.5f,
+          Position = Transform.Global.Position
+        };
+        call.Key = BatchKey.Default with
+        {
+          Matrix = Core.Token.Get<Camera2D>().GetTransform()
+        };
+      }
+
       if (Shape is CircleShape2D cs)
       {
-        Core.Canvas.Submit(new TextureDrawCall
+        call.Texture = GraphicsE.CreateCircle(cs.Radius);
+        call.Depth = 99;
+        call.Params = CanvasParams.Identity with
         {
-          Texture = GraphicsE.CreateCircle(cs.Radius),
-          Depth = 99,
-          Params = CanvasParams.Identity with
-          {
-            Color = color * 0.5f,
-            Position = Transform.Global.Position - new Vector2(cs.Radius)
-          },
-          Key = BatchKey.Default with
-          {
-            Matrix = Core.Index.Get<Camera2D>().GetTransform()
-          }
-        });
+          Color = color * 0.5f,
+          Position = Transform.Global.Position - new Vector2(cs.Radius)
+        };
+        call.Key = BatchKey.Default with
+        {
+          Matrix = Core.Token.Get<Camera2D>().GetTransform()
+        };
       }
-      else
-      {
-        var vert = Shape.GetVertices();
 
-        for (int i = 0; i < Shape.GetVertices().Length - 1; i++)
-        {
-          //var call = GraphicsE.Line(vert[i].ToVector2(), vert[i + 1].ToVector2(), 1) w;
-        }
-      }
+      Core.Canvas.Submit(call);
     }
 
     private void CheckOneWay()
@@ -95,7 +103,7 @@ namespace Amethyst.Hierarchy
       if (!OneWay || Shape == null)
         return;
 
-      foreach (KinematicBody2D kb in Core.Index.GetAll<KinematicBody2D>())
+      foreach (KinematicBody2D kb in Core.Token.GetAll<KinematicBody2D>())
       {
         foreach (var c in kb.CollisionShapes)
         {

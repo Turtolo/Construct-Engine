@@ -48,7 +48,7 @@ namespace Amethyst.Managers
 
       ClearOverlays();
 
-      Core.Index.Clear();
+      Core.Token.Clear();
 
       Type t = _scene.GetType();
 

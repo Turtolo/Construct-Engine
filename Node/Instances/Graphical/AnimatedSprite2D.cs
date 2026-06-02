@@ -111,7 +111,7 @@ namespace Amethyst.Hierarchy
 
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
-      
+
       var call = DrawCallPool<TextureDrawCall>.Get();
 
       call.Texture = CurrentFrame;
@@ -128,7 +128,7 @@ namespace Amethyst.Hierarchy
 
       call.Key = BatchKey.Default with
       {
-        Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
+        Matrix = Seperated ? null : Core.Token.Get<Camera2D>().GetTransform()
       };
 
       call.Depth = Ordering.Global.Depth;

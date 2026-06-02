@@ -28,7 +28,7 @@ namespace Amethyst.Graphics
         for (int x = 0; x < Columns; x++)
         {
           int storedIndex = Tiles[x, y];
-          if (storedIndex < 0) 
+          if (storedIndex < 0)
             continue;
 
           int tileSetIndex = storedIndex + IndexOffset;

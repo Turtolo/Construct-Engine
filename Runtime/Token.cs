@@ -9,7 +9,7 @@ using Amethyst.Runtime;
 namespace Amethyst
 {
   ///<summary>
-  /// The absolute abstract class for other classes.
+  /// The absolute abstract class for managed objects.
   ///</summary>
   public abstract class Token : BaseObject
   {
@@ -24,7 +24,7 @@ namespace Amethyst
 
     public Token()
     {
-      Core.Index.QueueAdd(this);
+      Core.Token.QueueAdd(this);
     }
 
     ///<summary>
@@ -35,7 +35,7 @@ namespace Amethyst
     ///</remarks>
     public void QueueFree()
     {
-      Core.Index.QueueRemove(this);
+      Core.Token.QueueRemove(this);
     }
 
     ///<summary>
@@ -43,7 +43,7 @@ namespace Amethyst
     ///</summary>
     public void FreeImmediate()
     {
-      Core.Index.RemoveNow(this);
+      Core.Token.RemoveNow(this);
     }
 
     ///<summary>

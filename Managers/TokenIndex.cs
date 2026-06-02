@@ -16,9 +16,10 @@ namespace Amethyst.Managers
 {
   public class TokenIndex : Loop
   {
-    private readonly List<Token> instances = new();
+    private readonly List<Token> tokens = new();
     private readonly Dictionary<string, List<Token>> byName = new();
 
+    private readonly List<Token> iterationBuffer = new();
 
     private readonly List<Token> pendingAdd = new();
     private readonly List<Token> pendingRemove = new();
@@ -27,10 +28,10 @@ namespace Amethyst.Managers
     /// Wrapper for creating an <see cref="Token"/>. 
     ///</summary>
     ///<remarks>
-    /// It is highly encouraged to use this as the only method of created instances,
+    /// It is highly encouraged to use this as the only method of created tokens,
     /// to ensure the engine has control over the order of operations.
     ///</remarks>
-    ///<returns>The instance which has been created, so it can be continually modfied.</returns>
+    ///<returns>The token which has been created, so it can be continually modfied.</returns>
     public T Create<T>()
         where T : Token, new()
     {
@@ -72,18 +73,18 @@ namespace Amethyst.Managers
 
 
     /// <summary>
-    /// Queues an instance to be added to this tree.
+    /// Queues an token to be added to this tree.
     /// </summary>
-    /// <param name="instance"></param>
-    public void QueueAdd(Token instance) => pendingAdd.Add(instance);
+    /// <param name="token"></param>
+    public void QueueAdd(Token token) => pendingAdd.Add(token);
     /// <summary>
     /// Queues an intance to be removed from this tree.
     /// </summary>
-    /// <param name="instance"></param>
-    public void QueueRemove(Token instance) => pendingRemove.Add(instance);
+    /// <param name="token"></param>
+    public void QueueRemove(Token token) => pendingRemove.Add(token);
 
     /// <summary>
-    /// Flushes all instances.
+    /// Flushes all tokens.
     /// </summary>
     internal void Flush()
     {
@@ -111,63 +112,63 @@ namespace Amethyst.Managers
     }
 
     /// <summary>
-    /// Adds an instance.
+    /// Adds an token.
     /// </summary>
-    /// <param name="instance"></param>
-    private void AddInternal(Token instance)
+    /// <param name="token"></param>
+    private void AddInternal(Token token)
     {
-      instances.Add(instance);
+      tokens.Add(token);
 
-      if (!string.IsNullOrEmpty(instance.Name))
+      if (!string.IsNullOrEmpty(token.Name))
       {
-        if (!byName.TryGetValue(instance.Name, out var list))
+        if (!byName.TryGetValue(token.Name, out var list))
         {
           list = new List<Token>();
-          byName[instance.Name] = list;
+          byName[token.Name] = list;
         }
-        list.Add(instance);
+        list.Add(token);
       }
     }
 
     /// <summary>
-    /// Removes an instance.
+    /// Removes an token.
     /// </summary>
-    /// <param name="instance"></param>
-    private void RemoveInternal(Token instance)
+    /// <param name="token"></param>
+    private void RemoveInternal(Token token)
     {
-      if (instance is IExitTree i)
+      if (token is IExitTree i)
         i._ExitTree();
 
-      instances.Remove(instance);
+      tokens.Remove(token);
 
-      if (!string.IsNullOrEmpty(instance.Name)
-          && byName.TryGetValue(instance.Name, out var list))
+      if (!string.IsNullOrEmpty(token.Name)
+          && byName.TryGetValue(token.Name, out var list))
       {
-        list.Remove(instance);
+        list.Remove(token);
         if (list.Count == 0)
-          byName.Remove(instance.Name);
+          byName.Remove(token.Name);
       }
 
-      instance.ClearData();
+      token.ClearData();
     }
 
     /// <summary>
-    /// Removes an instance without queueing.
+    /// Removes an token without queueing.
     /// </summary>
-    /// <param name="instance"></param>
-    internal void RemoveNow(Token instance) => RemoveInternal(instance);
+    /// <param name="token"></param>
+    internal void RemoveNow(Token token) => RemoveInternal(token);
 
     /// <summary>
-    /// Frees and removes all nodes immediately.
+    /// Frees and removes all tokens immediately.
     /// </summary>
     public void Clear()
     {
-      foreach (var instance in instances.ToList())
+      foreach (var token in tokens.ToList())
       {
-        RemoveInternal(instance);
+        RemoveInternal(token);
       }
 
-      instances.Clear();
+      tokens.Clear();
       byName.Clear();
 
       pendingAdd.Clear();
@@ -177,35 +178,51 @@ namespace Amethyst.Managers
 
     public override void _Process(TimeSpan delta)
     {
-
       Flush();
-      foreach (IProcess i in instances.ToList())
+
+      iterationBuffer.Clear();
+      iterationBuffer.AddRange(tokens);
+
+      float dt = (float)delta.TotalSeconds;
+
+      for (int i = 0; i < iterationBuffer.Count; i++)
       {
-        i._Process((float)delta.TotalSeconds);
-        Flush();
+        var inst = iterationBuffer[i];
+
+        if (inst is IProcess processor && !pendingRemove.Contains(inst))
+          processor._Process(dt);
+
+        if (inst is ICall caller && !pendingRemove.Contains(inst))
+          caller._SubmitCall();
       }
 
-      foreach (ICall i in instances.ToList())
-      {
-        i._SubmitCall();
-        Flush();
-      }
-
+      iterationBuffer.Clear(); 
+      Flush();
     }
 
     public override void _PhysicsUpdate(TimeSpan delta)
     {
-
       Flush();
-      foreach (IPhysicsUpdate i in instances.ToList())
+
+      iterationBuffer.Clear();
+      iterationBuffer.AddRange(tokens);
+
+      float dt = (float)delta.TotalSeconds;
+
+      for (int i = 0; i < iterationBuffer.Count; i++)
       {
-        i._PhysicsUpdate((float)delta.TotalSeconds);
-        Flush();
+        var inst = iterationBuffer[i];
+
+        if (inst is IPhysicsUpdate physics && !pendingRemove.Contains(inst))
+          physics._PhysicsUpdate((float)delta.TotalSeconds);
       }
+
+      iterationBuffer.Clear();
+      Flush();
     }
 
     /// <summary>
-    /// Gets the first instance by name.
+    /// Gets the first token by name.
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -213,7 +230,7 @@ namespace Amethyst.Managers
         => GetAll(name).FirstOrDefault();
 
     /// <summary>
-    /// Gets all instances by name.
+    /// Gets all tokens by name.
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -225,7 +242,7 @@ namespace Amethyst.Managers
                 : Array.Empty<Token>();
 
     /// <summary>
-    /// Gets the first instance by type.
+    /// Gets the first token by type.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -233,20 +250,20 @@ namespace Amethyst.Managers
         => GetAll<T>().FirstOrDefault();
 
     /// <summary>
-    /// Gets all instances by type.
+    /// Gets all tokens by type.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public IReadOnlyList<T> GetAll<T>() where T : Token
-        => instances.OfType<T>().ToList();
+        => tokens.OfType<T>().ToList();
 
     /// <summary>
-    /// Gets all instacnes
+    /// Gets all tokens 
     /// </summary>
     /// <returns></returns>
     public IReadOnlyList<Token> GetAll()
     {
-      return instances.AsReadOnly();
+      return tokens.AsReadOnly();
     }
 
   }

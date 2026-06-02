@@ -12,7 +12,7 @@ namespace Amethyst.Util
     ///<param name="ignoreTimeScale">Wether this timer should obey to timescale standards.</param>
     public static void Span(TimeSpan time, Action then, bool ignoreTimeScale = false)
     {
-      Core.Time.After(time, () => Core.Index.Post(then), ignoreTimeScale);
+      Core.Time.After(time, () => Core.Token.Post(then), ignoreTimeScale);
     }
 
     ///<summary>
@@ -34,7 +34,7 @@ namespace Amethyst.Util
       {
         if (condition())
         {
-          Core.Index.Post(then);
+          Core.Token.Post(then);
         }
         else
         {

@@ -113,7 +113,7 @@ namespace Amethyst.Hierarchy
       if (_tiles == null || Tileset == null || !Material.Global.Visible)
         return;
 
-      Vector2 worldTilePos =  Transform.Global.Position;
+      Vector2 worldTilePos = Transform.Global.Position;
 
       Vector2 pos = Rounded ? Vector2.Floor(worldTilePos) : worldTilePos;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
@@ -122,7 +122,7 @@ namespace Amethyst.Hierarchy
 
       call.Tiles = _tiles;
       call.Tileset = Tileset;
-      
+
       call.Columns = Columns;
       call.Rows = Rows;
 
@@ -130,7 +130,7 @@ namespace Amethyst.Hierarchy
       call.Depth = Ordering.Global.Depth;
 
       call.Params = CanvasParams.Identity with
-      { 
+      {
         Position = worldTilePos,
         Color = Material.Global.Modulate,
         Rotation = Transform.Global.Rotation,
@@ -141,7 +141,7 @@ namespace Amethyst.Hierarchy
 
       call.Key = BatchKey.Default with
       {
-        Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
+        Matrix = Seperated ? null : Core.Token.Get<Camera2D>().GetTransform()
       };
 
       Core.Canvas.Submit(call);

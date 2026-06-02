@@ -77,7 +77,7 @@ namespace Amethyst.Geometry
             Depth = depth,
             Key = BatchKey.Default with
             {
-              Matrix = Core.Index.Get<Camera2D>().GetTransform()
+              Matrix = Core.Token.Get<Camera2D>().GetTransform()
             }
           }
       );

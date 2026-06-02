@@ -28,7 +28,7 @@ namespace Amethyst
     public static Preferences Prefs { get; set; }
 
     public static TimeOwner Time { get; private set; }
-    public static TokenIndex Index { get; private set; }
+    public static TokenIndex Token { get; private set; }
     public static ResourceManager Resource { get; private set; }
     public static Canvas2D Canvas { get; private set; }
     public static SceneTree Tree { get; private set; }
@@ -69,8 +69,8 @@ namespace Amethyst
 
       Prefs = new Preferences();
       Resource = new ResourceManager();
-      Index = new TokenIndex();
-      Tree = new SceneTree(Index.Create<Node>());
+      Token = new TokenIndex();
+      Tree = new SceneTree(Token.Create<Node>());
       Physics = new PhysicsServer2D();
       Input = new InputManager();
 
@@ -114,7 +114,7 @@ namespace Amethyst
 
       Input.Update(gameTime);
 
-      Index.Update(context, physicsSteps);
+      Token.Update(context, physicsSteps);
 
       if (Input.Keyboard.IsKeyDown(Keys.Escape) || Input.CurrentGamePad.WasButtonJustPressed(Buttons.Start))
         Exit();

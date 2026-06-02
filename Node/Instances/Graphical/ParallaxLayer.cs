@@ -56,7 +56,7 @@ namespace Amethyst.Hierarchy
     {
       base._Process(delta);
 
-      var camera = Core.Index.Get<Camera2D>();
+      var camera = Core.Token.Get<Camera2D>();
       Vector2 camDelta = camera.Transform.Global.Position - lastCameraPos;
       lastCameraPos = camera.Transform.Global.Position;
 
@@ -68,7 +68,7 @@ namespace Amethyst.Hierarchy
       if (!Material.Global.Visible)
         return;
 
-      Rectangle view = Core.Index.Get<Camera2D>().GetWorldViewRectangle();
+      Rectangle view = Core.Token.Get<Camera2D>().GetWorldViewRectangle();
 
       int texW = Texture.Bounds.Width;
       int texH = Texture.Bounds.Height;
@@ -109,13 +109,13 @@ namespace Amethyst.Hierarchy
 
           Vector2 modPos = Rounded ? Vector2.Floor(pos) : pos;
           Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
-          
+
           var call = DrawCallPool<TextureDrawCall>.Get();
 
           call.Texture = this.Texture;
           call.Depth = Ordering.Global.Depth;
           call.Effect = Material.Global.Shader;
-          
+
           call.Params = CanvasParams.Identity with
           {
             Position = modPos,
@@ -127,7 +127,7 @@ namespace Amethyst.Hierarchy
 
           call.Key = BatchKey.Default with
           {
-            Matrix = Seperated ? null : Core.Index.Get<Camera2D>().GetTransform()
+            Matrix = Seperated ? null : Core.Token.Get<Camera2D>().GetTransform()
           };
 
           Core.Canvas.Submit(call);

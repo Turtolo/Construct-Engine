@@ -38,7 +38,7 @@ namespace Amethyst.Hierarchy
 
       Ray.TargetOffset = worldOffset;
 
-      var shapes = Core.Index
+      var shapes = Core.Token
           .GetAll<CollisionShape2D>()
           .Where(cs => cs.Shape != null)
           .Select(cs => (cs.Shape, cs.Transform.Global.Position))

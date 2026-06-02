@@ -119,7 +119,7 @@ namespace Amethyst.Graphics
       };
       call.Key = BatchKey.Default with
       {
-        Matrix = Core.Index.Get<Camera2D>().GetTransform()
+        Matrix = Core.Token.Get<Camera2D>().GetTransform()
       };
       call.Depth = 99;
 

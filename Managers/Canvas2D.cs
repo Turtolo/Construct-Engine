@@ -52,7 +52,7 @@ namespace Monolith.Managers
         _buckets[key] = list;
       }
 
-        list.Add(call);
+      list.Add(call);
     }
 
     public void Draw(SpriteBatch spriteBatch)

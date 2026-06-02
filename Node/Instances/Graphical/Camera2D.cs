@@ -14,6 +14,9 @@ namespace Amethyst.Hierarchy
     public Vector2 Zoom { get; set; } = Vector2.One;
 
     [Export]
+    public bool Disabled { get; set; } = false;
+
+    [Export]
     public Rectangle Bounds
     {
       get
