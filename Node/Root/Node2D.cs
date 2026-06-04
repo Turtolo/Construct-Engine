@@ -28,7 +28,7 @@ namespace Amethyst.Hierarchy
     }
 
     /// <summary>
-    /// The self contained rotation of this node, updates child node's rotation.
+    /// The self contained rotation of this node, updates child nodes' rotation.
     /// </summary>
     [Export]
     public float Rotation
@@ -41,7 +41,7 @@ namespace Amethyst.Hierarchy
     }
 
     /// <summary>
-    /// The self contained scale of this node, updates child node's scale.
+    /// The self contained scale of this node, updates child nodes' scale.
     /// </summary>
     [Export]
     public Vector2 Scale
@@ -53,9 +53,6 @@ namespace Amethyst.Hierarchy
       }
     }
 
-    /// <summary>
-    /// Creates a new Node2D using a SpatialNodeConfig.
-    /// </summary>
     public Node2D() { }
 
     public override void _EnterTree()

@@ -24,16 +24,9 @@ namespace Amethyst.Graphics
   {
     private readonly ParticleParams _initialData;
     private ParticleInfo _info;
-
-    public ParticleParams InitialData
-    {
-      get => _initialData;
-    }
-
-    public ParticleInfo Info
-    {
-      get => _info;
-    }
+    
+    public ParticleParams Params { get => _initialData; }
+    public ParticleInfo Info { get => _info; }
 
     public Particle(Vector2 pos, ParticleParams data)
     {
@@ -62,7 +55,7 @@ namespace Amethyst.Graphics
       }
     }
 
-    public void Update(float delta)
+    public void Modulate(float delta)
     {
       _info.LifespanLeft -= delta;
 
@@ -103,27 +96,5 @@ namespace Amethyst.Graphics
       _info.Position += _info.Direction * _initialData.Speed * delta;
     }
 
-    public void Draw()
-    {
-      var call = DrawCallPool<TextureDrawCall>.Get();
-
-      call.Texture = _initialData.Texture;
-
-      call.Params = CanvasParams.Identity with
-      {
-        Position = _info.Position,
-        Color = _info.Color * _info.Opacity,
-        Rotation = 0f,
-        Origin = _info.Origin,
-        Scale = new Vector2(_info.Scale),
-      };
-      call.Key = BatchKey.Default with
-      {
-        Matrix = Core.Token.Get<Camera2D>().GetTransform()
-      };
-      call.Depth = 99;
-
-      Core.Canvas.Submit(call);
-    }
   }
 }

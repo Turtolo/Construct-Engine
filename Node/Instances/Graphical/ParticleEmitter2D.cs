@@ -14,7 +14,7 @@ namespace Amethyst.Hierarchy
   {
     private readonly List<Particle> _particles = [];
 
-    private float _intervalLeft;
+    private float IntervalLeft;
 
     [Export]
     public EmitterParams Params { get; set; } = EmitterParams.Identity;
@@ -24,7 +24,7 @@ namespace Amethyst.Hierarchy
 
     public ParticleEmitter2D()
     {
-      _intervalLeft = Params.Interval;
+      IntervalLeft = Params.Interval;
     }
 
     private void Spawn(Vector2 pos)
@@ -75,18 +75,20 @@ namespace Amethyst.Hierarchy
     {
       base._Process(delta);
 
-      _intervalLeft -= delta;
+      IntervalLeft -= delta;
 
-      while (_intervalLeft <= 0f)
+      while (IntervalLeft <= 0f)
       {
-        _intervalLeft += Params.Interval;
+        IntervalLeft += Params.Interval;
 
         Emit();
       }
 
-      foreach (var particle in _particles)
+      for (int i = 0; i < _particles.Count; i++)
+
       {
-        particle.Update(delta);
+        var p = _particles[i];
+        p.Modulate(delta);
       }
 
       _particles.RemoveAll(p => p.Info.IsFinished);
@@ -98,7 +100,25 @@ namespace Amethyst.Hierarchy
 
       foreach (var particle in _particles)
       {
-        particle.Draw();
+        var call = DrawCallPool<TextureDrawCall>.Get();
+
+        call.Texture = particle.Params.Texture;
+
+        call.Params = CanvasParams.Identity with
+        {
+          Position = particle.Info.Position,
+          Color = particle.Info.Color * particle.Info.Opacity,
+          Rotation = 0f,
+          Origin = particle.Info.Origin,
+          Scale = new Vector2(particle.Info.Scale),
+        };
+        call.Key = BatchKey.Default with
+        {
+          Matrix = Core.Token.Get<Camera2D>().GetTransform()
+        };
+        call.Depth = 99;
+
+        Core.Canvas.Submit(call);
       }
     }
   }

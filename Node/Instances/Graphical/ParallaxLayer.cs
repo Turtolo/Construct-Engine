@@ -68,7 +68,7 @@ namespace Amethyst.Hierarchy
       if (!Material.Global.Visible)
         return;
 
-      Rectangle view = Core.Token.Get<Camera2D>().GetWorldViewRectangle();
+      Rectangle view = Core.Token.Get<Camera2D>().GetWorldViewRectangle(false);
 
       int texW = Texture.Bounds.Width;
       int texH = Texture.Bounds.Height;
