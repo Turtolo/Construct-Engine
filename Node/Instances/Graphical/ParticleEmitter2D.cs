@@ -1,5 +1,6 @@
 #nullable disable
 
+using Amethyst.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Params;
@@ -100,7 +101,7 @@ namespace Amethyst.Hierarchy
 
       foreach (var particle in _particles)
       {
-        var call = DrawCallPool<TextureDrawCall>.Get();
+        var call = ObjectPool<TextureDrawCall>.Get();
 
         call.Texture = particle.Params.Texture;
 

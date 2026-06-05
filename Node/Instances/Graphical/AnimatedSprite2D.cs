@@ -1,5 +1,6 @@
 #nullable disable
 
+using Amethyst.Util;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -16,9 +17,9 @@ namespace Amethyst.Hierarchy
     private bool _finished = false;
 
     [Export]
-    public Dictionary<string, Animation> Atlas { get; set; } = new Dictionary<string, Animation>();
+    public Dictionary<string, FrameAnimation> Atlas { get; set; } = new Dictionary<string, FrameAnimation>();
     [Export]
-    public Animation CurrentAnimation { get; private set; }
+    public FrameAnimation CurrentAnimation { get; private set; }
     [Export]
     public bool IsLooping { get; set; } = false;
 
@@ -32,7 +33,7 @@ namespace Amethyst.Hierarchy
 
     public void PlayAnimation(string name, bool isLooping = false)
     {
-      if (!Atlas.TryGetValue(name, out Animation target))
+      if (!Atlas.TryGetValue(name, out FrameAnimation target))
         return;
 
       if (CurrentAnimation != target || _finished)
@@ -45,7 +46,7 @@ namespace Amethyst.Hierarchy
       }
     }
 
-    public void PlayAnimation(Animation animation, bool isLooping = false)
+    public void PlayAnimation(FrameAnimation animation, bool isLooping = false)
     {
       if (animation == null)
         return;
@@ -112,7 +113,7 @@ namespace Amethyst.Hierarchy
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
-      var call = DrawCallPool<TextureDrawCall>.Get();
+      var call = ObjectPool<TextureDrawCall>.Get();
 
       call.Texture = CurrentFrame;
 

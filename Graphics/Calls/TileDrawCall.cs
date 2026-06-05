@@ -1,11 +1,14 @@
 using Amethyst.Params;
+using Amethyst.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Amethyst.Graphics
 {
-  public sealed class TileDrawCall : Layered, IDrawCall
+  public sealed class TileDrawCall : Layered, IDrawCall, IPoolable
   {
+    public int Index { get; set;}
+    
     public Effect Effect { get; set; }
 
     public CanvasParams Params { get; set; } = CanvasParams.Identity;
@@ -61,7 +64,7 @@ namespace Amethyst.Graphics
       }
     }
 
-    public void Recycle()
+    public void Reset()
     {
       Tileset = null;
       Tiles = null;
@@ -69,7 +72,7 @@ namespace Amethyst.Graphics
       Columns = 0;
       Rows = 0;
 
-      DrawCallPool<TileDrawCall>.Return(this);
+      ObjectPool<TileDrawCall>.Return(this);
     }
   }
 }

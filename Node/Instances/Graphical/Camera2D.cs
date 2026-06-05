@@ -1,5 +1,6 @@
 #nullable disable
 
+using Amethyst.Util;
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

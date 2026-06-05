@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 
-namespace Amethyst.Graphics
+namespace Amethyst.Util
 {
-  public static class DrawCallPool<T> where T : class, IDrawCall, new()
+  public static class ObjectPool<T> where T : class, IPoolable, new()
   {
     private static readonly Stack<T> _pool = new Stack<T>(50000);
-
+    
+    ///<summary>
+    /// Returns a fresh copy from the pool of drawcalls.
+    ///</summary>
     public static T Get()
     {
       return _pool.Count > 0 ? _pool.Pop() : new T();

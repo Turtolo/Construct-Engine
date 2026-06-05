@@ -3,11 +3,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Params;
+using Amethyst.Util;
 
 namespace Amethyst.Graphics
 {
-  public sealed class TextureDrawCall : Layered, IDrawCall
+  public sealed class TextureDrawCall : Layered, IDrawCall, IPoolable
   {
+    public int Index { get; set;}
+    
     public MTexture Texture { get; set; }
     public Rectangle? SourceRectangle { get; set; }
 
@@ -40,7 +43,7 @@ namespace Amethyst.Graphics
       );
     }
 
-    public void Recycle()
+    public void Reset()
     {
       Texture = null;
       SourceRectangle = null;
@@ -49,7 +52,7 @@ namespace Amethyst.Graphics
       Key = BatchKey.Default;
       Depth = 0;
 
-      DrawCallPool<TextureDrawCall>.Return(this);
+      ObjectPool<TextureDrawCall>.Return(this);
     }
   }
 }

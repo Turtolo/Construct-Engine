@@ -1,5 +1,6 @@
 #nullable disable
 
+using Amethyst.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Graphics;
@@ -77,7 +78,7 @@ namespace Amethyst.Hierarchy
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
-      TextureDrawCall call = DrawCallPool<TextureDrawCall>.Get();
+      TextureDrawCall call = ObjectPool<TextureDrawCall>.Get();
 
       call.Texture = Texture;
       call.SourceRectangle = sourceRect;

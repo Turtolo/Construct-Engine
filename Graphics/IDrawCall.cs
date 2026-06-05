@@ -14,12 +14,14 @@ namespace Amethyst.Graphics
 
     public Effect Effect { get; }
 
+    public int Index { get; set; }
+
     BatchKey Key { get; }
 
     int Depth { get; }
 
     void Draw(SpriteBatch sb);
 
-    void Recycle();
+    void Reset();
   }
 }

@@ -8,6 +8,7 @@ using Amethyst.Graphics;
 using Amethyst.IO;
 using Amethyst.Managers;
 using Amethyst.Params;
+using Amethyst.Util;
 
 namespace Amethyst.Hierarchy
 {
@@ -118,7 +119,7 @@ namespace Amethyst.Hierarchy
       Vector2 pos = Rounded ? Vector2.Floor(worldTilePos) : worldTilePos;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
-      TileDrawCall call = DrawCallPool<TileDrawCall>.Get();
+      TileDrawCall call = ObjectPool<TileDrawCall>.Get();
 
       call.Tiles = _tiles;
       call.Tileset = Tileset;

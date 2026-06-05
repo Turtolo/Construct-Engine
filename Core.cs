@@ -10,7 +10,6 @@ using Amethyst.Util;
 using Amethyst.Managers;
 using Amethyst.Params;
 using Amethyst.Hierarchy;
-using Monolith.Managers;
 namespace Amethyst
 {
   public class Core : Game

@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace Amethyst.Graphics
 {
-  public class Animation : BaseObject
+  public class FrameAnimation : BaseObject
   {
     public List<MTexture> Frames { get; set; }
 
     public TimeSpan Delay { get; set; }
 
-    public Animation()
+    public FrameAnimation()
     {
       Frames = new List<MTexture>();
       Delay = TimeSpan.Zero;
     }
 
-    public Animation(List<MTexture> frames, TimeSpan delay)
+    public FrameAnimation(List<MTexture> frames, TimeSpan delay)
     {
       Frames = frames;
       Delay = delay;

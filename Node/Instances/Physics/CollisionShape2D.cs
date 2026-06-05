@@ -7,6 +7,7 @@ using Amethyst.Geometry;
 using Amethyst.Params;
 using Amethyst.Tools;
 using Amethyst.Graphics;
+using Amethyst.Util;
 
 namespace Amethyst.Hierarchy
 {
@@ -62,7 +63,7 @@ namespace Amethyst.Hierarchy
       else
         color = Color.Blue;
 
-      var call = DrawCallPool<TextureDrawCall>.Get();
+      var call = ObjectPool<TextureDrawCall>.Get();
 
       if (Shape is RectangleShape2D rs)
       {

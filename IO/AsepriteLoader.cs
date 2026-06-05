@@ -15,7 +15,7 @@ namespace Amethyst.IO
   public static class AsepriteLoader
   {
 
-    public static Dictionary<string, Animation> LoadAnimation(
+    public static Dictionary<string, FrameAnimation> LoadAnimation(
         this MTexture source,
         Extent size,
         int spacing = 0,
@@ -24,7 +24,7 @@ namespace Amethyst.IO
     {
       List<MTexture> frames = new();
 
-      Dictionary<string, Animation> animations = new();
+      Dictionary<string, FrameAnimation> animations = new();
 
       int usableWidth = source.Bounds.Width - margin * 2;
       int usableHeight = source.Bounds.Height - margin * 2;
@@ -56,7 +56,7 @@ namespace Amethyst.IO
         }
       }
 
-      animations.Add("Main", new Animation
+      animations.Add("Main", new FrameAnimation 
       {
         Frames = frames,
         Delay = TimeSpan.FromMilliseconds(100)
@@ -65,7 +65,7 @@ namespace Amethyst.IO
       return animations;
     }
 
-    public static Dictionary<string, Animation> LoadAnimations(
+    public static Dictionary<string, FrameAnimation> LoadAnimations(
         this MTexture source, string jsonPath)
     {
       string json = File.ReadAllText(jsonPath);
@@ -81,7 +81,7 @@ namespace Amethyst.IO
           .Select(f => f.Value)
           .ToList();
 
-      Dictionary<string, Animation> animations = new();
+      Dictionary<string, FrameAnimation> animations = new();
 
       foreach (var tag in data.meta.frameTags)
       {
@@ -103,7 +103,7 @@ namespace Amethyst.IO
 
         TimeSpan speedMs = TimeSpan.FromMilliseconds((int)durations.Average());
 
-        animations[tag.name] = new Animation
+        animations[tag.name] = new FrameAnimation 
         {
           Frames = animFrames,
           Delay = speedMs

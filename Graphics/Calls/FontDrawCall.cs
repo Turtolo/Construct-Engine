@@ -3,11 +3,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Params;
+using Amethyst.Util;
 
 namespace Amethyst.Graphics
 {
-  public sealed class FontDrawCall : Layered, IDrawCall
+  public sealed class FontDrawCall : Layered, IDrawCall, IPoolable
   {
+    public int Index { get; set;}
+
     public IFont Font { get; set; }
     public string Text { get; set; }
 
@@ -35,7 +38,7 @@ namespace Amethyst.Graphics
       );
     }
 
-    public void Recycle()
+    public void Reset()
     {
       Font = null;
       Text = null;
@@ -44,7 +47,7 @@ namespace Amethyst.Graphics
       Key = BatchKey.Default;
       Depth = 0;
 
-      DrawCallPool<FontDrawCall>.Return(this);
+      ObjectPool<FontDrawCall>.Return(this);
     }
 
   }
