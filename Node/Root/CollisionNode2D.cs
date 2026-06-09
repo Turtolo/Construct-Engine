@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Amethyst.Geometry;
 using Amethyst.Params;
 using Amethyst.Tools;
+using System.Linq;
 
 namespace Amethyst.Hierarchy
 {
@@ -120,12 +120,27 @@ namespace Amethyst.Hierarchy
       {
         return false; 
       }
+      
+      int myCount = this.CollisionShapes.Count;
+      int otherCount = other.CollisionShapes.Count;
 
-      return this.CollisionShapes.Any(
-          myShape => other.CollisionShapes.Any(
-              otherShape => myShape.Intersects(otherShape)
-               && IsValid(myShape) && IsValid(otherShape)
-          ));
+      for (int i = 0; i < myCount; i++)
+      {
+        var thisShape = this.CollisionShapes[i];
+
+        if (!IsValid(thisShape))
+          continue;
+
+        for (int j = 0; j < otherCount; j++)
+        {
+          var otherShape = other.CollisionShapes[j];
+
+          if (IsValid(otherShape) && thisShape.Intersects(otherShape))
+            return true;
+        }
+      }
+
+      return false;
     }
 
     ///<summary>
@@ -140,22 +155,45 @@ namespace Amethyst.Hierarchy
       {
         return false; 
       }
+      
+      int myCount = this.CollisionShapes.Count;
+      int otherCount = other.CollisionShapes.Count;
 
-      return this.CollisionShapes.Any(
-          myShape => other.CollisionShapes.Any(
-              otherShape => myShape.IntersectsAt(offset, otherShape)
-               && IsValid(myShape) && IsValid(otherShape)
-          ));
+      for (int i = 0; i < myCount; i++)
+      {
+        var thisShape = this.CollisionShapes[i];
+
+        if (!IsValid(thisShape))
+          continue;
+
+        for (int j = 0; j < otherCount; j++)
+        {
+          var otherShape = other.CollisionShapes[j];
+
+          if (IsValid(otherShape) && thisShape.IntersectsAt(offset, otherShape))
+            return true;
+        }
+      }
+
+      return false;
     }
 
     ///<summary>
     /// Checks if this shape contains a specified position.
     ///</summary>
     ///<param name="position"> </param>
-    public bool Contains(Vector2 position)
+    public bool Contains(Vector2 p)
     {
-      return CollisionShapes.Any(
-          c => c.Shape.Contains(position.ToPoint(), Transform.Global.Position.ToPoint()) && IsValid(c));
+      int thisCount = this.CollisionShapes.Count;
+
+      for (int i = 0; i < thisCount; i++)
+      {
+        var thisShape = this.CollisionShapes[i];
+        if (thisShape.Contains(p))
+          return true;
+      }
+
+      return false;
     }
 
     public override void _EnterTree()
