@@ -150,7 +150,7 @@ namespace Amethyst.Hierarchy
       {
         Disabled = this.Disabled,
         OneWay = this.OneWay,
-        Shape = clonedShape
+        Shape = clonedShape,
       };
     }
   }

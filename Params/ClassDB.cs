@@ -13,7 +13,7 @@ namespace Amethyst.Params
     ///</summary>
     ///<remarks>
     /// The property has to have an <see cref="ExportAttribute"/>.
-    /// This funtion has to be called for each asssembly; that is to say each project.
+    /// This funtion has to be called for each asssembly, that is to say each project.
     ///</remarks>
     ///<param name="assembly">The current assembly.</param>
     public static void Initialize(Assembly assembly)

@@ -39,7 +39,7 @@ namespace Amethyst.Geometry
     /// Returns this polygon's vertices, as a combined product of the segments.
     ///</summary>
     ///<remarks>
-    /// This is not a true representation of this polygon -- and should not be used for intersection, as it could form both a concave and a convex.
+    /// This is not a true representation of this polygon, and should not be used for intersection, as it could form both a concave and a convex.
     ///</remarks>
     public ReadOnlySpan<Point> GetVertices()
     {
@@ -67,7 +67,7 @@ namespace Amethyst.Geometry
     ///</summary>
     ///<remarks>
     /// In contrast to a segment, the inputted points to not have to be convex.
-    /// If they are, for example in a concave formation -- it will be divided into convexes.
+    /// If they are, for example in a concave formation, it will be divided into convexes.
     ///</remarks>
     public PolygonShape2D(params Point[] vertices)
     {
@@ -82,7 +82,7 @@ namespace Amethyst.Geometry
     ///</summary>
     ///<remarks>
     /// In contrast to a segment, the inputted points to not have to be convex.
-    /// If they are, for example in a concave formation -- it will be divided into convexes.
+    /// If they are, for example in a concave formation, it will be divided into convexes.
     ///</remarks>
     public PolygonShape2D(IEnumerable<Point> vertices)
     {
@@ -98,7 +98,7 @@ namespace Amethyst.Geometry
     /// Creates a new polygon with explicitly set <see cref="ConvexSegment2D"/>.
     ///</summary>
     ///<remarks>
-    /// As the user is the one providing the segments, not the engine -- these have to be convex.
+    /// As the user is the one providing the segments, not the engine, these have to be convex.
     /// That is to say, each interior angle has to be less than π-rad (180° degrees).
     ///</remarks>
     public PolygonShape2D(IEnumerable<ConvexSegment2D> segments)
@@ -166,10 +166,10 @@ namespace Amethyst.Geometry
     ///<summary>
     /// Checks if this polygon intersects with another generic <see cref="IShape2D"/>, with an offset applied to <see cref="thisLocation"/>. 
     ///</summary>
-    ///<param name="offset"> The offset applied to <see cref="thisLocation"/>.</param>
-    ///<param name="other"> The shape this polygon checks against, <see cref="offset"/> is not applied to this.</param>
-    ///<param name="thisLocation"> The location for this shape. </param>
-    ///<param name="otherLocation"> The location for <see cref="other"/>.</param>
+    ///<param name="offset">The offset applied to <see cref="thisLocation"/>.</param>
+    ///<param name="other">The shape this polygon checks against, <see cref="offset"/> is not applied to this.</param>
+    ///<param name="thisLocation">The location for this shape. </param>
+    ///<param name="otherLocation">The location for <see cref="other"/>.</param>
     public bool IntersectsAt(Point offset, IShape2D other, Point thisLocation, Point otherLocation)
     {
       return Intersect(other, thisLocation + offset, otherLocation);
@@ -224,7 +224,7 @@ namespace Amethyst.Geometry
     }
 
     ///<summary>
-    /// Checks if the provided <see cref="vertices"/> -- make a convex polygon.
+    /// Checks if the provided <see cref="vertices"/>, make a convex polygon.
     /// It does this by checking how an edge trails off.
     ///</summary>
     ///<remarks>

@@ -26,7 +26,7 @@ namespace Amethyst.Hierarchy
     /// If shapes share one or more layers they can intersect, zero layered shapes intersect with eachother.
     ///</summary>
     [Export]
-    public List<int> Layers { get; private set; }
+    public HashSet<int> Layers { get; set; } = new();
 
     ///<summary>
     /// The bounds of this node's shapes, represented in the form of a rectangle.
@@ -58,7 +58,6 @@ namespace Amethyst.Hierarchy
     public int AddLayer(int layer)
     {
       var finVal = Math.Clamp(layer, 0, MaxLayer);
-
       Layers.Add(finVal);
 
       return finVal;
@@ -71,9 +70,9 @@ namespace Amethyst.Hierarchy
     public int[] AddLayers(params int[] layers)
     {
       var finVals = layers.ClampArray(0, MaxLayer);
-
-      Layers.AddRange(finVals);
-
+      foreach (var l in finVals)
+        Layers.Add(l);
+    
       return finVals;
     }
 
@@ -84,7 +83,6 @@ namespace Amethyst.Hierarchy
     public int RemoveLayer(int layer)
     {
       var finVal = Math.Clamp(layer, 0, MaxLayer);
-
       Layers.Remove(finVal);
 
       return finVal;
@@ -97,9 +95,8 @@ namespace Amethyst.Hierarchy
     public int[] RemoveLayers(params int[] layers)
     {
       var finVals = layers.ClampArray(0, MaxLayer);
-
-      Layers.RemoveAll(item => layers.Contains(item));
-
+      Layers.ExceptWith(finVals);
+      
       return finVals;
     }
 
@@ -118,6 +115,12 @@ namespace Amethyst.Hierarchy
     ///<param name="other">The other shape.</param>
     public bool Intersects(CollisionNode2D other)
     {
+      if ((this.Layers.Count > 0 || other.Layers.Count > 0) 
+          && !this.Layers.Overlaps(other.Layers))
+      {
+        return false; 
+      }
+
       return this.CollisionShapes.Any(
           myShape => other.CollisionShapes.Any(
               otherShape => myShape.Intersects(otherShape)
@@ -132,6 +135,12 @@ namespace Amethyst.Hierarchy
     ///<param name="other">The other shape, the offset is not applied to it.</param>
     public bool IntersectsAt(Vector2 offset, CollisionNode2D other)
     {
+      if ((this.Layers.Count > 0 || other.Layers.Count > 0) 
+          && !this.Layers.Overlaps(other.Layers))
+      {
+        return false; 
+      }
+
       return this.CollisionShapes.Any(
           myShape => other.CollisionShapes.Any(
               otherShape => myShape.IntersectsAt(offset, otherShape)
