@@ -9,6 +9,7 @@ using Amethyst.Managers;
 using Amethyst.Hierarchy;
 using Amethyst.Params;
 using Amethyst.Util;
+using Amethyst.Tools;
 
 namespace Amethyst.Hierarchy
 {
@@ -112,6 +113,9 @@ namespace Amethyst.Hierarchy
           Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
           var call = ObjectPool<TextureDrawCall>.Get();
+          
+
+          Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 
           call.Texture = this.Texture;
           call.Depth = Ordering.Global.Depth;
@@ -120,7 +124,7 @@ namespace Amethyst.Hierarchy
           call.Params = CanvasParams.Identity with
           {
             Position = modPos,
-            Color = Material.Global.Modulate,
+            Color = finalColor,
             Rotation = Transform.Global.Rotation,
             Scale = scale,
             Effects = Material.Global.SpriteEffects,

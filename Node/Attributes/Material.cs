@@ -13,16 +13,19 @@ namespace Amethyst.Params
     public SpriteEffects SpriteEffects { get; init; }
 
     public bool Visible { get; init; }
+
     public Color Modulate { get; init; }
+    public Color SelfModulate { get; init; }
 
     public bool Separated { get; init; }
 
     public static readonly Material Identity =
-        new(true, Color.White, null, SpriteEffects.None, false);
+        new(true, Color.White, Color.White, null, SpriteEffects.None, false);
 
-    public Material(bool visible, Color modulate, Effect shader, SpriteEffects spriteEffects, bool separated)
+    public Material(bool visible, Color modulate, Color selfModulate, Effect shader, SpriteEffects spriteEffects, bool separated)
     {
       Visible = visible;
+      SelfModulate = selfModulate;
       Modulate = modulate;
       Shader = shader;
       SpriteEffects = spriteEffects;
@@ -33,7 +36,8 @@ namespace Amethyst.Params
     {
       return new Material(
           parent.Visible && child.Visible,
-          ColorExtension.Multiply(parent.Modulate, child.Modulate),
+          child.Modulate,
+          ColorExtension.Multiply(parent.SelfModulate, child.SelfModulate),
           child.Shader ?? parent.Shader,
           child.SpriteEffects,
           child.Separated

@@ -9,6 +9,7 @@ using Amethyst.IO;
 using Amethyst.Managers;
 using Amethyst.Params;
 using Amethyst.Util;
+using Amethyst.Tools;
 
 namespace Amethyst.Hierarchy
 {
@@ -120,6 +121,8 @@ namespace Amethyst.Hierarchy
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
       TileDrawCall call = ObjectPool<TileDrawCall>.Get();
+      
+      Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 
       call.Tiles = _tiles;
       call.Tileset = Tileset;
@@ -133,7 +136,7 @@ namespace Amethyst.Hierarchy
       call.Params = CanvasParams.Identity with
       {
         Position = worldTilePos,
-        Color = Material.Global.Modulate,
+        Color = finalColor,
         Rotation = Transform.Global.Rotation,
         Origin = Vector2.Zero,
         Scale = scale,

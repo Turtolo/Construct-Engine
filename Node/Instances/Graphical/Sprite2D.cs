@@ -4,6 +4,7 @@ using Amethyst.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Graphics;
+using Amethyst.Tools;
 using Amethyst.Params;
 
 namespace Amethyst.Hierarchy
@@ -72,6 +73,8 @@ namespace Amethyst.Hierarchy
     {
       if (Texture == null || Material.Global.Visible == false)
         return;
+      
+      Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 
       Rectangle sourceRect = SourceRect;
 
@@ -88,7 +91,7 @@ namespace Amethyst.Hierarchy
       call.Params = CanvasParams.Identity with
       {
         Position = pos,
-        Color = Material.Global.Modulate,
+        Color = finalColor,
         Rotation = Transform.Global.Rotation,
         Origin = new Vector2(sourceRect.Width / 2f, sourceRect.Height / 2f),
         Scale = scale,

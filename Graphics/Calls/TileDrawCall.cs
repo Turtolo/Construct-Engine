@@ -7,8 +7,8 @@ namespace Amethyst.Graphics
 {
   public sealed class TileDrawCall : Layered, IDrawCall, IPoolable
   {
-    public int Index { get; set;}
-    
+    public int Index { get; set; }
+
     public Effect Effect { get; set; }
 
     public CanvasParams Params { get; set; } = CanvasParams.Identity;

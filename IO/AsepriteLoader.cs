@@ -56,7 +56,7 @@ namespace Amethyst.IO
         }
       }
 
-      animations.Add("Main", new FrameAnimation 
+      animations.Add("Main", new FrameAnimation
       {
         Frames = frames,
         Delay = TimeSpan.FromMilliseconds(100)
@@ -103,7 +103,7 @@ namespace Amethyst.IO
 
         TimeSpan speedMs = TimeSpan.FromMilliseconds((int)durations.Average());
 
-        animations[tag.name] = new FrameAnimation 
+        animations[tag.name] = new FrameAnimation
         {
           Frames = animFrames,
           Delay = speedMs

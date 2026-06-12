@@ -6,6 +6,7 @@ using System.Linq;
 using Amethyst;
 using Amethyst.Geometry;
 using Amethyst.Graphics;
+using Amethyst.Hierarchy;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,23 +23,46 @@ namespace Amethyst.Managers
     }
 
     private List<IDrawCall> _calls = new();
+    private List<IDrawCall> _lightCalls = new();
+
     private List<RenderBucket> _bucketPool = new();
     private List<RenderBucket> _activeBuckets = new();
-      
+
     internal Extent RenderSize { get; set; } = new Extent(640, 360);
     internal bool IntScaling { get; set; } = true;
     internal Rectangle Destination { get; set; }
+    
+    internal Color AmbientColor { get; set; } = Color.Black;
+
     internal Color CanvasColor { get; set; } = Color.CornflowerBlue;
 
     internal Effect? PostProcessingShader { get; set; }
 
     public RenderTarget2D? RenderTarget { get; internal set; }
+    public RenderTarget2D? LightRenderTarget { get; internal set; }
+
+    public static readonly BlendState MultiplicativeBlendState = new BlendState
+    {
+        ColorSourceBlend = Blend.Zero,
+        ColorDestinationBlend = Blend.SourceColor,
+        AlphaSourceBlend = Blend.Zero,
+        AlphaDestinationBlend = Blend.SourceAlpha
+    };
 
     public void Initialize()
     {
       RenderTarget?.Dispose();
+      LightRenderTarget?.Dispose();
 
       RenderTarget = new RenderTarget2D(
+          Core.GraphicsDevice,
+          RenderSize.Width,
+          RenderSize.Height,
+          false,
+          SurfaceFormat.Color,
+          DepthFormat.None);
+
+      LightRenderTarget = new RenderTarget2D(
           Core.GraphicsDevice,
           RenderSize.Width,
           RenderSize.Height,
@@ -56,42 +80,49 @@ namespace Amethyst.Managers
       _calls.Add(call);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void SubmitLight(IDrawCall call)
     {
-      Core.GraphicsDevice.SetRenderTarget(RenderTarget);
-      Core.GraphicsDevice.Clear(CanvasColor);
-
-      Flush(spriteBatch);
-
-      Core.GraphicsDevice.SetRenderTarget(null);
-      Core.GraphicsDevice.Clear(Color.Black);
-
-      spriteBatch.Begin(
-          SpriteSortMode.Immediate,
-          BlendState.AlphaBlend,
-          SamplerState.PointClamp,
-          effect: PostProcessingShader);
-
-      var dest = new Rectangle(
-          (int)MathF.Round(Destination.X),
-          (int)MathF.Round(Destination.Y),
-          Destination.Width,
-          Destination.Height
-      );
-
-      spriteBatch.Draw(RenderTarget, dest, Color.White);
-
-      spriteBatch.End();
+      if (call == null) throw new ArgumentNullException(nameof(call));
+      _lightCalls.Add(call);
     }
 
-    public void Flush(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch)
     {
-      if (_calls.Count == 0)
+        Core.GraphicsDevice.SetRenderTarget(RenderTarget);
+        Core.GraphicsDevice.Clear(CanvasColor);
+        Flush(spriteBatch, _calls);
+
+        Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
+        Core.GraphicsDevice.Clear(AmbientColor);
+        Flush(spriteBatch, _lightCalls);
+        
+        Core.GraphicsDevice.SetRenderTarget(null);
+        Core.GraphicsDevice.Clear(Color.Black);
+
+        var dest = new Rectangle(
+            (int)MathF.Round(Destination.X),
+            (int)MathF.Round(Destination.Y),
+            Destination.Width,
+            Destination.Height
+        );
+
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: PostProcessingShader);
+        spriteBatch.Draw(RenderTarget, dest, Color.White);
+        spriteBatch.End();
+
+        spriteBatch.Begin(SpriteSortMode.Immediate, MultiplicativeBlendState, SamplerState.PointClamp);
+        spriteBatch.Draw(LightRenderTarget, dest, Color.White);
+        spriteBatch.End();
+    }
+
+    public void Flush(SpriteBatch spriteBatch, List<IDrawCall> source)
+    {
+      if (source.Count == 0)
         return;
 
-      for (int i = 0; i < _calls.Count; i++)
+      for (int i = 0; i < source.Count; i++)
       {
-        var call = _calls[i];
+        var call = source[i];
 
         RenderBucket? targetBucket = null;
 
@@ -133,34 +164,34 @@ namespace Amethyst.Managers
 
       _activeBuckets.Sort((a, b) => a.Depth.CompareTo(b.Depth));
 
-      _calls.Clear();
+      source.Clear();
 
       for (int b = 0; b < _activeBuckets.Count; b++)
       {
         var bucket = _activeBuckets[b];
         for (int c = 0; c < bucket.Calls.Count; c++)
         {
-          _calls.Add(bucket.Calls[c]);
+          source.Add(bucket.Calls[c]);
         }
       }
 
       Sort(_activeBuckets);
-      
+
       HandleBuckets(spriteBatch, _activeBuckets);
-      
-      for (int i = 0; i < _calls.Count; i++)
+
+      for (int i = 0; i < source.Count; i++)
       {
-        _calls[i].Reset();
+        source[i].Reset();
       }
-      _calls.Clear();
-      
+      source.Clear();
+
       for (int b = 0; b < _activeBuckets.Count; b++)
       {
         _activeBuckets[b].Calls.Clear();
         _bucketPool.Add(_activeBuckets[b]);
       }
       _activeBuckets.Clear();
-    } 
+    }
 
     private void Sort(List<RenderBucket> list)
     {

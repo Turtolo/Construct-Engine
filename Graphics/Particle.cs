@@ -24,7 +24,7 @@ namespace Amethyst.Graphics
   {
     private readonly ParticleParams _initialData;
     private ParticleInfo _info;
-    
+
     public ParticleParams Params { get => _initialData; }
     public ParticleInfo Info { get => _info; }
 

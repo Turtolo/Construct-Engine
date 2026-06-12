@@ -50,15 +50,15 @@ namespace Amethyst.Graphics
 
     public int CompareTo(BatchKey other)
     {
-        int result = SortMode.CompareTo(other.SortMode);
-        if (result != 0) return result;
+      int result = SortMode.CompareTo(other.SortMode);
+      if (result != 0) return result;
 
-        result = RuntimeHelpers.GetHashCode(BlendState)
-            .CompareTo(RuntimeHelpers.GetHashCode(other.BlendState));
-        if (result != 0) return result;
+      result = RuntimeHelpers.GetHashCode(BlendState)
+          .CompareTo(RuntimeHelpers.GetHashCode(other.BlendState));
+      if (result != 0) return result;
 
-        return RuntimeHelpers.GetHashCode(SamplerState)
-            .CompareTo(RuntimeHelpers.GetHashCode(other.SamplerState));
+      return RuntimeHelpers.GetHashCode(SamplerState)
+          .CompareTo(RuntimeHelpers.GetHashCode(other.SamplerState));
     }
     public override int GetHashCode()
     {

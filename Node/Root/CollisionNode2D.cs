@@ -72,7 +72,7 @@ namespace Amethyst.Hierarchy
       var finVals = layers.ClampArray(0, MaxLayer);
       foreach (var l in finVals)
         Layers.Add(l);
-    
+
       return finVals;
     }
 
@@ -96,7 +96,7 @@ namespace Amethyst.Hierarchy
     {
       var finVals = layers.ClampArray(0, MaxLayer);
       Layers.ExceptWith(finVals);
-      
+
       return finVals;
     }
 
@@ -115,12 +115,12 @@ namespace Amethyst.Hierarchy
     ///<param name="other">The other shape.</param>
     public bool Intersects(CollisionNode2D other)
     {
-      if ((this.Layers.Count > 0 || other.Layers.Count > 0) 
+      if ((this.Layers.Count > 0 || other.Layers.Count > 0)
           && !this.Layers.Overlaps(other.Layers))
       {
-        return false; 
+        return false;
       }
-      
+
       int myCount = this.CollisionShapes.Count;
       int otherCount = other.CollisionShapes.Count;
 
@@ -150,12 +150,12 @@ namespace Amethyst.Hierarchy
     ///<param name="other">The other shape, the offset is not applied to it.</param>
     public bool IntersectsAt(Vector2 offset, CollisionNode2D other)
     {
-      if ((this.Layers.Count > 0 || other.Layers.Count > 0) 
+      if ((this.Layers.Count > 0 || other.Layers.Count > 0)
           && !this.Layers.Overlaps(other.Layers))
       {
-        return false; 
+        return false;
       }
-      
+
       int myCount = this.CollisionShapes.Count;
       int otherCount = other.CollisionShapes.Count;
 

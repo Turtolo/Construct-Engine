@@ -9,8 +9,8 @@ namespace Amethyst.Graphics
 {
   public sealed class TextureDrawCall : Layered, IDrawCall, IPoolable
   {
-    public int Index { get; set;}
-    
+    public int Index { get; set; }
+
     public MTexture Texture { get; set; }
     public Rectangle? SourceRectangle { get; set; }
 

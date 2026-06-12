@@ -196,7 +196,7 @@ namespace Amethyst.Managers
           caller._SubmitCall();
       }
 
-      iterationBuffer.Clear(); 
+      iterationBuffer.Clear();
       Flush();
     }
 

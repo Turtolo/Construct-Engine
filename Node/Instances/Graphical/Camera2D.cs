@@ -47,20 +47,20 @@ namespace Amethyst.Hierarchy
     /// </summary>
     public Rectangle GetWorldViewRectangle(bool useOffset = true)
     {
-        Matrix inverse = Matrix.Invert(GetTransform(useOffset));
+      Matrix inverse = Matrix.Invert(GetTransform(useOffset));
 
-        Vector2 topLeft = Vector2.Transform(Vector2.Zero, inverse);
-        Vector2 bottomRight = Vector2.Transform(
-            new Vector2(Core.Canvas.RenderTarget.Width, Core.Canvas.RenderTarget.Height),
-            inverse
-        );
+      Vector2 topLeft = Vector2.Transform(Vector2.Zero, inverse);
+      Vector2 bottomRight = Vector2.Transform(
+          new Vector2(Core.Canvas.RenderTarget.Width, Core.Canvas.RenderTarget.Height),
+          inverse
+      );
 
-        return new Rectangle(
-            (int)topLeft.X,
-            (int)topLeft.Y,
-            (int)(bottomRight.X - topLeft.X),
-            (int)(bottomRight.Y - topLeft.Y)
-        );
+      return new Rectangle(
+          (int)topLeft.X,
+          (int)topLeft.Y,
+          (int)(bottomRight.X - topLeft.X),
+          (int)(bottomRight.Y - topLeft.Y)
+      );
     }
 
     /// <summary>
@@ -69,21 +69,21 @@ namespace Amethyst.Hierarchy
     /// </summary>
     public Matrix GetTransform(bool useOffset = true)
     {
-        Vector2 canvasCenter = new(
-            Core.Canvas.RenderTarget.Width * 0.5f,
-            Core.Canvas.RenderTarget.Height * 0.5f
-        );
+      Vector2 canvasCenter = new(
+          Core.Canvas.RenderTarget.Width * 0.5f,
+          Core.Canvas.RenderTarget.Height * 0.5f
+      );
 
-        Vector2 cameraPosition = Transform.Global.Position;
+      Vector2 cameraPosition = Transform.Global.Position;
 
-        if (useOffset)
-            cameraPosition += Offset;
+      if (useOffset)
+        cameraPosition += Offset;
 
-        return
-            Matrix.CreateTranslation(new Vector3(-cameraPosition, 0f))
-            * Matrix.CreateRotationZ(Transform.Global.Rotation)
-            * Matrix.CreateScale(Zoom.X, Zoom.Y, 1f)
-            * Matrix.CreateTranslation(new Vector3(canvasCenter, 0f));
+      return
+          Matrix.CreateTranslation(new Vector3(-cameraPosition, 0f))
+          * Matrix.CreateRotationZ(Transform.Global.Rotation)
+          * Matrix.CreateScale(Zoom.X, Zoom.Y, 1f)
+          * Matrix.CreateTranslation(new Vector3(canvasCenter, 0f));
     }
 
     public override void _Process(float delta)

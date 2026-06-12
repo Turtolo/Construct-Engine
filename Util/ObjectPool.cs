@@ -5,7 +5,7 @@ namespace Amethyst.Util
   public static class ObjectPool<T> where T : class, IPoolable, new()
   {
     private static readonly Stack<T> _pool = new Stack<T>(50000);
-    
+
     ///<summary>
     /// Returns a fresh copy from the pool of drawcalls.
     ///</summary>

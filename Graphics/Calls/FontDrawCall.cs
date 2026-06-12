@@ -9,7 +9,7 @@ namespace Amethyst.Graphics
 {
   public sealed class FontDrawCall : Layered, IDrawCall, IPoolable
   {
-    public int Index { get; set;}
+    public int Index { get; set; }
 
     public IFont Font { get; set; }
     public string Text { get; set; }
