@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using Amethyst.Util;
@@ -65,7 +66,7 @@ namespace Amethyst.Hierarchy
       ApplyCameraDelta(camDelta);
     }
 
-    public override void _SubmitCall()
+    public override void _Submit(Canvas2D canvas)
     {
       if (!Material.Global.Visible)
         return;
@@ -113,7 +114,7 @@ namespace Amethyst.Hierarchy
           Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
           var call = ObjectPool<TextureDrawCall>.Get();
-          
+
 
           Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 

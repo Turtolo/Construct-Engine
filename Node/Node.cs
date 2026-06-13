@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -183,7 +184,7 @@ namespace Amethyst.Hierarchy
     /// <summary>
     /// Called when submitting draw calls.
     /// </summary>
-    public virtual void _SubmitCall() { }
+    public virtual void _Submit(Canvas2D canvas) { }
   }
 }
 

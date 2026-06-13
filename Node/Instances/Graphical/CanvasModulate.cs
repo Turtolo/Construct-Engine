@@ -1,6 +1,7 @@
+using Amethyst.Managers;
 namespace Amethyst.Hierarchy
 {
-  public class CanvasModulate : Node2D 
+  public class CanvasModulate : Node2D
   {
   }
 }

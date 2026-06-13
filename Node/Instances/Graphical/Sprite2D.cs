@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using Amethyst.Util;
@@ -69,11 +70,11 @@ namespace Amethyst.Hierarchy
 
     public Sprite2D() { }
 
-    public override void _SubmitCall()
+    public override void _Submit(Canvas2D canvas)
     {
       if (Texture == null || Material.Global.Visible == false)
         return;
-      
+
       Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 
       Rectangle sourceRect = SourceRect;

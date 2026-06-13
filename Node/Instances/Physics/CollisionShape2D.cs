@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using System;
@@ -50,9 +51,9 @@ namespace Amethyst.Hierarchy
       CheckOneWay();
     }
 
-    public override void _SubmitCall()
+    public override void _Submit(Canvas2D canvas)
     {
-      base._SubmitCall();
+      base._Submit(canvas);
 
       if (!Core.Prefs.General.ShowCollision)
         return;

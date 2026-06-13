@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 using Amethyst.Graphics;
 
 namespace Amethyst.Params

@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using Amethyst;
 using Amethyst.Geometry;
 using Amethyst.Graphics;
@@ -36,6 +38,8 @@ namespace Amethyst.Managers
 
     internal Color CanvasColor { get; set; } = Color.CornflowerBlue;
 
+    internal Effect? LightingShader { get; set; }
+
     internal Effect? PostProcessingShader { get; set; }
 
     public RenderTarget2D? RenderTarget { get; internal set; }
@@ -51,6 +55,24 @@ namespace Amethyst.Managers
 
     public void Initialize()
     {
+      var assembly = typeof(Core).Assembly;
+      
+      string resourceName = $"Amethyst.Compiled.Lighting.mgfxo";
+
+      using (Stream? stream = assembly.GetManifestResourceStream(resourceName))
+      {
+        if (stream == null)
+          throw new Exception($"Could not find embedded shader resource: {resourceName}");
+
+        using (MemoryStream ms = new MemoryStream())
+        {
+          stream.CopyTo(ms);
+          byte[] shaderCode = ms.ToArray();
+
+          LightingShader = new Effect(Core.GraphicsDevice, shaderCode);
+        }
+      }
+
       RenderTarget?.Dispose();
       LightRenderTarget?.Dispose();
 

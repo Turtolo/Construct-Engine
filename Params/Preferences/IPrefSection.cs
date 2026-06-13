@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 namespace Amethyst.Prefs
 {
   public interface IPrefSection

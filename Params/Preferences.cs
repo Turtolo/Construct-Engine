@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 using System.Collections.Generic;
 using Amethyst.Prefs;
 

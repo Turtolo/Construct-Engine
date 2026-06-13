@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 using Amethyst.Geometry;
 using Amethyst.Prefs;
 using Microsoft.Xna.Framework;

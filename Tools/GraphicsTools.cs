@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;

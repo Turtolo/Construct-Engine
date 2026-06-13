@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using System;
@@ -193,7 +194,7 @@ namespace Amethyst.Managers
           processor._Process(dt);
 
         if (inst is ICall caller && !pendingRemove.Contains(inst))
-          caller._SubmitCall();
+          caller._Submit(Core.Canvas);
       }
 
       iterationBuffer.Clear();

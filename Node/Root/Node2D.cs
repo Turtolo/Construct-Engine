@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -70,9 +71,9 @@ namespace Amethyst.Hierarchy
       base._Process(delta);
     }
 
-    public override void _SubmitCall()
+    public override void _Submit(Canvas2D canvas)
     {
-      base._SubmitCall();
+      base._Submit(canvas);
     }
   }
 }

@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using Amethyst.Util;
@@ -95,9 +96,9 @@ namespace Amethyst.Hierarchy
       _particles.RemoveAll(p => p.Info.IsFinished);
     }
 
-    public override void _SubmitCall()
+    public override void _Submit(Canvas2D canvas)
     {
-      base._SubmitCall();
+      base._Submit(canvas);
 
       foreach (var particle in _particles)
       {

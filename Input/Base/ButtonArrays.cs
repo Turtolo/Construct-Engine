@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using Microsoft.Xna.Framework.Input;

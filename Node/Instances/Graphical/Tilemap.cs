@@ -1,3 +1,4 @@
+using Amethyst.Managers;
 #nullable disable
 
 using System;
@@ -108,9 +109,9 @@ namespace Amethyst.Hierarchy
           _tiles[x, y] = data[x, y] - IndexOffset;
     }
 
-    public override void _SubmitCall()
+    public override void _Submit(Canvas2D canvas)
     {
-      base._SubmitCall();
+      base._Submit(canvas);
 
       if (_tiles == null || Tileset == null || !Material.Global.Visible)
         return;
@@ -121,7 +122,7 @@ namespace Amethyst.Hierarchy
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
       TileDrawCall call = ObjectPool<TileDrawCall>.Get();
-      
+
       Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 
       call.Tiles = _tiles;
