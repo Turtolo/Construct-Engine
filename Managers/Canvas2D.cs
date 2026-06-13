@@ -77,28 +77,33 @@ namespace Amethyst.Managers
       LightRenderTarget?.Dispose();
 
       RenderTarget = new RenderTarget2D(
-          Core.GraphicsDevice,
-          RenderSize.Width,
-          RenderSize.Height,
-          false,
-          SurfaceFormat.Color,
-          DepthFormat.None);
+            Core.GraphicsDevice,
+            RenderSize.Width,
+            RenderSize.Height,
+            false,
+            SurfaceFormat.Color,
+            DepthFormat.None,
+            0,
+            RenderTargetUsage.PreserveContents);
 
-      LightRenderTarget = new RenderTarget2D(
-          Core.GraphicsDevice,
-          RenderSize.Width,
-          RenderSize.Height,
-          false,
-          SurfaceFormat.Color,
-          DepthFormat.None);
+        LightRenderTarget = new RenderTarget2D(
+            Core.GraphicsDevice,
+            RenderSize.Width,
+            RenderSize.Height,
+            false,
+            SurfaceFormat.Color,
+            DepthFormat.None,
+            0,
+            RenderTargetUsage.PreserveContents);
 
-      Core.Tracked.Window.ClientSizeChanged += (_, _) => UpdateTransform();
-      UpdateTransform();
-    }
+            Core.Tracked.Window.ClientSizeChanged += (_, _) => UpdateTransform();
+            UpdateTransform();
+        }
 
     public void Submit(IDrawCall call)
     {
       if (call == null) throw new ArgumentNullException(nameof(call));
+
       _calls.Add(call);
     }
 
@@ -110,33 +115,36 @@ namespace Amethyst.Managers
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        Core.GraphicsDevice.SetRenderTarget(RenderTarget);
-        Core.GraphicsDevice.Clear(CanvasColor);
-        Flush(spriteBatch, _calls);
+      if (LightingShader == null)
+        throw new($"There has been a fatal error, {LightingShader} appears to be null.");
 
-        Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
-        Core.GraphicsDevice.Clear(AmbientColor);
-        Flush(spriteBatch, _lightCalls);
-        
-        Core.GraphicsDevice.SetRenderTarget(null);
-        Core.GraphicsDevice.Clear(Color.Black);
+      Core.GraphicsDevice.SetRenderTarget(RenderTarget);
+      Core.GraphicsDevice.Clear(Color.Black);
 
-        var dest = new Rectangle(
-            (int)MathF.Round(Destination.X),
-            (int)MathF.Round(Destination.Y),
-            Destination.Width,
-            Destination.Height
-        );
+      Flush(spriteBatch, _calls);
 
-        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: PostProcessingShader);
-        spriteBatch.Draw(RenderTarget, dest, Color.White);
-        spriteBatch.End();
+      Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
+      Core.GraphicsDevice.Clear(Color.Black);
+      
+      Flush(spriteBatch, _lightCalls);
 
-        spriteBatch.Begin(SpriteSortMode.Immediate, MultiplicativeBlendState, SamplerState.PointClamp);
-        spriteBatch.Draw(LightRenderTarget, dest, Color.White);
-        spriteBatch.End();
+      Core.GraphicsDevice.SetRenderTarget(null);
+      Core.GraphicsDevice.Clear(Color.Black);
+
+      var dest = new Rectangle(
+          (int)MathF.Round(Destination.X),
+          (int)MathF.Round(Destination.Y),
+          Destination.Width,
+          Destination.Height
+      );
+
+      LightingShader.Parameters["MaskTexture"].SetValue(LightRenderTarget);
+
+      spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: LightingShader);
+      spriteBatch.Draw(RenderTarget, dest, Color.White); 
+      spriteBatch.End();
     }
-
+    
     public void Flush(SpriteBatch spriteBatch, List<IDrawCall> source)
     {
       if (source.Count == 0)
