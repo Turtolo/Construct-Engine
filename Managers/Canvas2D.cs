@@ -34,7 +34,7 @@ namespace Amethyst.Managers
     internal bool IntScaling { get; set; } = true;
     internal Rectangle Destination { get; set; }
     
-    internal Color AmbientColor { get; set; } = Color.Black;
+    internal Color AmbientColor { get; set; } = Color.Gray;
 
     internal Color CanvasColor { get; set; } = Color.CornflowerBlue;
 
@@ -124,7 +124,7 @@ namespace Amethyst.Managers
       Flush(spriteBatch, _calls);
 
       Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
-      Core.GraphicsDevice.Clear(Color.Black);
+      Core.GraphicsDevice.Clear(Color.White);
       
       Flush(spriteBatch, _lightCalls);
 

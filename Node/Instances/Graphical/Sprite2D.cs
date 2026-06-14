@@ -101,7 +101,8 @@ namespace Amethyst.Hierarchy
 
       call.Key = BatchKey.Default with
       {
-        Matrix = Seperated ? null : Core.Token.Get<Camera2D>().GetTransform()
+        Matrix = Seperated ? null : Core.Token.Get<Camera2D>()?.GetTransform(),
+        BlendState = BlendState.AlphaBlend
       };
 
       Core.Canvas.Submit(call);
