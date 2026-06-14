@@ -25,6 +25,7 @@ namespace Amethyst.Managers
     }
 
     private List<IDrawCall> _calls = new();
+    private List<IDrawCall> _unLitCalls = new();
     private List<IDrawCall> _lightCalls = new();
 
     private List<RenderBucket> _bucketPool = new();
@@ -44,6 +45,7 @@ namespace Amethyst.Managers
 
     public RenderTarget2D? RenderTarget { get; internal set; }
     public RenderTarget2D? LightRenderTarget { get; internal set; }
+    public RenderTarget2D? UnlitRenderTarget { get; internal set; }
 
     public static readonly BlendState MultiplicativeBlendState = new BlendState
     {
@@ -77,28 +79,38 @@ namespace Amethyst.Managers
       LightRenderTarget?.Dispose();
 
       RenderTarget = new RenderTarget2D(
-            Core.GraphicsDevice,
-            RenderSize.Width,
-            RenderSize.Height,
-            false,
-            SurfaceFormat.Color,
-            DepthFormat.None,
-            0,
-            RenderTargetUsage.PreserveContents);
+          Core.GraphicsDevice,
+          RenderSize.Width,
+          RenderSize.Height,
+          false,
+          SurfaceFormat.Color,
+          DepthFormat.None,
+          0,
+          RenderTargetUsage.PreserveContents);
 
-        LightRenderTarget = new RenderTarget2D(
-            Core.GraphicsDevice,
-            RenderSize.Width,
-            RenderSize.Height,
-            false,
-            SurfaceFormat.Color,
-            DepthFormat.None,
-            0,
-            RenderTargetUsage.PreserveContents);
+      LightRenderTarget = new RenderTarget2D(
+          Core.GraphicsDevice,
+          RenderSize.Width,
+          RenderSize.Height,
+          false,
+          SurfaceFormat.Color,
+          DepthFormat.None,
+          0,
+          RenderTargetUsage.PreserveContents);
 
-            Core.Tracked.Window.ClientSizeChanged += (_, _) => UpdateTransform();
-            UpdateTransform();
-        }
+      UnlitRenderTarget = new RenderTarget2D(
+          Core.GraphicsDevice,
+          RenderSize.Width,
+          RenderSize.Height,
+          false,
+          SurfaceFormat.Color,
+          DepthFormat.None,
+          0,
+          RenderTargetUsage.PreserveContents);
+
+      Core.Tracked.Window.ClientSizeChanged += (_, _) => UpdateTransform();
+      UpdateTransform();
+    }
 
     public void Submit(IDrawCall call)
     {
@@ -113,35 +125,38 @@ namespace Amethyst.Managers
       _lightCalls.Add(call);
     }
 
+    public void SubmitUnLit(IDrawCall call)
+    {
+      if (call == null) throw new ArgumentNullException(nameof(call));
+      _unLitCalls.Add(call);
+    }
+
     public void Draw(SpriteBatch spriteBatch)
     {
-      if (LightingShader == null)
-        throw new($"There has been a fatal error, {LightingShader} appears to be null.");
+      if (LightingShader == null) throw new Exception("LightingShader is null.");
 
       Core.GraphicsDevice.SetRenderTarget(RenderTarget);
       Core.GraphicsDevice.Clear(Color.Black);
-
       Flush(spriteBatch, _calls);
 
       Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
-      Core.GraphicsDevice.Clear(Color.White);
-      
+      Core.GraphicsDevice.Clear(Color.Black);
       Flush(spriteBatch, _lightCalls);
+
+      Core.GraphicsDevice.SetRenderTarget(RenderTarget);
+      
+      LightingShader.Parameters["MaskTexture"].SetValue(LightRenderTarget);
+      spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: LightingShader);
+      spriteBatch.Draw(RenderTarget, Vector2.Zero, Color.White); 
+      spriteBatch.End();
+
+      Flush(spriteBatch, _unLitCalls);
 
       Core.GraphicsDevice.SetRenderTarget(null);
       Core.GraphicsDevice.Clear(Color.Black);
-
-      var dest = new Rectangle(
-          (int)MathF.Round(Destination.X),
-          (int)MathF.Round(Destination.Y),
-          Destination.Width,
-          Destination.Height
-      );
-
-      LightingShader.Parameters["MaskTexture"].SetValue(LightRenderTarget);
-
-      spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: LightingShader);
-      spriteBatch.Draw(RenderTarget, dest, Color.White); 
+      
+      spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+      spriteBatch.Draw(RenderTarget, Destination, Color.White);
       spriteBatch.End();
     }
     
