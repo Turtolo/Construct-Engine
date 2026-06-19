@@ -34,8 +34,8 @@ namespace Amethyst.Managers
     internal Extent RenderSize { get; set; } = new Extent(640, 360);
     internal bool IntScaling { get; set; } = true;
     internal Rectangle Destination { get; set; }
-    
-    internal Color AmbientColor { get; set; } = Color.Gray;
+
+    internal Color AmbientColor { get; set; } = Color.White;
 
     internal Color CanvasColor { get; set; } = Color.CornflowerBlue;
 
@@ -45,20 +45,19 @@ namespace Amethyst.Managers
 
     public RenderTarget2D? RenderTarget { get; internal set; }
     public RenderTarget2D? LightRenderTarget { get; internal set; }
-    public RenderTarget2D? UnlitRenderTarget { get; internal set; }
 
     public static readonly BlendState MultiplicativeBlendState = new BlendState
     {
-        ColorSourceBlend = Blend.Zero,
-        ColorDestinationBlend = Blend.SourceColor,
-        AlphaSourceBlend = Blend.Zero,
-        AlphaDestinationBlend = Blend.SourceAlpha
+      ColorSourceBlend = Blend.Zero,
+      ColorDestinationBlend = Blend.SourceColor,
+      AlphaSourceBlend = Blend.Zero,
+      AlphaDestinationBlend = Blend.SourceAlpha
     };
 
     public void Initialize()
     {
       var assembly = typeof(Core).Assembly;
-      
+
       string resourceName = $"Amethyst.Compiled.Lighting.mgfxo";
 
       using (Stream? stream = assembly.GetManifestResourceStream(resourceName))
@@ -98,17 +97,7 @@ namespace Amethyst.Managers
           0,
           RenderTargetUsage.PreserveContents);
 
-      UnlitRenderTarget = new RenderTarget2D(
-          Core.GraphicsDevice,
-          RenderSize.Width,
-          RenderSize.Height,
-          false,
-          SurfaceFormat.Color,
-          DepthFormat.None,
-          0,
-          RenderTargetUsage.PreserveContents);
-
-      Core.Tracked.Window.ClientSizeChanged += (_, _) => UpdateTransform();
+      Core.Instance.Window.ClientSizeChanged += (_, _) => UpdateTransform();
       UpdateTransform();
     }
 
@@ -136,30 +125,30 @@ namespace Amethyst.Managers
       if (LightingShader == null) throw new Exception("LightingShader is null.");
 
       Core.GraphicsDevice.SetRenderTarget(RenderTarget);
-      Core.GraphicsDevice.Clear(Color.Black);
+      Core.GraphicsDevice.Clear(CanvasColor);
       Flush(spriteBatch, _calls);
 
       Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
-      Core.GraphicsDevice.Clear(Color.Black);
+      Core.GraphicsDevice.Clear(AmbientColor);
       Flush(spriteBatch, _lightCalls);
 
       Core.GraphicsDevice.SetRenderTarget(RenderTarget);
-      
+
       LightingShader.Parameters["MaskTexture"].SetValue(LightRenderTarget);
       spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: LightingShader);
-      spriteBatch.Draw(RenderTarget, Vector2.Zero, Color.White); 
+      spriteBatch.Draw(RenderTarget, Vector2.Zero, Color.White);
       spriteBatch.End();
 
       Flush(spriteBatch, _unLitCalls);
 
       Core.GraphicsDevice.SetRenderTarget(null);
       Core.GraphicsDevice.Clear(Color.Black);
-      
+
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
       spriteBatch.Draw(RenderTarget, Destination, Color.White);
       spriteBatch.End();
     }
-    
+
     public void Flush(SpriteBatch spriteBatch, List<IDrawCall> source)
     {
       if (source.Count == 0)

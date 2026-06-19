@@ -21,6 +21,4 @@ namespace Amethyst.IO
     void Unload(string path);
     void ClearCache();
   }
-
-
 }

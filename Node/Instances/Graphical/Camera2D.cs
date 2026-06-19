@@ -26,8 +26,10 @@ namespace Amethyst.Hierarchy
         float width = Core.Canvas.RenderTarget.Width / Zoom.X;
         float height = Core.Canvas.RenderTarget.Height / Zoom.Y;
 
-        float left = Transform.Global.Position.X - width * 0.5f;
-        float top = Transform.Global.Position.Y - height * 0.5f;
+        Vector2 posToUse = Transform.Global.Position;
+
+        float left = posToUse.X - width * 0.5f;
+        float top = posToUse.Y - height * 0.5f;
 
         return new Rectangle(
             (int)left,

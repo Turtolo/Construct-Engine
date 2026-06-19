@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using ImGuiNET;
+using ImGuiNET.SampleProgram.XNA;
+
 using Amethyst.Graphics;
 using Amethyst.Util;
 using Amethyst.Managers;
@@ -15,7 +18,7 @@ namespace Amethyst
 {
   public class Core : Game
   {
-    public static Core Tracked { get; set; }
+    public static Core Instance { get; set; }
 
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static new GraphicsDevice GraphicsDevice { get; private set; }
@@ -26,6 +29,11 @@ namespace Amethyst
     public static MTexture Pixel { get; private set; }
 
     public static Preferences Prefs { get; set; }
+
+    /// <summary>  
+    /// Gets the ImGui renderer used for debug UIs.  
+    /// </summary>  
+    public static ImGuiRenderer ImGuiRenderer { get; private set; }
 
     public static TimeOwner Time { get; private set; }
     public static TokenIndex Token { get; private set; }
@@ -41,10 +49,10 @@ namespace Amethyst
 
     public Core()
     {
-      if (Tracked != null)
+      if (Instance != null)
         throw new InvalidOperationException("Only one Core instance can exist.");
 
-      Tracked = this;
+      Instance = this;
       Graphics = new GraphicsDeviceManager(this)
       {
         PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
@@ -82,6 +90,9 @@ namespace Amethyst
       Canvas = new Canvas2D();
 
       Canvas.Initialize();
+
+      ImGuiRenderer = new ImGuiRenderer(this);
+      ImGuiRenderer.RebuildFontAtlas();
     }
 
     protected override void LoadContent()
@@ -131,7 +142,6 @@ namespace Amethyst
       base.Update(gameTime);
     }
 
-
     protected override void Draw(GameTime gameTime)
     {
       Canvas.Draw(SpriteBatch);
@@ -139,6 +149,6 @@ namespace Amethyst
       base.Draw(gameTime);
     }
 
-    public static void Quit() => Tracked.Exit();
+    public static void Quit() => Instance.Exit();
   }
 }

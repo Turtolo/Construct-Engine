@@ -2,6 +2,7 @@ using Amethyst.Managers;
 using Amethyst.Geometry;
 using Amethyst.Prefs;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Amethyst
 {
@@ -31,6 +32,13 @@ namespace Amethyst
       set => tracker.Set(ref canvasColor, value);
     }
 
+    private bool mouseVisible = true;
+    public bool MouseVisible
+    {
+      get => mouseVisible;
+      set => tracker.Set(ref mouseVisible, value);
+    }
+
     public bool IsDirty => tracker.IsDirty;
 
     public void Apply()
@@ -39,6 +47,8 @@ namespace Amethyst
 
       Core.Canvas.RenderSize = RenderSize;
       Core.Canvas.CanvasColor = CanvasColor;
+
+      Core.Instance.IsMouseVisible = MouseVisible;
 
       Core.Canvas.UpdateTransform();
       Core.Graphics.ApplyChanges();

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Amethyst.Hierarchy
 {
-  public class PointLight2D : Node2D 
+  public class PointLight2D : Node2D
   {
     public MTexture Texture => throw new System.NotImplementedException();
 

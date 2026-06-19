@@ -23,7 +23,7 @@ namespace Amethyst.Prefs
 
     public void Apply()
     {
-      Core.Tracked.Window.Title = title;
+      Core.Instance.Window.Title = title;
     }
   }
 }

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Amethyst.Graphics
 {
-  public sealed class PointLightDrawCall : Layered, IDrawCall, IPoolable 
+  public sealed class PointLightDrawCall : Layered, IDrawCall, IPoolable
   {
     public int Index { get; set; }
 

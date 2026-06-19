@@ -16,90 +16,38 @@ namespace Amethyst.Geometry
     public Vector2 Origin { get; set; }
     public Vector2 TargetOffset { get; set; }
 
-    public Vector2 Direction =>
-        TargetOffset == Vector2.Zero
+    public Vector2 Direction
+    {
+      get
+      {
+        return TargetOffset == Vector2.Zero
             ? Vector2.Zero
             : Vector2.Normalize(TargetOffset);
+      }
+    }
 
-    public float Length =>
-        TargetOffset.Length();
+    public float Length { get => TargetOffset.Length(); }
 
-    public bool _hasHit;
-    private Vector2 _hitPoint;
 
-    public bool HasHit => _hasHit;
-    public Vector2 HitPoint => _hitPoint;
-
-    public bool CheckIntersections(IEnumerable<(IShape2D shape, Vector2 position)> shapes)
+    public bool CheckIntersections(IShape2D other, Vector2 otherPosition, out Vector2 hitPoint, out float distance)
     {
-      _hasHit = false;
       float closest = float.MaxValue;
 
-      foreach (var (shape, position) in shapes)
+      if (other.RayIntersect(
+          Origin,
+          Direction,
+          Length,
+          otherPosition,
+          out hitPoint,
+          out distance))
       {
-        if (shape.RayIntersect(
-            Origin,
-            Direction,
-            Length,
-            position,
-            out Vector2 hit,
-            out float distance))
+        if (distance < closest)
         {
-          if (distance < closest)
-          {
-            closest = distance;
-            _hasHit = true;
-            _hitPoint = hit;
-          }
+          return true;
         }
       }
 
-      return _hasHit;
+      return false;
     }
-
-    public void Draw()
-    {
-      Color color = HasHit ? Color.Yellow : Color.Red;
-      int depth = 99;
-      int thickness = 2;
-
-      Core.Canvas.Submit(
-          new TextureDrawCall
-          {
-            Params = CanvasParams.Identity with
-            {
-              Position = Origin,
-              Color = color,
-              Scale = new Vector2(Length, thickness),
-              Rotation = MathF.Atan2(Direction.Y, Direction.X),
-              Origin = new Vector2(0f, 0.5f)
-            },
-            Texture = Core.Pixel,
-            Depth = depth,
-            Key = BatchKey.Default with
-            {
-              Matrix = Core.Token.Get<Camera2D>().GetTransform()
-            }
-          }
-      );
-
-      if (HasHit)
-      {
-        Core.Canvas.Submit(
-            new TextureDrawCall
-            {
-              Params = CanvasParams.Identity with
-              {
-                Position = HitPoint,
-                Color = Color.Blue,
-                Scale = new Vector2(4, 4)
-              },
-              Texture = Core.Pixel,
-              Depth = depth + 1
-            }
-        );
-      }
-    }
-
   }
 }

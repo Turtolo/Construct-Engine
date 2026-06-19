@@ -17,7 +17,7 @@ namespace Amethyst.Managers
 
     public ResourceManager()
     {
-      Core.Tracked.Content.RootDirectory = ContentRoot;
+      Core.Instance.Content.RootDirectory = ContentRoot;
 
       Provider = new PipelineLoader();
     }

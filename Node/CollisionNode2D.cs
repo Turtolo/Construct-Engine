@@ -44,7 +44,12 @@ namespace Amethyst.Hierarchy
         var b = new List<Rectangle>();
 
         foreach (var c in CollisionShapes)
+        {
           b.Add(c.Shape.GetAABB(c.Transform.Global.Position.ToPoint()));
+
+          if (c.Shape is CircleShape2D)
+            Console.WriteLine(c.Shape.GetAABB(c.Transform.Global.Position.ToPoint()));
+        }
 
         return b;
       }

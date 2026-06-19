@@ -57,7 +57,7 @@ namespace Amethyst.IO
       {
         try
         {
-          result = Core.Tracked.Content.Load<T>(path);
+          result = Core.Instance.Content.Load<T>(path);
         }
         catch
         {
@@ -80,7 +80,7 @@ namespace Amethyst.IO
     /// <returns></returns>
     public string LoadText(string path)
     {
-      return Core.Tracked.Content.Load<string>(path);
+      return Core.Instance.Content.Load<string>(path);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace Amethyst.IO
     public void ClearCache()
     {
       _cache.Clear();
-      Core.Tracked.Content.Unload();
+      Core.Instance.Content.Unload();
     }
   }
 }

@@ -18,7 +18,18 @@ namespace Amethyst.Tools
       return (int)MathF.Round(start + (end - start) * t);
     }
 
-    public static Point Lerp(Point start, Point end, float t)
+
+    public static Point Lerp(Point value1, Point value2, float amount)
+    {
+      amount = MathHelper.Clamp(amount, 0f, 1f);
+
+      int x = (int)MathF.Round(value1.X + (value2.X - value1.X) * amount);
+      int y = (int)MathF.Round(value1.Y + (value2.Y - value1.Y) * amount);
+
+      return new Point(x, y);
+    }
+
+    public static Point LerpPure(Point start, Point end, float t)
     {
       return new Point(
           (int)MathF.Round(start.X + (end.X - start.X) * t),

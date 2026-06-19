@@ -71,6 +71,8 @@ namespace Amethyst.Hierarchy
       if (!Material.Global.Visible)
         return;
 
+      var cam = Core.Token.Get<Camera2D>();
+
       Rectangle view = Core.Token.Get<Camera2D>().GetWorldViewRectangle(false);
 
       int texW = Texture.Bounds.Width;
@@ -114,7 +116,6 @@ namespace Amethyst.Hierarchy
           Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
 
           var call = ObjectPool<TextureDrawCall>.Get();
-
 
           Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
 
