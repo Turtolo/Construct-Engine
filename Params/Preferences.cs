@@ -43,6 +43,7 @@ namespace Amethyst
     public T Register<T>(T section) where T : IPrefSection
     {
       sections.Add(section);
+      section.Apply();
       return section;
     }
 

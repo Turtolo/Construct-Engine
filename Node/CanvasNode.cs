@@ -20,11 +20,6 @@ namespace Amethyst.Hierarchy
     public Dual<Transform2D> Transform { get; private set; }
 
     /// <summary>
-    /// Signal for when the transform changes.
-    /// </summary>
-    public event Action<Transform2D>? OnTransformChanged;
-
-    /// <summary>
     /// The self contained visibility of this node. 
     /// </summary>
     [Export]
@@ -93,7 +88,6 @@ namespace Amethyst.Hierarchy
       }
     }
 
-
     /// <summary>
     /// The self contained sprite effects of this node.
     /// </summary>
@@ -112,43 +106,6 @@ namespace Amethyst.Hierarchy
       Ordering = new Dual<Ordering>(Params.Ordering.Identity);
       Material = new Dual<Material>(Params.Material.Identity);
       Transform = new Dual<Transform2D>(Params.Transform2D.Identity);
-
-      Ordering.OnChanged += UpdateAttributes;
-      Material.OnChanged += UpdateAttributes;
-      Transform.OnChanged += UpdateAttributes;
-
-      UpdateAttributes();
-      OnParentChanged += (node) =>
-      {
-        UpdateAttributes();
-      };
-    }
-
-    /// <summary>
-    /// Recalculates global rendering attributes and propagates them to children.
-    /// </summary>
-    private void UpdateAttributes()
-    {
-      if (GetParent() is CanvasNode parent)
-      {
-        Ordering.Global = Params.Ordering.Combine(parent.Ordering.Global, Ordering.Local);
-        Material.Global = Params.Material.Combine(parent.Material.Global, Material.Local);
-        Transform.Global = Transform2D.Combine(parent.Transform.Global, Transform.Local);
-      }
-      else
-      {
-        Ordering.Global = Ordering.Local;
-        Material.Global = Material.Local;
-        Transform.Global = Transform.Local;
-      }
-
-      OnTransformChanged?.Invoke(Transform.Global);
-
-      foreach (var child in Children)
-      {
-        if (child is CanvasNode canvasChild)
-          canvasChild.UpdateAttributes();
-      }
     }
   }
 }

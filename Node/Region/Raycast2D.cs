@@ -1,37 +1,47 @@
 using System;
 using Amethyst.Geometry;
 using Amethyst.Graphics;
-using Amethyst.Hierarchy;
 using Amethyst.Managers;
 using Amethyst.Params;
 using Amethyst.Util;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Hierarch
+namespace Amethyst.Hierarchy
 {
   public class Raycast2D : Node2D
   {
     [Export]
-    public bool Disabled { get; set; }
+    public bool Disabled { get; set; } = false;
+    
+    [Export]
+    public bool ExcludeParent { get; set; } = true;
     
     ///<summary>
-    /// The point where the ray ends, think of it as an arrow from the origin to said pont.
+    /// The point where the ray ends, think of it as an arrow from the origin to said point.
     ///</summary>
-    public Vector2 TargetPosition { get; set; }
-    
-    public RayCastShape2D Shape { get; set; } 
+    [Export]
+    public Vector2 TargetPosition
+    {
+      get => Shape.TargetPosition;
+      set => Shape.TargetPosition = value;
+    }
+
+    ///<summary>
+    /// The internal raycast, contains no position logic – that is handled within <see cref="IsColliding()"/>.
+    ///</summary>
+    [Export]
+    public RayCastShape2D Shape { get; set; }
 
     public Raycast2D() {}
-
 
     public bool IsColliding(out Vector2 hitPoint, out float distance)
     {
       hitPoint = Vector2.Zero;
       distance = 0f;
 
-      if (Disabled)
+      if (Disabled || Shape == null)
         return false;
-      
+
       Rectangle bounds = new Rectangle(
         (int)Transform.Global.Position.X,
         (int)Transform.Global.Position.Y,
@@ -43,12 +53,15 @@ namespace Amethyst.Hierarch
       for (int i = 0; i < bodies.Count; i++)
       {
         var body = bodies[i]; 
+
+        if (GetParent() == body && ExcludeParent)
+          continue;
         
         for (int j = 0; j < body.CollisionShapes.Count; j++)
         {
           var shape = body.CollisionShapes[j];
 
-          if (Shape.CheckIntersections(shape.Shape, body.Transform.Global.Position, out hitPoint, out distance))
+          if (Shape.CheckIntersections(shape.Shape, Transform.Global.Position, shape.Transform.Global.Position, out hitPoint, out distance))
             return true;
         }
       }
@@ -56,12 +69,17 @@ namespace Amethyst.Hierarch
       return false;
     }
 
+    public bool IsColliding()
+    {
+      return IsColliding(out _, out _);
+    }
+
     public override void _Submit(Canvas2D canvas)
     {
-      if (!Core.Prefs.General.ShowCollision)
+      if (!Core.Prefs.General.ShowCollision || Shape == null)
         return;
 
-      var colliding = IsColliding(out Vector2 hitPoint, out float distance);;
+      var colliding = IsColliding(out Vector2 hitPoint, out float distance);
   
       Color color = colliding ? Color.Red : Color.Yellow;
       int depth = 99;
@@ -78,7 +96,7 @@ namespace Amethyst.Hierarch
         Origin = new Vector2(0f, 0.5f)
       };
 
-      initial.Texture = Core.Pixel;
+      initial.Texture = Core.Resources.Pixel;
 
       initial.Depth = depth;
 
@@ -88,32 +106,6 @@ namespace Amethyst.Hierarch
       };
 
       Core.Canvas.Submit(initial);
-
-      if (colliding)
-      {
-        TextureDrawCall secondary = ObjectPool<TextureDrawCall>.Get();
-
-        secondary.Params = CanvasParams.Identity with
-        {
-          Position = hitPoint,
-          Color = Color.Blue,
-          Scale = new Vector2(Shape.Length, thickness),
-          Rotation = MathF.Atan2(Shape.Direction.Y, Shape.Direction.X),
-          Origin = new Vector2(0f, 0.5f)
-        };
-
-        secondary.Texture = Core.Pixel;
-
-        secondary.Depth = depth + 1;
-
-        secondary.Key = BatchKey.Default with
-        {
-          Matrix = Core.Token.Get<Camera2D>().GetTransform()
-        };
-        
-        Core.Canvas.Submit(secondary);
-      }
     }
-
   }
 }

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Amethyst.Params;
 using Amethyst.Util;
+using System;
 
 namespace Amethyst.Graphics
 {
@@ -30,7 +31,7 @@ namespace Amethyst.Graphics
           SourceRectangle
           ?? Texture.SourceRectangle
           ?? new Rectangle(0, 0, Texture.Texture.Width, Texture.Texture.Height);
-
+      
       sb.Draw(
           Texture.Texture,
           Params.Position,

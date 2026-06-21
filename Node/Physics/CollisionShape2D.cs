@@ -68,7 +68,7 @@ namespace Amethyst.Hierarchy
 
       if (Shape is RectangleShape2D rs)
       {
-        call.Texture = Core.Pixel;
+        call.Texture = Core.Resources.Pixel;
         call.Depth = 99;
         call.Params = CanvasParams.Identity with
         {
@@ -120,7 +120,7 @@ namespace Amethyst.Hierarchy
 
     public bool Intersects(CollisionShape2D other)
     {
-      if (Disabled || other?.Shape == null || Shape == null)
+      if (Disabled || other?.Shape == null || other.Disabled || Shape == null)
         return false;
 
       return Shape.Intersect(other.Shape, Transform.Global.Position.ToPoint(), other.Transform.Global.Position.ToPoint());
@@ -136,10 +136,10 @@ namespace Amethyst.Hierarchy
 
     public bool Contains(Vector2 position)
     {
-      if (!Disabled && Shape != null)
-        return Shape.Contains(position.ToPoint(), Transform.Global.Position.ToPoint());
-
-      return false;
+      if (Disabled || Shape == null)
+        return false;
+        
+      return Shape.Contains(position.ToPoint(), Transform.Global.Position.ToPoint());
     }
 
 

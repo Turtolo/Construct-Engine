@@ -43,7 +43,7 @@ namespace Amethyst
 
     public void Apply()
     {
-      Core.Graphics.IsFullScreen = Fullscreen;
+      Core.Instance.Graphics.IsFullScreen = Fullscreen;
 
       Core.Canvas.RenderSize = RenderSize;
       Core.Canvas.CanvasColor = CanvasColor;
@@ -51,7 +51,7 @@ namespace Amethyst
       Core.Instance.IsMouseVisible = MouseVisible;
 
       Core.Canvas.UpdateTransform();
-      Core.Graphics.ApplyChanges();
+      Core.Instance.Graphics.ApplyChanges();
     }
   }
 }

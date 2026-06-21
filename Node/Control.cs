@@ -12,10 +12,8 @@ using System.IO.Compression;
 
 namespace Amethyst.Hierarchy
 {
-
-  public class Node2D : CanvasNode
+  public class Control : CanvasNode
   {
-
     /// <summary>
     /// Signal for when the transform changes.
     /// </summary>
@@ -60,7 +58,7 @@ namespace Amethyst.Hierarchy
       }
     }
 
-    public Node2D() 
+    public Control() 
     { 
       Ordering.OnChanged += UpdateAttributes;
       Material.OnChanged += UpdateAttributes;

@@ -20,7 +20,7 @@ namespace Amethyst.Tools
 
       using (MemoryStream ms = new MemoryStream(imageBytes))
       {
-        texture = Texture2D.FromStream(Core.GraphicsDevice, ms);
+        texture = Texture2D.FromStream(Core.Instance.GraphicsDevice, ms);
       }
 
       Color[] pixels = new Color[texture.Width * texture.Height];
@@ -57,7 +57,7 @@ namespace Amethyst.Tools
     public static MTexture CreateCircle(int radius)
     {
       int diameter = radius * 2;
-      Texture2D texture = new Texture2D(Core.GraphicsDevice, diameter, diameter);
+      Texture2D texture = new Texture2D(Core.Instance.GraphicsDevice, diameter, diameter);
       Color[] data = new Color[diameter * diameter];
 
       for (int y = 0; y < diameter; y++)
@@ -87,7 +87,7 @@ namespace Amethyst.Tools
 
       var call = new TextureDrawCall
       {
-        Texture = Core.Pixel,
+        Texture = Core.Resources.Pixel,
         Params = CanvasParams.Identity with
         {
           Position = start,

@@ -13,28 +13,31 @@ namespace Amethyst.Geometry
 {
   public class RayCastShape2D
   {
-    public Vector2 Origin { get; set; }
-    public Vector2 TargetOffset { get; set; }
+    public Vector2 TargetPosition { get; set; }
 
     public Vector2 Direction
     {
       get
       {
-        return TargetOffset == Vector2.Zero
+        return TargetPosition == Vector2.Zero
             ? Vector2.Zero
-            : Vector2.Normalize(TargetOffset);
+            : Vector2.Normalize(TargetPosition);
       }
     }
 
-    public float Length { get => TargetOffset.Length(); }
+    public float Length { get => TargetPosition.Length(); }
+    
+    public RayCastShape2D(Vector2 targetPosition)
+    {
+      TargetPosition = targetPosition;
+    }
 
-
-    public bool CheckIntersections(IShape2D other, Vector2 otherPosition, out Vector2 hitPoint, out float distance)
+    public bool CheckIntersections(IShape2D other, Vector2 thisPosition, Vector2 otherPosition, out Vector2 hitPoint, out float distance)
     {
       float closest = float.MaxValue;
 
       if (other.RayIntersect(
-          Origin,
+          thisPosition,
           Direction,
           Length,
           otherPosition,

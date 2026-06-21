@@ -70,7 +70,7 @@ namespace Amethyst.Managers
           stream.CopyTo(ms);
           byte[] shaderCode = ms.ToArray();
 
-          LightingShader = new Effect(Core.GraphicsDevice, shaderCode);
+          LightingShader = new Effect(Core.Instance.GraphicsDevice, shaderCode);
         }
       }
 
@@ -78,7 +78,7 @@ namespace Amethyst.Managers
       LightRenderTarget?.Dispose();
 
       RenderTarget = new RenderTarget2D(
-          Core.GraphicsDevice,
+          Core.Instance.GraphicsDevice,
           RenderSize.Width,
           RenderSize.Height,
           false,
@@ -88,7 +88,7 @@ namespace Amethyst.Managers
           RenderTargetUsage.PreserveContents);
 
       LightRenderTarget = new RenderTarget2D(
-          Core.GraphicsDevice,
+          Core.Instance.GraphicsDevice,
           RenderSize.Width,
           RenderSize.Height,
           false,
@@ -124,15 +124,15 @@ namespace Amethyst.Managers
     {
       if (LightingShader == null) throw new Exception("LightingShader is null.");
 
-      Core.GraphicsDevice.SetRenderTarget(RenderTarget);
-      Core.GraphicsDevice.Clear(CanvasColor);
+      Core.Instance.GraphicsDevice.SetRenderTarget(RenderTarget);
+      Core.Instance.GraphicsDevice.Clear(CanvasColor);
       Flush(spriteBatch, _calls);
 
-      Core.GraphicsDevice.SetRenderTarget(LightRenderTarget);
-      Core.GraphicsDevice.Clear(AmbientColor);
+      Core.Instance.GraphicsDevice.SetRenderTarget(LightRenderTarget);
+      Core.Instance.GraphicsDevice.Clear(AmbientColor);
       Flush(spriteBatch, _lightCalls);
 
-      Core.GraphicsDevice.SetRenderTarget(RenderTarget);
+      Core.Instance.GraphicsDevice.SetRenderTarget(RenderTarget);
 
       LightingShader.Parameters["MaskTexture"].SetValue(LightRenderTarget);
       spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, effect: LightingShader);
@@ -141,8 +141,8 @@ namespace Amethyst.Managers
 
       Flush(spriteBatch, _unLitCalls);
 
-      Core.GraphicsDevice.SetRenderTarget(null);
-      Core.GraphicsDevice.Clear(Color.Black);
+      Core.Instance.GraphicsDevice.SetRenderTarget(null);
+      Core.Instance.GraphicsDevice.Clear(Color.Black);
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
       spriteBatch.Draw(RenderTarget, Destination, Color.White);
@@ -271,7 +271,7 @@ namespace Amethyst.Managers
 
     internal void UpdateTransform()
     {
-      var pp = Core.GraphicsDevice.PresentationParameters;
+      var pp = Core.Instance.GraphicsDevice.PresentationParameters;
 
       float scale = Math.Min(
           pp.BackBufferWidth / (float)RenderSize.Width,

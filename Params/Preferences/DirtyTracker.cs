@@ -10,8 +10,11 @@ namespace Amethyst.Prefs
 
     public void Set<T>(ref T field, T value)
     {
-      field = value;
-      IsDirty = true;
+      if (!EqualityComparer<T>.Default.Equals(field, value))
+      {
+        field = value;
+        IsDirty = true;
+      }
     }
 
     public void MarkClean() => IsDirty = false;

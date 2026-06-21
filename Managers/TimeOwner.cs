@@ -19,6 +19,10 @@ namespace Amethyst.Managers
     public float TimeScale { get; set; } = 1.0f;
     public float Alpha { get; private set; }
 
+    public static float FPS { get; private set; }
+    private int _fpsFrames;
+    private double _fpsTimer;
+
     public TimeOwner(TimeSpan fixedDelta)
     {
       _fixedDelta = fixedDelta;
@@ -75,6 +79,15 @@ namespace Amethyst.Managers
           action.Callback?.Invoke();
           _delayedActions.RemoveAt(i);
         }
+      }
+
+      _fpsTimer += (float)rawDelta.TotalSeconds;
+      _fpsFrames++;
+      if (_fpsTimer >= 1.0)
+      {
+        FPS = _fpsFrames / (float)_fpsTimer;
+        _fpsFrames = 0;
+        _fpsTimer = 0;
       }
 
       return steps;

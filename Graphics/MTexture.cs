@@ -58,7 +58,7 @@ namespace Amethyst.Graphics
     /// </summary>
     public MTexture(int width, int height, bool mipMap = false, SurfaceFormat format = SurfaceFormat.Color)
     {
-      Texture = new Texture2D(Core.GraphicsDevice, width, height, mipMap, format);
+      Texture = new Texture2D(Core.Instance.GraphicsDevice, width, height, mipMap, format);
       SourceRectangle = null;
     }
 
@@ -70,7 +70,7 @@ namespace Amethyst.Graphics
       if (data.Length != width * height)
         throw new ArgumentException("Color array length does not match width*height");
 
-      Texture = new Texture2D(Core.GraphicsDevice, width, height, mipMap, format);
+      Texture = new Texture2D(Core.Instance.GraphicsDevice, width, height, mipMap, format);
       Texture.SetData(data);
       SourceRectangle = null;
     }
