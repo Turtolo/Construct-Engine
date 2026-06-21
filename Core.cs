@@ -127,7 +127,7 @@ namespace Amethyst
       };
       Graphics.ApplyChanges();
 
-
+      Window.AllowUserResizing = true;
       IsFixedTimeStep = false;
       Graphics.SynchronizeWithVerticalRetrace = true;
     }
@@ -184,9 +184,11 @@ namespace Amethyst
       Input.Update(gameTime);
 
       Token.Update(context, physicsSteps);
-
+      
+      #if DEBUG
       if (Input.Keyboard.IsKeyDown(Keys.Escape) || Input.CurrentGamePad.WasButtonJustPressed(Buttons.Start))
         Exit();
+      #endif
 
       base.Update(gameTime);
     }

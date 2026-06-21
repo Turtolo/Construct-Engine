@@ -19,7 +19,8 @@ namespace Amethyst.Managers
     public float TimeScale { get; set; } = 1.0f;
     public float Alpha { get; private set; }
 
-    public static float FPS { get; private set; }
+    public float FPS { get; private set; }
+
     private int _fpsFrames;
     private double _fpsTimer;
 
