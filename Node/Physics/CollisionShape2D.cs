@@ -14,6 +14,8 @@ namespace Amethyst.Hierarchy
 {
   public class CollisionShape2D : Node2D
   {
+    private bool _oneWayState = false;
+
     [Export]
     public bool Disabled { get; set; }
     [Export]
@@ -105,17 +107,15 @@ namespace Amethyst.Hierarchy
       if (!OneWay || Shape == null)
         return;
 
-      foreach (KinematicBody2D kb in Core.Token.GetAll<KinematicBody2D>())
-      {
-        foreach (var c in kb.CollisionShapes)
-        {
-          if (kb.Velocity.Y < 0)
-            Disabled = true;
+      var kb = Core.Token.Get<KinematicBody2D>();
 
-          else if (!Intersects(c))
-            Disabled = false;
-        }
-      }
+      var thisTop = Shape.GetAABB(Transform.Global.Position.ToPoint()).Top;
+      var thatBottom = kb.CollisionShapes[0].Shape.GetAABB(kb.Transform.Global.Position.ToPoint()).Bottom;
+
+      if (thatBottom > thisTop)
+        Disabled = true;
+      else
+        Disabled = false;
     }
 
     public bool Intersects(CollisionShape2D other)

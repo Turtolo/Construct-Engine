@@ -35,7 +35,10 @@ namespace Amethyst.Hierarchy
     /// </summary>
     public event Action<Node> OnChildRemoved;
 
-    public Node() { }
+    public Node()
+    {
+      _Ready();
+    }
 
     /// <summary>
     /// Returns the generic type parent of this node.
@@ -159,7 +162,11 @@ namespace Amethyst.Hierarchy
       parent = null;
       children.Clear();
     }
-
+    
+    /// <summary>
+    /// Called at immediately upon the cretion of this node.
+    /// </summary>
+    public virtual void _Ready() { }
 
     /// <summary>
     /// Called when the node enters the tree.

@@ -53,11 +53,16 @@ namespace Amethyst.Hierarchy
       }
       else
       {
-        startX = -layerOffset.X % RepeatSize.Width;
-        if (startX > 0)
-          startX -= RepeatSize.Width;
-        startX += pos.X;
-        endX = pos.X + (viewportSize.X * RepeatTimes);
+        float repeatLeft = (float)MathF.Floor(RepeatTimes / 2f);
+        float repeatRight = (float)MathF.Ceiling(RepeatTimes / 2f);
+
+        var baseStartX = -layerOffset.X % RepeatSize.Width;
+        if (baseStartX > 0)
+          baseStartX -= RepeatSize.Width;
+        baseStartX += pos.X;
+
+        startX = baseStartX - (repeatLeft * viewportSize.X);
+        endX = baseStartX + (repeatRight * viewportSize.X);
         stepX = RepeatSize.Width;
       }
 
@@ -70,11 +75,17 @@ namespace Amethyst.Hierarchy
       }
       else
       {
-        startY = -layerOffset.Y % RepeatSize.Height;
-        if (startY > 0)
-          startY -= RepeatSize.Height;
-        startY += pos.Y;
-        endY = pos.Y + (viewportSize.Y * RepeatTimes);
+
+        float repeatUp = (float)MathF.Floor(RepeatTimes / 2f);
+        float repeatDown = (float)MathF.Ceiling(RepeatTimes / 2f);
+
+        var baseStartY = -layerOffset.Y % RepeatSize.Height;
+        if (baseStartY > 0)
+          baseStartY -= RepeatSize.Height;
+        baseStartY += pos.Y;
+        
+        startY = baseStartY - (repeatUp * viewportSize.Y);
+        endY = baseStartY + (repeatDown * viewportSize.Y);
         stepY = RepeatSize.Height;
       }
 

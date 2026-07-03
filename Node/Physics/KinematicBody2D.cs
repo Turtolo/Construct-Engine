@@ -26,8 +26,8 @@ namespace Amethyst.Hierarchy
     [Export]
     public bool IsOnRoof => _isOnRoof;
 
-    private CollisionNode2D _floorBody;
-    private CollisionNode2D _wallBody;
+    public CollisionNode2D FloorBody { get; private set; }
+    public CollisionNode2D WallBody { get; private set; }
 
     private Vector2 _lastWallGlobalPosition;
     private Vector2 _lastFloorGlobalPosition;
@@ -58,27 +58,28 @@ namespace Amethyst.Hierarchy
       _isOnRoof = false;
       _isOnWall = false;
       WallNormal = Vector2.Zero;
-      _floorBody = null;
-      _wallBody = null;
+      FloorBody = null;
+      WallBody = null;
 
       ResolveHorizontal(ref movement, nearby);
+
       ResolveVertical(ref movement, nearby);
     }
 
     private void ResolvePlatforms()
     {
-      if (_isOnFloor && _floorBody != null)
+      if (_isOnFloor && FloorBody != null)
       {
-        Vector2 platformDelta = _floorBody.Transform.Global.Position - _lastFloorGlobalPosition;
+        Vector2 platformDelta = FloorBody.Transform.Global.Position - _lastFloorGlobalPosition;
         Position += platformDelta;
-        _lastFloorGlobalPosition = _floorBody.Transform.Global.Position;
+        _lastFloorGlobalPosition = FloorBody.Transform.Global.Position;
       }
 
-      if (_isOnWall && _wallBody != null)
+      if (_isOnWall && WallBody != null)
       {
-        Vector2 wallDelta = _wallBody.Transform.Global.Position - _lastWallGlobalPosition;
+        Vector2 wallDelta = WallBody.Transform.Global.Position - _lastWallGlobalPosition;
         Position += wallDelta;
-        _lastWallGlobalPosition = _wallBody.Transform.Global.Position;
+        _lastWallGlobalPosition = WallBody.Transform.Global.Position;
       }
     }
 
@@ -92,7 +93,7 @@ namespace Amethyst.Hierarchy
         if (this.Intersects(other))
         {
           _isOnWall = true;
-          _wallBody = other;
+          WallBody = other;
           _lastWallGlobalPosition = other.Transform.Global.Position;
 
           WallNormal = movement.X > 0 ? new Vector2(-1, 0) : new Vector2(1, 0);
@@ -139,7 +140,7 @@ namespace Amethyst.Hierarchy
             ResolveVerticalPenetration(other, true);
 
             _isOnFloor = true;
-            _floorBody = other;
+            FloorBody = other;
             _lastFloorGlobalPosition = other.Transform.Global.Position;
           }
           else if (movement.Y < 0)
@@ -155,30 +156,30 @@ namespace Amethyst.Hierarchy
         if (movement.Y >= 0 && this.IntersectsAt(new Vector2(0, FLOOR_TOLERANCE), other))
         {
           _isOnFloor = true;
-          _floorBody = other;
+          FloorBody = other;
           _lastFloorGlobalPosition = other.Transform.Global.Position;
           break;
         }
       }
     }
 
-    private void ResolveVerticalPenetration(CollisionNode2D other, bool fromTop)
+    private void ResolveVerticalPenetration(PhysicsBody2D other, bool fromTop)
     {
       foreach (var a in this.Bounds)
         foreach (var b in other.Bounds)
         {
-          if (!a.Intersects(b)) continue;
+        if (!a.Intersects(b)) continue;
 
-          if (fromTop)
-          {
-            float penetration = (a.Bottom - b.Top);
-            Position -= new Vector2(0, penetration);
-          }
-          else
-          {
-            float penetration = (b.Bottom - a.Top);
-            Position += new Vector2(0, penetration);
-          }
+        if (fromTop)
+        {
+          float penetration = (a.Bottom - b.Top);
+          Position -= new Vector2(0, penetration);
+        }
+        else
+        {
+          float penetration = (b.Bottom - a.Top);
+          Position += new Vector2(0, penetration);
+        }
         }
     }
 
