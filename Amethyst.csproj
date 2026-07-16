@@ -13,6 +13,6 @@
     <EmbeddedResource Include="Graphics/Font/bitmap_font.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Compiled/*" />
+    <EmbeddedResource Include="Compiled/*"/>
   </ItemGroup>
 </Project>

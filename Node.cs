@@ -38,6 +38,7 @@ namespace Amethyst.Hierarchy
     public Node()
     {
       _Ready();
+      Ready();
     }
 
     /// <summary>
@@ -163,35 +164,23 @@ namespace Amethyst.Hierarchy
       children.Clear();
     }
     
-    /// <summary>
-    /// Called at immediately upon the cretion of this node.
-    /// </summary>
     public virtual void _Ready() { }
+    public virtual void Ready() { }
 
-    /// <summary>
-    /// Called when the node enters the tree.
-    /// </summary>
     public virtual void _EnterTree() { }
+    public virtual void EnterTree() { }
 
-    /// <summary>
-    /// Called when the node exits the tree.
-    /// </summary>
     public virtual void _ExitTree() { }
+    public virtual void ExitTree() { }
 
-    /// <summary>
-    /// Called every frame.
-    /// </summary>
     public virtual void _Process(float delta) { }
+    public virtual void Process(float delta) { }
 
-    /// <summary>
-    /// Called every physics tick.
-    /// </summary>
     public virtual void _PhysicsUpdate(float delta) { }
+    public virtual void PhysicsUpdate(float delta) { }
 
-    /// <summary>
-    /// Called when submitting draw calls.
-    /// </summary>
     public virtual void _Submit(Canvas2D canvas) { }
+    public virtual void Submit(Canvas2D canvas) { }
   }
 }
 

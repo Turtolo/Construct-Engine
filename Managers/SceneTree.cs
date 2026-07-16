@@ -37,6 +37,9 @@ namespace Amethyst.Managers
         _scene.QueueFree();
       }
 
+      foreach (var node in Core.Token.GetAll())
+        node.QueueFree();
+
       _scene = scene;
 
       _root.AddChild(scene);

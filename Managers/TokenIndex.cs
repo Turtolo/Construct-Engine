@@ -102,7 +102,10 @@ namespace Amethyst.Managers
       foreach (var n in toAdd)
       {
         if (n is IEnterTree enter)
+        {
           enter._EnterTree();
+          enter.EnterTree();
+        }
       }
 
       var toRemove = pendingRemove.ToList();
@@ -138,7 +141,10 @@ namespace Amethyst.Managers
     private void RemoveInternal(Token token)
     {
       if (token is IExitTree i)
+      {
         i._ExitTree();
+        i.ExitTree();
+      }
 
       tokens.Remove(token);
 
@@ -191,10 +197,16 @@ namespace Amethyst.Managers
         var inst = iterationBuffer[i];
 
         if (inst is IProcess processor && !pendingRemove.Contains(inst))
+        {
           processor._Process(dt);
+          processor.Process(dt);
+        }
 
         if (inst is ICall caller && !pendingRemove.Contains(inst))
+        {
           caller._Submit(Core.Canvas);
+          caller.Submit(Core.Canvas);
+        }
       }
 
       iterationBuffer.Clear();
@@ -215,7 +227,10 @@ namespace Amethyst.Managers
         var inst = iterationBuffer[i];
 
         if (inst is IPhysicsUpdate physics && !pendingRemove.Contains(inst))
+        {
           physics._PhysicsUpdate((float)delta.TotalSeconds);
+          physics.PhysicsUpdate((float)delta.TotalSeconds);
+        }
       }
 
       iterationBuffer.Clear();

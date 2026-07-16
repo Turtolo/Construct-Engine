@@ -56,6 +56,8 @@ namespace Amethyst.Util
       callbackAction = action;
     }
 
+    public virtual void Process(float delta) {}
+
     public void _Process(float delta)
     {
       if (!isRunning) return;
