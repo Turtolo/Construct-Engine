@@ -1,16 +1,16 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Geometry;
-using Amethyst.Graphics;
-using Amethyst.Tools;
-using Amethyst.Managers;
-using Amethyst.Params;
+using Opal.Geometry;
+using Opal.Graphics;
+using Opal.Tools;
+using Opal.Managers;
+using Opal.Params;
 using System.IO.Compression;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
 
   public class Node2D : CanvasNode

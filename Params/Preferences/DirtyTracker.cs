@@ -1,8 +1,8 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 
-namespace Amethyst.Prefs
+namespace Opal.Prefs
 {
   public class DirtyTracker
   {

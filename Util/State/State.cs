@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Util
+namespace Opal.Util
 {
   public interface IState
   {

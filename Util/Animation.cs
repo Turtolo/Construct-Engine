@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System.Collections.Generic;
 
-namespace Amethyst.Util
+namespace Opal.Util
 {
   public sealed class Animation : BaseObject
   {

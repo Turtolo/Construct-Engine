@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amethyst.Tools;
+using Opal.Tools;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public struct ConvexSegment2D
   {

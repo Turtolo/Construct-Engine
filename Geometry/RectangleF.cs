@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public struct RectangleF
   {

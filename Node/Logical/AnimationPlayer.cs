@@ -1,11 +1,11 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-using Amethyst.Util;
+using Opal.Util;
 using System;
 using System.Collections.Generic;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class AnimationPlayer : Node
   {

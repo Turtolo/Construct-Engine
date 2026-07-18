@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
-using Amethyst.Managers;
-using Amethyst.Runtime;
+using Opal.Managers;
+using Opal.Runtime;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class Node : Token,
     IEnterTree,

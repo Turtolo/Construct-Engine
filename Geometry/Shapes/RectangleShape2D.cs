@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public struct RectangleShape2D : IShape2D
   {

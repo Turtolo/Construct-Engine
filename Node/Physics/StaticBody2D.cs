@@ -1,14 +1,14 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Managers;
+using Opal.Geometry;
+using Opal.Managers;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class StaticBody2D : PhysicsBody2D
   {

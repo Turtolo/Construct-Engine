@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Amethyst.Tools;
+using Opal.Tools;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public static class AStar
   {

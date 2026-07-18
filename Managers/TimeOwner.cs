@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
-using Amethyst.Runtime;
-using Amethyst.Util;
+using Opal.Runtime;
+using Opal.Util;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public sealed class TimeOwner : BaseObject
   {

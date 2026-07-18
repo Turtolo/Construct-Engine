@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Amethyst;
-using Amethyst.Geometry;
-using Amethyst.Graphics;
-using Amethyst.Hierarchy;
+using Opal;
+using Opal.Geometry;
+using Opal.Graphics;
+using Opal.Hierarchy;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public class Canvas2D : BaseObject
   {
@@ -58,7 +58,7 @@ namespace Amethyst.Managers
     {
       var assembly = typeof(Core).Assembly;
 
-      string resourceName = $"Amethyst.Compiled.Lighting.mgfxo";
+      string resourceName = $"Opal.Compiled.Lighting.mgfxo";
 
       using (Stream? stream = assembly.GetManifestResourceStream(resourceName))
       {

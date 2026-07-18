@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable enable
 
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public static class DictionaryExtension
   {

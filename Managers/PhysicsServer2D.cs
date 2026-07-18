@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Hierarchy;
+using Opal.Geometry;
+using Opal.Hierarchy;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public class PhysicsServer2D : BaseObject
   {

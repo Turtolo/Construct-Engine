@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Hierarchy;
-using Amethyst.Params;
+using Opal.Geometry;
+using Opal.Hierarchy;
+using Opal.Params;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public static class RegionTools
   {

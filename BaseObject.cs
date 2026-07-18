@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Amethyst.Params;
+using Opal.Params;
 
-namespace Amethyst
+namespace Opal
 {
   ///<summary>
   /// The absolute abstract base class that all others inherit.

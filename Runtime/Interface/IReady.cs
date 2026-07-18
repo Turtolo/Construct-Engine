@@ -1,5 +1,5 @@
-using Amethyst.Managers;
-namespace Amethyst.Runtime
+using Opal.Managers;
+namespace Opal.Runtime
 {
   public interface IReady
   {

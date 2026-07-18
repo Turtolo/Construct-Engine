@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using Microsoft.Xna.Framework;
@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public class MonoFont : BaseObject, IFont
   {

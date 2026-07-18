@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using Microsoft.Xna.Framework.Input;
 
-namespace Amethyst.Input
+namespace Opal.Input
 {
   public class ButtonArrays
   {

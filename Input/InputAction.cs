@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-using Amethyst.Input;
+using Opal.Input;
 using Microsoft.Xna.Framework.Input;
 
-namespace Amethyst.Input
+namespace Opal.Input
 {
   public enum InputType
   {

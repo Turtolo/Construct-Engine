@@ -1,11 +1,11 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Util
+namespace Opal.Util
 {
   public class StateController : BaseObject
   {

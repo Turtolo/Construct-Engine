@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v4doJhZQL2M=",
+  "dgSpecHash": "7X9UiKZBYwI=",
   "success": true,
-  "projectFilePath": "/Users/nilslauvstad/Git/Amethyst/Amethyst.csproj",
+  "projectFilePath": "/Users/nilslauvstad/Git/Opal/Opal.csproj",
   "expectedPackageFiles": [
     "/Users/nilslauvstad/.nuget/packages/imgui.net/1.91.6.1/imgui.net.1.91.6.1.nupkg.sha512",
     "/Users/nilslauvstad/.nuget/packages/monogame.framework.desktopgl/3.8.2.1105/monogame.framework.desktopgl.3.8.2.1105.nupkg.sha512",

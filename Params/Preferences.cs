@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System.Collections.Generic;
-using Amethyst.Prefs;
+using Opal.Prefs;
 using System;
 
-namespace Amethyst
+namespace Opal
 {
   public class Preferences
   {

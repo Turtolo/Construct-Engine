@@ -1,8 +1,8 @@
-using Amethyst.Managers;
-using Amethyst.Params;
+using Opal.Managers;
+using Opal.Params;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   ///<summary>
   /// A node that acts as an 'anchor' for <see cref="Canvas2D"/>, this is not in an orientation sense – more so configuration of it.

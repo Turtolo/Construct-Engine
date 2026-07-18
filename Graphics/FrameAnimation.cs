@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public class FrameAnimation : BaseObject
   {

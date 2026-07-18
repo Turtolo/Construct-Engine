@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
-using Amethyst.Geometry;
+using Opal.Geometry;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public static class ShapeT
   {

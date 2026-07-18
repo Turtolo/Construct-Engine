@@ -1,6 +1,6 @@
-using Amethyst.Params;
+using Opal.Params;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public readonly record struct Anchor : IProperty<Anchor>
   {

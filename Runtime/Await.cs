@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 
-namespace Amethyst.Util
+namespace Opal.Util
 {
   public static class Await
   {

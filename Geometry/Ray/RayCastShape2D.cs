@@ -1,15 +1,15 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Amethyst.Graphics;
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Hierarchy;
+using Opal.Graphics;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Hierarchy;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public class RayCastShape2D
   {

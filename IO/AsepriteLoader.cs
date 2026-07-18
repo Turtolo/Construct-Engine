@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Graphics;
+using Opal.Geometry;
+using Opal.Graphics;
 
-namespace Amethyst.IO
+namespace Opal.IO
 {
   public static class AsepriteLoader
   {

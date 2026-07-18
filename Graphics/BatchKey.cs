@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public struct BatchKey : IEquatable<BatchKey>
   {

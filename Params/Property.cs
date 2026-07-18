@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Amethyst.Hierarchy;
-using Amethyst.Managers;
-using Amethyst.Tools;
+using Opal.Hierarchy;
+using Opal.Managers;
+using Opal.Tools;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public interface IProperty<TSelf>
       where TSelf : struct

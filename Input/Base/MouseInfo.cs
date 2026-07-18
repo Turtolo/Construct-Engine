@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Amethyst.Input
+namespace Opal.Input
 {
   public class MouseInfo
   {

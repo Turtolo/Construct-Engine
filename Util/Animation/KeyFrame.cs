@@ -1,5 +1,5 @@
-using Amethyst.Managers;
-namespace Amethyst.Util
+using Opal.Managers;
+namespace Opal.Util
 {
   public struct KeyFrame<T>
   {

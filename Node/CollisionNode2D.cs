@@ -1,15 +1,15 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Params;
-using Amethyst.Tools;
+using Opal.Geometry;
+using Opal.Params;
+using Opal.Tools;
 using System.Linq;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
 
   public class CollisionNode2D : Node2D

@@ -422,11 +422,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/nilslauvstad/Git/Amethyst/Amethyst.csproj",
-      "projectName": "Amethyst",
-      "projectPath": "/Users/nilslauvstad/Git/Amethyst/Amethyst.csproj",
+      "projectUniqueName": "/Users/nilslauvstad/Git/Opal/Opal.csproj",
+      "projectName": "Opal",
+      "projectPath": "/Users/nilslauvstad/Git/Opal/Opal.csproj",
       "packagesPath": "/Users/nilslauvstad/.nuget/packages/",
-      "outputPath": "/Users/nilslauvstad/Git/Amethyst/obj/",
+      "outputPath": "/Users/nilslauvstad/Git/Opal/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/nilslauvstad/.nuget/NuGet/NuGet.Config"

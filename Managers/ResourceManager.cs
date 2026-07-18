@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System.Diagnostics.Contracts;
-using Amethyst.IO;
+using Opal.IO;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public class ResourceManager : BaseObject
   {

@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amethyst.Params;
+using Opal.Params;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class Area2D : CollisionNode2D
   {

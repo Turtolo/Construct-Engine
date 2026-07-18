@@ -1,8 +1,8 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public record struct CanvasParams
   {

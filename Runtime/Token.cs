@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Runtime;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Runtime;
 
-namespace Amethyst
+namespace Opal
 {
   ///<summary>
   /// The absolute abstract class for managed objects.

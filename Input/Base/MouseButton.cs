@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-namespace Amethyst.Input
+namespace Opal.Input
 {
   public enum MouseButton
   {

@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
@@ -9,16 +9,16 @@ using Microsoft.Xna.Framework.Input;
 using ImGuiNET;
 using ImGuiNET.SampleProgram.XNA;
 
-using Amethyst.Graphics;
-using Amethyst.Util;
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Hierarchy;
-using Amethyst.IO;
-using Amethyst.Input;
-using Amethyst.Tools;
+using Opal.Graphics;
+using Opal.Util;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Hierarchy;
+using Opal.IO;
+using Opal.Input;
+using Opal.Tools;
 
-namespace Amethyst
+namespace Opal
 {
   public class Core : Game
   {
@@ -32,7 +32,7 @@ namespace Amethyst
     /// <summary>
     /// Gets the internal <see cref="Microsoft.Xna.Framework.Graphics.GraphicsDevice"/>.
     /// </summary>
-    public new GraphicsDevice  GraphicsDevice { get; private set; }
+    public new GraphicsDevice GraphicsDevice { get; private set; }
 
     /// <summary>
     /// Gets resources that the enigne, and users will use, such as an <see cref="BitmapFont"/> and a 1x1 pixel.
@@ -109,7 +109,7 @@ namespace Amethyst
     /// The handling of <see cref="PhysicsBody2D"> in a hash-map, with queing for bodies in a certain region.
     /// </summary>
     /// <remarks>
-    /// This is rarely – if ever – accessed by the user, thought it is very important to the performance of the engine.
+    /// This is rarely – if ever – accessed by the user, though it is very important to the performance of the engine.
     /// </remarks>
     public static PhysicsServer2D Physics { get; private set; }
 

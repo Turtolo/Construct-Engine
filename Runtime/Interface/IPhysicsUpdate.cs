@@ -1,6 +1,6 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
-namespace Amethyst.Runtime
+namespace Opal.Runtime
 {
   public interface IPhysicsUpdate
   {

@@ -1,18 +1,18 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Graphics;
-using Amethyst.IO;
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Util;
-using Amethyst.Tools;
+using Opal.Graphics;
+using Opal.IO;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Util;
+using Opal.Tools;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class Tilemap : Node2D
   {

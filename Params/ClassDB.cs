@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public static class ClassDB
   {

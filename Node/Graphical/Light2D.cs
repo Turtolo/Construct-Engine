@@ -1,8 +1,8 @@
-using Amethyst.Managers;
-using Amethyst.Graphics;
+using Opal.Managers;
+using Opal.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class PointLight2D : Node2D
   {

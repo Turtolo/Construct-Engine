@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
-using Amethyst.Params;
-using Amethyst.Hierarchy;
+using Opal.Params;
+using Opal.Hierarchy;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public record struct ParticleInfo
   {

@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
-using Amethyst.Hierarchy;
-using Amethyst.Runtime;
-using Amethyst.Tools;
+using Opal.Hierarchy;
+using Opal.Runtime;
+using Opal.Tools;
 
-namespace Amethyst.Util
+namespace Opal.Util
 {
   public class Tween<T> : Token, IProcess
   {

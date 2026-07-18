@@ -1,9 +1,9 @@
 using System;
-using Amethyst.Graphics;
+using Opal.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public class Resources : BaseObject
   {
@@ -31,9 +31,9 @@ namespace Amethyst.Tools
     internal void LoadContent()
     {
       var assembly = typeof(Core).Assembly;
-      using var stream = assembly.GetManifestResourceStream("Amethyst.Graphics.Font.bitmap_font.png");
+      using var stream = assembly.GetManifestResourceStream("Opal.Graphics.Font.bitmap_font.png");
       if (stream == null)
-        throw new InvalidOperationException("Embedded resource not found: Amethyst.Graphics.Font.bitmap_font.png");
+        throw new InvalidOperationException("Embedded resource not found: Opal.Graphics.Font.bitmap_font.png");
 
       var texture = Texture2D.FromStream(Core.Instance.GraphicsDevice, stream);
       BitmapFont = new BitmapFont(texture, 6, 10);

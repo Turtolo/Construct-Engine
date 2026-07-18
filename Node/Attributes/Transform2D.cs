@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public readonly record struct Transform2D : IProperty<Transform2D>
   {

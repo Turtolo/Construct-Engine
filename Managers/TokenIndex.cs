@@ -1,19 +1,19 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amethyst.Geometry;
-using Amethyst.Graphics;
-using Amethyst.Hierarchy;
-using Amethyst.Params;
-using Amethyst.Runtime;
-using Amethyst.Tools;
-using Amethyst.Util;
+using Opal.Geometry;
+using Opal.Graphics;
+using Opal.Hierarchy;
+using Opal.Params;
+using Opal.Runtime;
+using Opal.Tools;
+using Opal.Util;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public class TokenIndex : Loop
   {

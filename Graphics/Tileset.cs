@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public class Tileset : BaseObject
   {

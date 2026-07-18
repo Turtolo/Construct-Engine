@@ -1,4 +1,4 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using System.Text.Json;
-using Amethyst.Graphics;
+using Opal.Graphics;
 
-namespace Amethyst.IO
+namespace Opal.IO
 {
   public class PipelineLoader : IContentProvider
   {

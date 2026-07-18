@@ -1,14 +1,14 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-using Amethyst.Util;
+using Opal.Util;
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Managers;
-using Amethyst.Params;
+using Opal.Managers;
+using Opal.Params;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class Camera2D : Node2D
   {

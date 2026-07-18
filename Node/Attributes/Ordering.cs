@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
-using Amethyst.Managers;
+using Opal.Managers;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public readonly record struct Ordering : IProperty<Ordering>
   {

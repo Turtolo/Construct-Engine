@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Amethyst.Params;
+using Opal.Params;
 using System.Collections.Generic;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class KinematicBody2D : PhysicsBody2D
   {

@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Graphics;
-using Amethyst.Params;
-using Amethyst.Hierarchy;
+using Opal.Graphics;
+using Opal.Params;
+using Opal.Hierarchy;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public static class GraphicsE
   {

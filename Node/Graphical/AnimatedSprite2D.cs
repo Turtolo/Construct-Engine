@@ -1,15 +1,15 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-using Amethyst.Util;
+using Opal.Util;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Graphics;
-using Amethyst.Params;
+using Opal.Graphics;
+using Opal.Params;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class AnimatedSprite2D : Node2D
   {

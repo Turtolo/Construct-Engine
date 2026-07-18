@@ -1,14 +1,14 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-using Amethyst.Util;
+using Opal.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Graphics;
-using Amethyst.Tools;
-using Amethyst.Params;
+using Opal.Graphics;
+using Opal.Tools;
+using Opal.Params;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class Sprite2D : Node2D
   {

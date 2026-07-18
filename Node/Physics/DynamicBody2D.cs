@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
-using Amethyst.Params;
-using Amethyst.Util;
+using Opal.Params;
+using Opal.Util;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class DynamicBody2D : PhysicsBody2D
   {

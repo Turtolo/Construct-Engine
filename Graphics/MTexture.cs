@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Geometry;
+using Opal.Geometry;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   /// <summary>
   /// Represents a texture or a rectangular region of a texture.

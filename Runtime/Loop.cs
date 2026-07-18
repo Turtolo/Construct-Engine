@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
-using Amethyst.Hierarchy;
-using Amethyst.Util;
+using Opal.Hierarchy;
+using Opal.Util;
 
-namespace Amethyst.Runtime
+namespace Opal.Runtime
 {
   public abstract class Loop : BaseObject
   {

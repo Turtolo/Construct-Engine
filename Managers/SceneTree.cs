@@ -1,11 +1,11 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
-using Amethyst.Hierarchy;
+using Opal.Hierarchy;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public class SceneTree : BaseObject
   {

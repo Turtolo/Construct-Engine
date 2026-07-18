@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Graphics;
-using Amethyst.Params;
+using Opal.Graphics;
+using Opal.Params;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public interface IDrawCall
   {

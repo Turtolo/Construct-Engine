@@ -1,13 +1,13 @@
 using System;
-using Amethyst.Graphics;
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Tools;
-using Amethyst.Util;
+using Opal.Graphics;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Tools;
+using Opal.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class ColorRect : Node2D
   {

@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   /// <summary>
   /// Provides a collection of easing functions used to interpolate values over time.

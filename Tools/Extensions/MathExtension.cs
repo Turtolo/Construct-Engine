@@ -1,8 +1,8 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public static class MathE
   {

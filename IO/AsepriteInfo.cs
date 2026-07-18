@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System.Collections.Generic;
 
-namespace Amethyst.IO
+namespace Opal.IO
 {
   public class AsepriteFrameRect
   {

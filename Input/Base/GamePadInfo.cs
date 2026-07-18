@@ -1,11 +1,11 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Amethyst.Input
+namespace Opal.Input
 {
   public class GamePadInfo
   {

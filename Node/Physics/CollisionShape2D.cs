@@ -1,16 +1,16 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Amethyst.Geometry;
-using Amethyst.Params;
-using Amethyst.Tools;
-using Amethyst.Graphics;
-using Amethyst.Util;
+using Opal.Geometry;
+using Opal.Params;
+using Opal.Tools;
+using Opal.Graphics;
+using Opal.Util;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class CollisionShape2D : Node2D
   {

@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
 using Microsoft.Xna.Framework;
-using Amethyst.Graphics;
+using Opal.Graphics;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public record struct ParticleParams
   {

@@ -1,10 +1,10 @@
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Util;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public sealed class TileDrawCall : Layered, IDrawCall, IPoolable
   {

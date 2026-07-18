@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
 
 #nullable disable
 
 using System.Numerics;
-using Amethyst.Input;
+using Opal.Input;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public partial class InputManager : BaseObject
   {

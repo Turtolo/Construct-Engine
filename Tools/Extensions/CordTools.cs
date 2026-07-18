@@ -1,13 +1,13 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Hierarchy;
+using Opal.Geometry;
+using Opal.Hierarchy;
 
-namespace Amethyst.Tools
+namespace Opal.Tools
 {
   public static class CordTools
   {

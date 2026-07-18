@@ -1,7 +1,7 @@
-using Amethyst.Managers;
-using Amethyst.Graphics;
+using Opal.Managers;
+using Opal.Graphics;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public record struct EmitterParams
   {

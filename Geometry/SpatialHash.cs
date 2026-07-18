@@ -1,11 +1,11 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public class SpatialHash<T> where T : IHashAble
   {

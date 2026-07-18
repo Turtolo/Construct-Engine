@@ -1,10 +1,10 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Text.RegularExpressions;
 
-namespace Amethyst.Graphics
+namespace Opal.Graphics
 {
   public abstract class Layered : BaseObject
   {

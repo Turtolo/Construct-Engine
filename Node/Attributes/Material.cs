@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
-using Amethyst.Hierarchy;
-using Amethyst.Tools;
+using Opal.Hierarchy;
+using Opal.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public readonly record struct Material : IProperty<Material>
   {

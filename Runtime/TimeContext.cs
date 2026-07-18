@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 
-namespace Amethyst.Runtime
+namespace Opal.Runtime
 {
   public readonly struct TimeContext
   {

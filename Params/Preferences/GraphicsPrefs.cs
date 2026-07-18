@@ -1,10 +1,10 @@
-using Amethyst.Managers;
-using Amethyst.Geometry;
-using Amethyst.Prefs;
+using Opal.Managers;
+using Opal.Geometry;
+using Opal.Prefs;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace Amethyst
+namespace Opal
 {
 
   public class GraphicsPrefs : IPrefSection

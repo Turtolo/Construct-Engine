@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   public class AudioOutput : BaseObject
   {

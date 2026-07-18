@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Amethyst.Geometry;
-using Amethyst.Tools;
+using Opal.Geometry;
+using Opal.Tools;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   ///<summary>
   /// The class for all bodies which posses phsyics and are required to be queued from the server.

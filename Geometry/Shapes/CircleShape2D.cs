@@ -1,12 +1,12 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using Microsoft.Xna.Framework;
-using Amethyst.Tools;
+using Opal.Tools;
 using System.Collections.Generic;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   public struct CircleShape2D : IShape2D
   {

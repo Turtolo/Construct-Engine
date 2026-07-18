@@ -1,5 +1,5 @@
-using Amethyst.Managers;
-namespace Amethyst.Prefs
+using Opal.Managers;
+namespace Opal.Prefs
 {
   public class GeneralPrefs : IPrefSection
   {

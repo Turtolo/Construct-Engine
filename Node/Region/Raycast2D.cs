@@ -1,12 +1,12 @@
 using System;
-using Amethyst.Geometry;
-using Amethyst.Graphics;
-using Amethyst.Managers;
-using Amethyst.Params;
-using Amethyst.Util;
+using Opal.Geometry;
+using Opal.Graphics;
+using Opal.Managers;
+using Opal.Params;
+using Opal.Util;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Hierarchy
+namespace Opal.Hierarchy
 {
   public class Raycast2D : Node2D
   {

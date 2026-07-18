@@ -1,9 +1,9 @@
-using Amethyst.Managers;
+using Opal.Managers;
 
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Amethyst.Geometry
+namespace Opal.Geometry
 {
   ///<summary>
   /// A struct with a width and height, used primarily for geometrical shapes without a location.

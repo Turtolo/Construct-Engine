@@ -1,8 +1,8 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
-using Amethyst.Managers;
+using Opal.Managers;
 
-namespace Amethyst.Util
+namespace Opal.Util
 {
   ///<summary>
   /// A struct keeping information for a timer.

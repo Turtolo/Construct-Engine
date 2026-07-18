@@ -1,15 +1,15 @@
-using Amethyst.Managers;
+using Opal.Managers;
 #nullable disable
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Amethyst.Tools;
-using Amethyst.Input;
+using Opal.Tools;
+using Opal.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Amethyst.Managers
+namespace Opal.Managers
 {
   public partial class InputManager : BaseObject
   {

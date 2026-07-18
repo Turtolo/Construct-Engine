@@ -1,7 +1,7 @@
-using Amethyst.Managers;
+using Opal.Managers;
 using System;
 
-namespace Amethyst.Params
+namespace Opal.Params
 {
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
   public sealed class ExportAttribute : Attribute { }
