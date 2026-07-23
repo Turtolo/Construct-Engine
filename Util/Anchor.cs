@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+
+namespace Opal.Util
+{
+  public class Anchor : Token
+  {
+    public List<Token> Chained { get; private set; }= new();
+    
+    public void Activate()
+    {
+      //token.setCurrentAnchorPoint(this);
+    }
+
+    public void Attach(Token t)
+    {
+      Chained.Add(t);
+    }
+
+    public void Detatch(Token t)
+    {
+      Chained.Remove(t);
+    }
+
+    public void DeActivate()
+    {
+      for (int i = Chained.Count - 1; i >= 0; i--)
+      {
+        Token t = Chained[i];
+
+        Chained.RemoveAt(i);
+        t.QueueFree();
+      }
+
+      QueueFree();
+    }
+  }
+}

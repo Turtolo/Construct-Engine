@@ -47,6 +47,11 @@ namespace Opal
       Core.Token.RemoveNow(this);
     }
 
+    public void Detach()
+    {
+
+    }
+
     ///<summary>
     /// Removes all data associated with this instance.
     ///</summary>

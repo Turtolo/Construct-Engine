@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Opal.Geometry;
 using Opal.Graphics;
-using Opal.Hierarchy;
 using Opal.Params;
 using Opal.Runtime;
 using Opal.Tools;
@@ -25,6 +24,13 @@ namespace Opal.Managers
     private readonly List<Token> pendingAdd = new();
     private readonly List<Token> pendingRemove = new();
 
+    public AnchorManager Anchor { get; private set; }
+
+    public TokenIndex()
+    {
+      Anchor = new AnchorManager();
+    }
+    
     ///<summary>
     /// Wrapper for creating an <see cref="Token"/>. 
     ///</summary>
@@ -77,12 +83,19 @@ namespace Opal.Managers
     /// Queues an token to be added to this tree.
     /// </summary>
     /// <param name="token"></param>
-    public void QueueAdd(Token token) => pendingAdd.Add(token);
+    public void QueueAdd(Token token)
+    {
+      pendingAdd.Add(token);
+
+      Anchor.GetCurrentAnchor()?.Attach(token);
+    }
+
     /// <summary>
     /// Queues an intance to be removed from this tree.
     /// </summary>
     /// <param name="token"></param>
     public void QueueRemove(Token token) => pendingRemove.Add(token);
+
 
     /// <summary>
     /// Flushes all tokens.
