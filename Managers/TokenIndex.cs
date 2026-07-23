@@ -23,7 +23,18 @@ namespace Opal.Managers
 
     private readonly List<Token> pendingAdd = new();
     private readonly List<Token> pendingRemove = new();
-
+    
+    /// <summary>
+    /// The manager for <see cref="Opal.Util.Anchor"/>. Has methods for interacting with the current one. 
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Keeps track of the <see cref="Token"/> instances chained to the current anchor -- if it is deactivated -- all chained are removed.
+    /// </para>
+    /// <para>
+    /// The usual interface for using anchors is <see cref="Scene"/>, which has general lifecycle functions -- though, you can just use an anchor.
+    /// </para>
+    /// </remarks>
     public AnchorManager Anchor { get; private set; }
 
     public TokenIndex()

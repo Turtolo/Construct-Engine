@@ -5,7 +5,7 @@ namespace Opal.Util
 {
   public class Anchor : Token
   {
-    public List<Token> Chained { get; private set; }= new();
+    public List<Token> Chained { get; private set; } = new();
     
     public void Activate()
     {

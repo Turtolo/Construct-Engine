@@ -89,15 +89,6 @@ namespace Opal
     public static Canvas2D Canvas { get; private set; }
 
     /// <summary>
-    /// Handles the scenes, which are essentially the root nodes in the tree.
-    /// </summary>
-    /// <remarks>
-    /// Instead of following the godot approach of having the scene tree be responsible for lifecycles, i have instead chosen to use an interface design.
-    /// In this design, tokens can choose to use interfaces such as <see cref="IUpdateable">, which in this case bundles physics- and process updates.
-    /// </remarks>
-    public static SceneTree Tree { get; private set; }
-
-    /// <summary>
     /// Handles input for the engine, currently supporting gamepads, keyboards and mouses.
     /// </summary>
     /// <remarks>
@@ -112,7 +103,6 @@ namespace Opal
     /// This is rarely – if ever – accessed by the user, though it is very important to the performance of the engine.
     /// </remarks>
     public static PhysicsServer2D Physics { get; private set; }
-
 
     public Core()
     {
@@ -142,7 +132,6 @@ namespace Opal
 
       Resource = new ResourceManager();
       Token = new TokenIndex();
-      Tree = new SceneTree(Token.Create<Node>());
       Physics = new PhysicsServer2D();
       Input = new InputManager();
 
