@@ -1,5 +1,5 @@
 using Opal.Managers;
-namespace Opal.Util
+namespace Opal.Tools
 {
   public class Signal : BaseObject
   {

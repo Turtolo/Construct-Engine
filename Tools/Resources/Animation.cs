@@ -1,7 +1,7 @@
 using Opal.Managers;
 using System.Collections.Generic;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public sealed class Animation : BaseObject
   {

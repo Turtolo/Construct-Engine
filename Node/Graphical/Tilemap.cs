@@ -9,7 +9,7 @@ using Opal.Graphics;
 using Opal.IO;
 using Opal.Managers;
 using Opal.Params;
-using Opal.Util;
+using Opal.Tools;
 using Opal.Tools;
 
 namespace Opal.Hierarchy

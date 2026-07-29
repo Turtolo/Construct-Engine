@@ -2,7 +2,7 @@ using Opal.Managers;
 using System;
 using Opal.Managers;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   ///<summary>
   /// A struct keeping information for a timer.

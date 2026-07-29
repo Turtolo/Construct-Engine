@@ -10,13 +10,12 @@ using ImGuiNET;
 using ImGuiNET.SampleProgram.XNA;
 
 using Opal.Graphics;
-using Opal.Util;
+using Opal.Tools;
 using Opal.Managers;
 using Opal.Params;
 using Opal.Hierarchy;
 using Opal.IO;
 using Opal.Input;
-using Opal.Tools;
 
 namespace Opal
 {

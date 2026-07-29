@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public class Anchor : Token
   {

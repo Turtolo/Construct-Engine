@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 using Opal.Graphics;
-using Opal.Util;
+using Opal.Tools;
 using Opal.Params;
 using Opal.Tools;
 

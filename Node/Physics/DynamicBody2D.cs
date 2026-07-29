@@ -5,7 +5,7 @@ using Opal.Managers;
 using System;
 using Microsoft.Xna.Framework;
 using Opal.Params;
-using Opal.Util;
+using Opal.Tools;
 
 namespace Opal.Hierarchy
 {

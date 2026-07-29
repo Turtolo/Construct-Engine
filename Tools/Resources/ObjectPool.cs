@@ -1,7 +1,7 @@
 using Opal.Managers;
 using System.Collections.Generic;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public static class ObjectPool<T> where T : class, IPoolable, new()
   {

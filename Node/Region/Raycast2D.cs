@@ -3,7 +3,7 @@ using Opal.Geometry;
 using Opal.Graphics;
 using Opal.Managers;
 using Opal.Params;
-using Opal.Util;
+using Opal.Tools;
 using Microsoft.Xna.Framework;
 
 namespace Opal.Hierarchy

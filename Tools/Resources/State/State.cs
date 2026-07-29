@@ -3,7 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public interface IState
   {

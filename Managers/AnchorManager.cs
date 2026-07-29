@@ -1,5 +1,5 @@
 using System;
-using Opal.Util;
+using Opal.Tools;
 
 namespace Opal.Managers
 {

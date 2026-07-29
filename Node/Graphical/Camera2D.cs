@@ -1,7 +1,7 @@
 using Opal.Managers;
 #nullable disable
 
-using Opal.Util;
+using Opal.Tools;
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

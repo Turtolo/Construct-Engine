@@ -1,7 +1,7 @@
 using Opal.Managers;
 using System;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public static class Await
   {

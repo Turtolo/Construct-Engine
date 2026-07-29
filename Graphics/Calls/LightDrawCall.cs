@@ -1,5 +1,5 @@
 using Opal.Params;
-using Opal.Util;
+using Opal.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

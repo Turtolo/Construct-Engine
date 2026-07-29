@@ -2,7 +2,7 @@ using Opal.Managers;
 using System;
 using System.Collections.Generic;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public enum TrackWrapMode
   {

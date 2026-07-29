@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public interface ITimer
   {

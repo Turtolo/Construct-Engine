@@ -2,7 +2,7 @@ using Opal.Params;
 
 namespace Opal.Hierarchy
 {
-  public readonly record struct Anchor : IProperty<Anchor>
+  public readonly record struct ControlAnchor : IProperty<ControlAnchor>
   {
     public float AnchorBottom { get; init; }
     public float AnchorLeft { get; init; }
@@ -14,7 +14,7 @@ namespace Opal.Hierarchy
     public float OffsetRight { get; init; }
     public float OffsetTop { get; init; }
 
-    public static Anchor Combine(in Anchor parent, in Anchor child)
+    public static ControlAnchor Combine(in ControlAnchor parent, in ControlAnchor child)
     {
       throw new System.NotImplementedException();
     }

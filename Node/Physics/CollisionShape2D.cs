@@ -8,7 +8,7 @@ using Opal.Geometry;
 using Opal.Params;
 using Opal.Tools;
 using Opal.Graphics;
-using Opal.Util;
+using Opal.Tools;
 
 namespace Opal.Hierarchy
 {

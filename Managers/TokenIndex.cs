@@ -9,7 +9,7 @@ using Opal.Graphics;
 using Opal.Params;
 using Opal.Runtime;
 using Opal.Tools;
-using Opal.Util;
+using Opal.Tools;
 using Microsoft.Xna.Framework;
 
 namespace Opal.Managers
@@ -25,7 +25,7 @@ namespace Opal.Managers
     private readonly List<Token> pendingRemove = new();
     
     /// <summary>
-    /// The manager for <see cref="Opal.Util.Anchor"/>. Has methods for interacting with the current one. 
+    /// The manager for <see cref="Opal.Tools.Anchor"/>. Has methods for interacting with the current one. 
     /// </summary>
     /// <remarks>
     /// <para>

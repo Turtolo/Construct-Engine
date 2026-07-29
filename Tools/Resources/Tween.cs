@@ -6,7 +6,7 @@ using Opal.Hierarchy;
 using Opal.Runtime;
 using Opal.Tools;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public class Tween<T> : Token, IProcess
   {

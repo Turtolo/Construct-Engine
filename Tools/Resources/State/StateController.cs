@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace Opal.Util
+namespace Opal.Tools
 {
   public class StateController : BaseObject
   {
