@@ -11,6 +11,15 @@ namespace Opal.Geometry
 {
   public static class AStar
   {
+    /// <summary>
+    /// Gets the fastest path towards a goal.
+    /// </summary>
+    /// <summary>
+    /// Uses heuristic, moves in eight directions.
+    /// </summary>
+    /// <param name="grid"> The grid which will be used, takes the form of a csv, you can turn collision into a csv. </param>
+    /// <param name="start"> The start point; should not be in real-world coordinates nor go past the <see cref="grid"/> boundry. </param>
+    /// <param name="goal"> The end point, the goal; should not be in real-world cooridnates nor go past the <see cref="grid"/> boundry. </param>
     public static List<Point> GetPath(int[,] grid, Point start, Point goal)
     {
       var allCells = new Dictionary<Point, Cell>();
