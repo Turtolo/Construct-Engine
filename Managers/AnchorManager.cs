@@ -16,6 +16,7 @@ namespace Opal.Managers
     /// <param name="anchor">The new anchor.</param>
     public void SetAnchor(Anchor anchor)
     {
+      currentAnchor?.Detach(anchor);
       currentAnchor?.DeActivate();
 
       currentAnchor = anchor;
@@ -31,9 +32,9 @@ namespace Opal.Managers
     /// </remarks>
     public void ReloadCurrentAnchor()
     {
-      currentAnchor?.DeActivate();
-
       Type t = currentAnchor.GetType();
+
+      currentAnchor?.DeActivate();
 
       Anchor newAnchor = (Anchor)Activator.CreateInstance(t);
 

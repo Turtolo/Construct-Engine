@@ -17,7 +17,7 @@ namespace Opal.Tools
       Chained.Add(t);
     }
 
-    public void Detatch(Token t)
+    public void Detach(Token t)
     {
       Chained.Remove(t);
     }

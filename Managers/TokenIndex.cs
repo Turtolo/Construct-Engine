@@ -97,7 +97,7 @@ namespace Opal.Managers
     public void QueueAdd(Token token)
     {
       pendingAdd.Add(token);
-
+      
       Anchor.GetCurrentAnchor()?.Attach(token);
     }
 
