@@ -45,8 +45,8 @@ namespace Opal.Hierarchy
       Rectangle bounds = new Rectangle(
         (int)Transform.Global.Position.X,
         (int)Transform.Global.Position.Y,
-        (int)TargetPosition.X,
-        (int)TargetPosition.Y);
+        (int)MathF.Abs(TargetPosition.X),
+        (int)MathF.Abs(TargetPosition.Y));
 
       var bodies = Core.Physics.Query([bounds]);
 
