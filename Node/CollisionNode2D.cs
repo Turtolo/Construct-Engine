@@ -28,6 +28,12 @@ namespace Opal.Hierarchy
     ///</summary>
     [Export]
     public HashSet<int> Layers { get; set; } = new();
+    
+    /// <summary>
+    /// The layers that this <see cref="CollisionNode2D"/> checks against during intersection.
+    /// </summary>
+    [Export]
+    public HashSet<int> Masks { get; set; } = new();
 
     ///<summary>
     /// The bounds of this node's shapes, represented in the form of a rectangle.
@@ -65,6 +71,18 @@ namespace Opal.Hierarchy
     }
 
     ///<summary>
+    /// Adds a layer which will be used for checking intersection.
+    ///</summary>
+    ///<param name="mask">The layer, if it surpases the max value (default: 30); it will be clamped down.</param>
+    public int AddMask(int mask)
+    {
+      var finVal = Math.Clamp(mask, 0, MaxLayer);
+      Masks.Add(finVal);
+
+      return finVal;
+    }
+
+    ///<summary>
     /// Adds layers which will be used for checking intersection.
     ///</summary>
     ///<param name="layers">The layers, if they surpass the max value (default: 30); they will be clamped down.</param>
@@ -73,6 +91,19 @@ namespace Opal.Hierarchy
       var finVals = layers.ClampArray(0, MaxLayer);
       foreach (var l in finVals)
         Layers.Add(l);
+
+      return finVals;
+    }
+
+    ///<summary>
+    /// Adds masks which will be used for checking intersection.
+    ///</summary>
+    ///<param name="masks">The masks, if they surpass the max value (default: 30); they will be clamped down.</param>
+    public int[] AddMasks(params int[] masks)
+    {
+      var finVals = masks.ClampArray(0, MaxLayer);
+      foreach (var m in finVals)
+        Masks.Add(m);
 
       return finVals;
     }
@@ -90,12 +121,36 @@ namespace Opal.Hierarchy
     }
 
     ///<summary>
+    /// Removes a mask.
+    ///</summary>
+    ///<param name="mask">The mask in question, if it surpasses the max value (default: 30), will be clamped down</param>
+    public int RemoveMask(int layer)
+    {
+      var finVal = Math.Clamp(layer, 0, MaxLayer);
+      Masks.Remove(finVal);
+
+      return finVal;
+    }
+
+    ///<summary>
     /// Removes multiple layers.
     ///</summary>
     ///<param name="layers">The layers in question, if they surpass the max value (default: 30), they will be clamped down</param>
     public int[] RemoveLayers(params int[] layers)
     {
       var finVals = layers.ClampArray(0, MaxLayer);
+      Layers.ExceptWith(finVals);
+
+      return finVals;
+    }
+
+    ///<summary>
+    /// Removes multiple masks.
+    ///</summary>
+    ///<param name="masks">The masks in question, if they surpass the max value (default: 30), they will be clamped down</param>
+    public int[] RemoveMasks(params int[] masks)
+    {
+      var finVals = masks.ClampArray(0, MaxLayer);
       Layers.ExceptWith(finVals);
 
       return finVals;
@@ -116,8 +171,8 @@ namespace Opal.Hierarchy
     ///<param name="other">The other shape.</param>
     public bool Intersects(CollisionNode2D other)
     {
-      if ((this.Layers.Count > 0 || other.Layers.Count > 0)
-          && !this.Layers.Overlaps(other.Layers))
+      if ((this.Masks.Count > 0 || other.Layers.Count > 0)
+          && !this.Masks.Overlaps(other.Layers))
       {
         return false;
       }
@@ -151,8 +206,8 @@ namespace Opal.Hierarchy
     ///<param name="other">The other shape, the offset is not applied to it.</param>
     public bool IntersectsAt(Vector2 offset, CollisionNode2D other)
     {
-      if ((this.Layers.Count > 0 || other.Layers.Count > 0)
-          && !this.Layers.Overlaps(other.Layers))
+      if ((this.Masks.Count > 0 || other.Layers.Count > 0)
+          && !this.Masks.Overlaps(other.Layers))
       {
         return false;
       }
