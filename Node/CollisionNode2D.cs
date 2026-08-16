@@ -59,34 +59,10 @@ namespace Opal.Hierarchy
     public CollisionNode2D() { }
 
     ///<summary>
-    /// Adds a layer which will be used for checking intersection.
-    ///</summary>
-    ///<param name="layer">The layer, if it surpases the max value (default: 30); it will be clamped down.</param>
-    public int AddLayer(int layer)
-    {
-      var finVal = Math.Clamp(layer, 0, MaxLayer);
-      Layers.Add(finVal);
-
-      return finVal;
-    }
-
-    ///<summary>
-    /// Adds a layer which will be used for checking intersection.
-    ///</summary>
-    ///<param name="mask">The layer, if it surpases the max value (default: 30); it will be clamped down.</param>
-    public int AddMask(int mask)
-    {
-      var finVal = Math.Clamp(mask, 0, MaxLayer);
-      Masks.Add(finVal);
-
-      return finVal;
-    }
-
-    ///<summary>
     /// Adds layers which will be used for checking intersection.
     ///</summary>
     ///<param name="layers">The layers, if they surpass the max value (default: 30); they will be clamped down.</param>
-    public int[] AddLayers(params int[] layers)
+    public int[] AddLayer(params int[] layers)
     {
       var finVals = layers.ClampArray(0, MaxLayer);
       foreach (var l in finVals)
@@ -99,7 +75,7 @@ namespace Opal.Hierarchy
     /// Adds masks which will be used for checking intersection.
     ///</summary>
     ///<param name="masks">The masks, if they surpass the max value (default: 30); they will be clamped down.</param>
-    public int[] AddMasks(params int[] masks)
+    public int[] AddMask(params int[] masks)
     {
       var finVals = masks.ClampArray(0, MaxLayer);
       foreach (var m in finVals)
@@ -109,34 +85,10 @@ namespace Opal.Hierarchy
     }
 
     ///<summary>
-    /// Removes a layer.
-    ///</summary>
-    ///<param name="layer">The layer in question, if it surpasses the max value (default: 30), it will be clamped down</param>
-    public int RemoveLayer(int layer)
-    {
-      var finVal = Math.Clamp(layer, 0, MaxLayer);
-      Layers.Remove(finVal);
-
-      return finVal;
-    }
-
-    ///<summary>
-    /// Removes a mask.
-    ///</summary>
-    ///<param name="mask">The mask in question, if it surpasses the max value (default: 30), will be clamped down</param>
-    public int RemoveMask(int layer)
-    {
-      var finVal = Math.Clamp(layer, 0, MaxLayer);
-      Masks.Remove(finVal);
-
-      return finVal;
-    }
-
-    ///<summary>
     /// Removes multiple layers.
     ///</summary>
     ///<param name="layers">The layers in question, if they surpass the max value (default: 30), they will be clamped down</param>
-    public int[] RemoveLayers(params int[] layers)
+    public int[] RemoveLayer(params int[] layers)
     {
       var finVals = layers.ClampArray(0, MaxLayer);
       Layers.ExceptWith(finVals);
@@ -148,7 +100,7 @@ namespace Opal.Hierarchy
     /// Removes multiple masks.
     ///</summary>
     ///<param name="masks">The masks in question, if they surpass the max value (default: 30), they will be clamped down</param>
-    public int[] RemoveMasks(params int[] masks)
+    public int[] RemoveMask(params int[] masks)
     {
       var finVals = masks.ClampArray(0, MaxLayer);
       Layers.ExceptWith(finVals);

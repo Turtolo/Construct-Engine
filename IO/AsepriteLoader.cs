@@ -15,10 +15,10 @@ namespace Opal.IO
 {
   public static class AsepriteLoader
   {
-
     public static Dictionary<string, FrameAnimation> LoadAnimation(
         this MTexture source,
         Extent size,
+        int speed = 100,
         int spacing = 0,
         int margin = 0,
         int? frameCount = null)
@@ -60,7 +60,7 @@ namespace Opal.IO
       animations.Add("Main", new FrameAnimation
       {
         Frames = frames,
-        Delay = TimeSpan.FromMilliseconds(100)
+        Delay = TimeSpan.FromMilliseconds(speed)
       });
 
       return animations;

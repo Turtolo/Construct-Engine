@@ -49,7 +49,7 @@ namespace Opal
 
     public void Detach()
     {
-
+      Core.Token.Anchor.GetCurrentAnchor()?.Detach(this); 
     }
 
     ///<summary>

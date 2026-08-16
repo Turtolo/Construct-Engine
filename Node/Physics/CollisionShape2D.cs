@@ -109,6 +109,9 @@ namespace Opal.Hierarchy
 
       var kb = Core.Token.Get<KinematicBody2D>();
 
+      if (kb == null)
+        return;
+
       var thisTop = Shape.GetAABB(Transform.Global.Position.ToPoint()).Top;
       var thatBottom = kb.CollisionShapes[0].Shape.GetAABB(kb.Transform.Global.Position.ToPoint()).Bottom;
 
