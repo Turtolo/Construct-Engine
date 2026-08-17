@@ -36,9 +36,6 @@ namespace Opal.Hierarchy
     {
       if (!Atlas.TryGetValue(name, out FrameAnimation target))
         return;
-      
-      if (name == "Out")
-        Console.WriteLine($"[{name}] Playing!");
 
       if (CurrentAnimation != target || _finished)
       {

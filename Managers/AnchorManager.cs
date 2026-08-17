@@ -8,19 +8,44 @@ namespace Opal.Managers
     private Anchor currentAnchor;
     
     /// <summary>
-    /// Changes the current anchor to a specified one.
+    /// Changes the current anchor, with a provided type. Does not use reflection.
     /// </summary>
     /// <remarks>
     /// De-activates the current anchor; which removes all its chained instances of <see cref="Token"/>.
     /// </remarks>
-    /// <param name="anchor">The new anchor.</param>
-    public void SetAnchor(Anchor anchor)
+    /// <param name="T">The type of the new anchor, similar to <see cref="TokenIndex">' Get functions.</param>
+    public T SetAnchor<T>() where T : Anchor, new()
     {
-      currentAnchor?.Detach(anchor);
       currentAnchor?.DeActivate();
 
-      currentAnchor = anchor;
-      anchor.Activate();
+      var newAnchor = new T();
+      currentAnchor = newAnchor;
+      newAnchor.Activate();
+
+      return newAnchor;
+    }
+
+    /// <summary>
+    /// Changes the current anchor, with a provided type. Uses reflection -- though -- as <see cref="Anchor"/>s are usually transitional, this is negligible.
+    /// </summary>
+    /// <remarks>
+    /// De-activates the current anchor; which removes all its chained instances of <see cref="Token"/>.
+    /// </remarks>
+    /// <param name="anchorType">The type of the new anchor.</param>
+    public Anchor SetAnchor(Type anchorType)
+    {
+      if (!typeof(Anchor).IsAssignableFrom(anchorType))
+      {
+        throw new ArgumentException($"{anchorType.Name} must inherit from Anchor.");
+      }
+
+      currentAnchor?.DeActivate();
+
+      var newAnchor = (Anchor)Activator.CreateInstance(anchorType);
+      currentAnchor = newAnchor;
+      newAnchor.Activate();
+
+      return newAnchor;
     }
     
     /// <summary>
