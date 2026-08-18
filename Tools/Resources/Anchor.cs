@@ -22,7 +22,7 @@ namespace Opal.Tools
       Chained.Remove(t);
     }
 
-    public void DeActivate()
+    public void Dispose()
     {
       for (int i = Chained.Count - 1; i >= 0; i--)
       {

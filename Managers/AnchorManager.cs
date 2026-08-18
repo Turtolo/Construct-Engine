@@ -16,7 +16,7 @@ namespace Opal.Managers
     /// <param name="T">The type of the new anchor, similar to <see cref="TokenIndex">' Get functions.</param>
     public T SetAnchor<T>() where T : Anchor, new()
     {
-      currentAnchor?.DeActivate();
+      currentAnchor?.Dispose();
 
       var newAnchor = new T();
       currentAnchor = newAnchor;
@@ -39,7 +39,7 @@ namespace Opal.Managers
         throw new ArgumentException($"{anchorType.Name} must inherit from Anchor.");
       }
 
-      currentAnchor?.DeActivate();
+      currentAnchor?.Dispose();
 
       var newAnchor = (Anchor)Activator.CreateInstance(anchorType);
       currentAnchor = newAnchor;
@@ -59,11 +59,7 @@ namespace Opal.Managers
     {
       Type t = currentAnchor.GetType();
 
-      currentAnchor?.DeActivate();
-
-      Anchor newAnchor = (Anchor)Activator.CreateInstance(t);
-
-      SetAnchor(newAnchor);
+      SetAnchor(t);
     }
     
     /// <summary>
