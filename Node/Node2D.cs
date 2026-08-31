@@ -107,9 +107,6 @@ namespace Opal.Hierarchy
       }
     }
 
-    public override void _Ready()
-    {}
-
     public override void _EnterTree()
     {
       base._EnterTree();

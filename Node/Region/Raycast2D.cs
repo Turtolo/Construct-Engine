@@ -102,7 +102,7 @@ namespace Opal.Hierarchy
 
       initial.Key = BatchKey.Default with
       {
-        Matrix = Core.Token.Get<Camera2D>().GetTransform()
+        Matrix = Core.Token.Get<Camera2D>()?.GetTransform()
       };
 
       Core.Canvas.Submit(initial);

@@ -80,7 +80,7 @@ namespace Opal.Hierarchy
         };
         call.Key = BatchKey.Default with
         {
-          Matrix = Core.Token.Get<Camera2D>().GetTransform()
+          Matrix = Core.Token.Get<Camera2D>()?.GetTransform()
         };
       }
 
@@ -95,7 +95,7 @@ namespace Opal.Hierarchy
         };
         call.Key = BatchKey.Default with
         {
-          Matrix = Core.Token.Get<Camera2D>().GetTransform()
+          Matrix = Core.Token.Get<Camera2D>()?.GetTransform()
         };
       }
 

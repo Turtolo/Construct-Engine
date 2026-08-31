@@ -102,6 +102,14 @@ namespace Opal
     /// This is rarely – if ever – accessed by the user, though it is very important to the performance of the engine.
     /// </remarks>
     public static PhysicsServer2D Physics { get; private set; }
+  
+    /// <summary>
+    /// Whether the game should exit when <see cref="Keys.Escape"/> or <see cref="Buttons.Start"/> is pressed
+    /// </summary>
+    /// <remarks>
+    /// Only in debug mode, though.
+    /// </remarks>
+    public static bool ExitOnEsc { get; set; } = true;
 
     public Core()
     {
@@ -174,7 +182,7 @@ namespace Opal
       Token.Update(context, physicsSteps);
       
       #if DEBUG
-      if (Input.Keyboard.IsKeyDown(Keys.Escape) || Input.CurrentGamePad.WasButtonJustPressed(Buttons.Start))
+      if ((Input.Keyboard.IsKeyDown(Keys.Escape) || Input.CurrentGamePad.WasButtonJustPressed(Buttons.Start)) && ExitOnEsc)
         Exit();
       #endif
 

@@ -107,5 +107,10 @@ namespace Opal.Hierarchy
       Material = new Dual<Material>(Params.Material.Identity);
       Transform = new Dual<Transform2D>(Params.Transform2D.Identity);
     }
+
+    public override void _Ready()
+    {
+      base._Ready();
+    }
   }
 }

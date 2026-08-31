@@ -46,7 +46,7 @@ namespace Opal
       Core.Instance.Graphics.IsFullScreen = Fullscreen;
 
       Core.Canvas.RenderSize = RenderSize;
-      Core.Canvas.CanvasColor = CanvasColor;
+      //Core.Canvas.CanvasColor = CanvasColor;
 
       Core.Instance.IsMouseVisible = MouseVisible;
 
