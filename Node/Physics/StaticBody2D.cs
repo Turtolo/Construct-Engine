@@ -23,7 +23,6 @@ namespace Opal.Hierarchy
     {
       base._PhysicsUpdate(delta);
     }
-
   }
 
 }

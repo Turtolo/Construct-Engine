@@ -11,39 +11,6 @@ namespace Opal.Tools
 {
   public static class GraphicsE
   {
-    public static MTexture LoadBaseObject64Premultiplied(this string base64String)
-    {
-      if (base64String.Contains(",")) base64String = base64String.Split(',')[1];
-      byte[] imageBytes = Convert.FromBase64String(base64String);
-
-      Texture2D texture;
-
-      using (MemoryStream ms = new MemoryStream(imageBytes))
-      {
-        texture = Texture2D.FromStream(Core.Instance.GraphicsDevice, ms);
-      }
-
-      Color[] pixels = new Color[texture.Width * texture.Height];
-      texture.GetData(pixels);
-
-      for (int i = 0; i < pixels.Length; i++)
-      {
-        Color p = pixels[i];
-        float alpha = p.A / 255f;
-
-        pixels[i] = new Color(
-            (byte)(p.R * alpha),
-            (byte)(p.G * alpha),
-            (byte)(p.B * alpha),
-            p.A
-        );
-      }
-
-      texture.SetData(pixels);
-
-      return texture.ToMTexture();
-    }
-
     public static MTexture ToMTexture(this Texture2D texture)
     {
       return new MTexture(texture);
@@ -54,7 +21,7 @@ namespace Opal.Tools
       return texture.Texture;
     }
 
-    public static MTexture CreateCircle(int radius)
+    public static TextureRegion CreateCircle(int radius)
     {
       int diameter = radius * 2;
       Texture2D texture = new Texture2D(Core.Instance.GraphicsDevice, diameter, diameter);
@@ -75,7 +42,7 @@ namespace Opal.Tools
       }
 
       texture.SetData(data);
-      return texture.ToMTexture();
+      return new TextureRegion(texture, 0, 0, diameter, diameter);
     }
 
     public static TextureDrawCall Line(Vector2 start, Vector2 end, int thickness)

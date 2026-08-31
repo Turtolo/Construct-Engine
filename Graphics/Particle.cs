@@ -39,8 +39,8 @@ namespace Opal.Graphics
       _info.Color = _initialData.ColorStart;
       _info.Opacity = _initialData.OpacityStart;
       _info.Origin = new(
-          _initialData.Texture.Bounds.Width / 2,
-          _initialData.Texture.Bounds.Height / 2
+          _initialData.Texture.Width / 2,
+          _initialData.Texture.Height / 2
       );
 
       if (_initialData.Speed != 0)
@@ -92,7 +92,7 @@ namespace Opal.Graphics
           _initialData.SizeEnd,
           _initialData.SizeStart,
           _info.LifespanAmount
-      ) / _initialData.Texture.Bounds.Width;
+      ) / _initialData.Texture.Width;
 
       _info.Position += _info.Direction * _initialData.Speed * delta;
     }

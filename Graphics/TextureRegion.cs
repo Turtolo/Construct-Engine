@@ -72,7 +72,7 @@ namespace Opal.Graphics
       Source = source;
       SourceRectangle = sourceRect;
     }
-    
+
     /// <summary>
     /// Creates a new <see cref="TextureRegion"/> sub-section within this one. This can be useful for tilesets, where you need to split it into the map, and then tiles.
     /// </summary>

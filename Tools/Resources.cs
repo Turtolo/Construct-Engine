@@ -26,7 +26,14 @@ namespace Opal.Tools
     /// <summary>
     /// A single 1x1 pixel, useful for most graphics in situations where you may not be able to load a resource.
     /// </summary>
-    public MTexture Pixel { get; private set; } = new MTexture(1, 1, new[] { Color.White });
+    public TextureRegion Pixel { get; private set; } = CreatePixel();
+      
+    internal static TextureRegion CreatePixel()
+    {
+      var txtr = new Texture2D(Core.Instance.GraphicsDevice, 1, 1);
+      txtr.SetData(new[] { Color.White });
+      return new TextureRegion(txtr, 0, 0, 1, 1);
+    }
 
     internal void LoadContent()
     {

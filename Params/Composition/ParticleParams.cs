@@ -7,7 +7,7 @@ namespace Opal.Params
 {
   public record struct ParticleParams
   {
-    public MTexture Texture { get; set; }
+    public TextureRegion Texture { get; set; }
     public float Lifespan { get; set; }
     public Color ColorStart { get; set; }
     public Color ColorEnd { get; set; }
@@ -26,7 +26,7 @@ namespace Opal.Params
     );
 
     public ParticleParams(
-        MTexture texture, float lifespan,
+        TextureRegion texture, float lifespan,
         Color colorStart, Color colorEnd, float opacityStart,
         float opacityEnd, float sizeStart, float sizeEnd,
         float speed, float angle)
