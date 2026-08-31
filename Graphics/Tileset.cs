@@ -8,7 +8,7 @@ namespace Opal.Graphics
 {
   public class Tileset : BaseObject
   {
-    private readonly MTexture[] _tiles;
+    private readonly TextureRegion[] _tiles;
 
     /// <summary>
     /// Gets the width, in pixels, of each tile in this tileset.
@@ -42,41 +42,31 @@ namespace Opal.Graphics
     /// <param name="texture">The texture that contains the tiles for the tileset.</param>
     /// <param name="tileWidth">The width of each tile in the tileset.</param>
     /// <param name="tileHeight">The height of each tile in the tileset.</param>
-    public Tileset(MTexture texture, int tileWidth, int tileHeight)
+    public Tileset(TextureRegion texture, int tileWidth, int tileHeight)
     {
       if (texture == null) throw new ArgumentNullException(nameof(texture));
 
       TileWidth = tileWidth;
       TileHeight = tileHeight;
-      Columns = texture.Bounds.Width / tileWidth;
-      Rows = texture.Bounds.Height / tileHeight;
+      Columns = texture.Width / tileWidth;
+      Rows = texture.Height / tileHeight;
       Count = Columns * Rows;
 
-      _tiles = new MTexture[Count];
-
-      Rectangle baseRect = texture.SourceRectangle ?? new Rectangle(0, 0, texture.Bounds.Width, texture.Bounds.Height);
+      _tiles = new TextureRegion[Count];
 
       for (int i = 0; i < Count; i++)
       {
         int x = i % Columns * tileWidth;
         int y = i / Columns * tileHeight;
 
-        _tiles[i] = texture.CreateSubTexture(
-            new Rectangle
-            (
-                baseRect.X + x,
-                baseRect.Y + y,
-                tileWidth,
-                tileHeight
-            )
-        );
+        _tiles[i] = texture.CreateSubRegion(x, y, tileWidth, tileHeight);
       }
     }
 
     /// <summary>
     /// Gets the tile at the specified index.
     /// </summary>
-    public MTexture GetTile(int index)
+    public TextureRegion GetTile(int index)
     {
       if (index < 0 || index >= Count)
         throw new IndexOutOfRangeException($"Tile index {index} is out of bounds.");
@@ -87,7 +77,7 @@ namespace Opal.Graphics
     /// <summary>
     /// Gets the tile at the specified column and row.
     /// </summary>
-    public MTexture GetTile(int column, int row)
+    public TextureRegion GetTile(int column, int row)
     {
       if (column < 0 || column >= Columns)
         throw new ArgumentOutOfRangeException(nameof(column), "Column is out of bounds.");

@@ -9,7 +9,7 @@ namespace Opal.Graphics
   {
     public int Index { get; set; }
 
-    public MTexture Texture { get; set; }
+    public TextureRegion Texture { get; set; }
     public Rectangle? SourceRectangle { get; set; }
 
     public float Intensity { get; set; }
@@ -23,21 +23,22 @@ namespace Opal.Graphics
 
     public void Draw(SpriteBatch sb)
     {
-      if (Texture?.Texture == null)
+      if (Texture.Source == null)
         return;
 
-      Rectangle src =
-          SourceRectangle
-          ?? Texture.SourceRectangle
-          ?? new Rectangle(0, 0, Texture.Texture.Width, Texture.Texture.Height);
-
       Color color = Tint * Intensity;
+
+      Rectangle src = new Rectangle
+      (
+        SourceRectangle?.Location + Texture.SourceRectangle.Location ?? Texture.SourceRectangle.Location, 
+        SourceRectangle?.Size ?? Texture.SourceRectangle.Size
+      );
 
       //Perhaps, though i will have to research this further.
       //Color color = ColorExstention.Multiply(Tint, Params.Color) * Tint
 
       sb.Draw(
-          Texture.Texture,
+          Texture.Source,
           Params.Position,
           src,
           color,

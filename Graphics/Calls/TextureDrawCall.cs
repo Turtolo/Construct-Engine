@@ -13,7 +13,7 @@ namespace Opal.Graphics
   {
     public int Index { get; set; }
 
-    public MTexture Texture { get; set; }
+    public TextureRegion Texture { get; set; }
     public Rectangle? SourceRectangle { get; set; }
 
     public Effect Effect { get; set; }
@@ -24,16 +24,17 @@ namespace Opal.Graphics
 
     public void Draw(SpriteBatch sb)
     {
-      if (Texture?.Texture == null)
+      if (Texture.Source == null)
         return;
 
-      Rectangle src =
-          SourceRectangle
-          ?? Texture.SourceRectangle
-          ?? new Rectangle(0, 0, Texture.Texture.Width, Texture.Texture.Height);
+      Rectangle src = new Rectangle
+      (
+        SourceRectangle?.Location + Texture.SourceRectangle.Location ?? Texture.SourceRectangle.Location, 
+        SourceRectangle?.Size ?? Texture.SourceRectangle.Size
+      );
       
       sb.Draw(
-          Texture.Texture,
+          Texture.Source,
           Params.Position,
           src,
           Params.Color,

@@ -37,8 +37,8 @@ namespace Opal.Graphics
 
           int tileSetIndex = storedIndex + IndexOffset;
 
-          MTexture tile = Tileset.GetTile(tileSetIndex);
-          if (tile?.Texture == null)
+          TextureRegion tile = Tileset.GetTile(tileSetIndex);
+          if (tile?.Source == null)
             continue;
 
           Vector2 localTilePos = new Vector2(
@@ -48,12 +48,10 @@ namespace Opal.Graphics
 
           Vector2 worldTilePos = localTilePos + Params.Position;
 
-          Rectangle src = tile.SourceRectangle ?? new Rectangle(0, 0, tile.Texture.Width, tile.Texture.Height);
-
           sb.Draw(
-              tile.Texture,
+              tile.Source,
               worldTilePos,
-              src,
+              tile.SourceRectangle,
               Params.Color,
               Params.Rotation,
               Params.Origin,
