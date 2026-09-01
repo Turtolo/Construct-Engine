@@ -16,19 +16,19 @@ namespace Opal.IO
   public static class AsepriteLoader
   {
     public static Dictionary<string, FrameAnimation> LoadAnimation(
-        this MTexture source,
+        this TextureRegion source,
         Extent size,
         int speed = 100,
         int spacing = 0,
         int margin = 0,
         int? frameCount = null)
     {
-      List<MTexture> frames = new();
+      List<TextureRegion> frames = new();
 
       Dictionary<string, FrameAnimation> animations = new();
 
-      int usableWidth = source.Bounds.Width - margin * 2;
-      int usableHeight = source.Bounds.Height - margin * 2;
+      int usableWidth = source.Width - margin * 2;
+      int usableHeight = source.Height - margin * 2;
 
       int columns = (usableWidth + spacing) / (size.Width + spacing);
       int rows = (usableHeight + spacing) / (size.Height + spacing);
@@ -52,7 +52,7 @@ namespace Opal.IO
               size.Height
           );
 
-          frames.Add(source.CreateSubTexture(rect));
+          frames.Add(source.CreateSubRegion(rect));
           count++;
         }
       }
@@ -67,7 +67,7 @@ namespace Opal.IO
     }
 
     public static Dictionary<string, FrameAnimation> LoadAnimations(
-        this MTexture source, string jsonPath)
+        this TextureRegion source, string jsonPath)
     {
       string json = File.ReadAllText(jsonPath);
 
@@ -86,7 +86,7 @@ namespace Opal.IO
 
       foreach (var tag in data.meta.frameTags)
       {
-        List<MTexture> animFrames = new();
+        List<TextureRegion> animFrames = new();
         List<int> durations = new();
 
         for (int i = tag.from; i <= tag.to; i++)
@@ -97,7 +97,7 @@ namespace Opal.IO
               f.frame.x, f.frame.y,
               f.frame.w, f.frame.h);
 
-          animFrames.Add(source.CreateSubTexture(rect));
+          animFrames.Add(source.CreateSubRegion(rect));
 
           durations.Add(f.duration);
         }

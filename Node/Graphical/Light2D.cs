@@ -12,7 +12,7 @@ namespace Opal.Hierarchy
 {
   public class PointLight2D : Node2D
   {
-    public MTexture Texture { get; set; }
+    public TextureRegion Texture { get; set; }
     public Color Tint { get; set; } = Color.White;
     public float Intensity { get; set; } = 1.0f;
     

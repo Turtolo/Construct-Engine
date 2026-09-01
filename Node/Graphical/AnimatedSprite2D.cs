@@ -28,7 +28,7 @@ namespace Opal.Hierarchy
     public bool IsFinished => _finished;
 
     [Export]
-    public MTexture CurrentFrame => CurrentAnimation?.Frames[_currentFrame];
+    public TextureRegion CurrentFrame => CurrentAnimation?.Frames[_currentFrame];
 
     public AnimatedSprite2D() { }
 
@@ -122,7 +122,7 @@ namespace Opal.Hierarchy
         Position = pos,
         Color = Material.Global.Modulate,
         Rotation = Transform.Global.Rotation,
-        Origin = CurrentFrame.Center,
+        Origin = new Vector2(CurrentFrame.Width / 2, CurrentFrame.Height / 2),
         Scale = scale,
         Effects = Material.Global.SpriteEffects,
       };

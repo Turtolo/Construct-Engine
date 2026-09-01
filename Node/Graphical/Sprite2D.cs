@@ -13,7 +13,7 @@ namespace Opal.Hierarchy
   public class Sprite2D : Node2D
   {
     [Export]
-    public MTexture Texture { get; set; }
+    public TextureRegion Texture { get; set; }
 
     [Export]
     public int HFrames { get; set; } = 1;
@@ -31,7 +31,7 @@ namespace Opal.Hierarchy
         if (Texture == null)
           return 0;
 
-        return Texture.Bounds.Width / HFrames;
+        return Texture.Width / HFrames;
       }
     }
 
@@ -42,7 +42,7 @@ namespace Opal.Hierarchy
         if (Texture == null)
           return 0;
 
-        return Texture.Bounds.Height / VFrames;
+        return Texture.Height / VFrames;
       }
     }
 

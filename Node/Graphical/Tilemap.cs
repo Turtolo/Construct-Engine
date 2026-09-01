@@ -67,7 +67,7 @@ namespace Opal.Hierarchy
       }
     }
 
-    public MTexture GetTile(int column, int row)
+    public TextureRegion GetTile(int column, int row)
     {
       if (_tiles == null ||
           column < 0 || column >= columns ||

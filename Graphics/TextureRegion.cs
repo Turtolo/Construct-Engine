@@ -30,8 +30,8 @@ namespace Opal.Graphics
     /// <summary>
     /// Gets the size of the sub-section within <see cref="Source"/>.
     /// </summary>
-    public Extent Size => new Extent(SourceRectangle.Width, SourceRectangle.Height);
-    
+    public Extent Size => new Extent(Width, Height);
+
     /// <summary>
     /// Creates a new -- empty -- <see cref="TextureRegion"/>.
     /// </summary>

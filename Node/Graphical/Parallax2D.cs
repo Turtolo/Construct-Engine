@@ -11,7 +11,7 @@ namespace Opal.Hierarchy
 {
   public class Parallax2D : Node2D
   {
-    public MTexture Texture { get; set; }
+    public TextureRegion Texture { get; set; }
 
     public int RepeatTimes { get; set; } = 1;
 
@@ -104,7 +104,7 @@ namespace Opal.Hierarchy
             Position = new Vector2(x, y),
             Color = finalColor,
             Rotation = Transform.Global.Rotation,
-            Origin = new Vector2(Texture.Bounds.Width / 2f, Texture.Bounds.Height / 2f),
+            Origin = new Vector2(Texture.Width / 2f, Texture.Height / 2f),
             Scale = scale,
             Effects = Material.Global.SpriteEffects,
           };
