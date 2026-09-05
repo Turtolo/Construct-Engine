@@ -5,7 +5,7 @@ using Opal.Geometry;
 
 namespace Opal.Graphics
 {
-  public class TextureRegion
+  public class TextureRegion : BaseObject
   {
     /// <summary>
     /// The source atlas, containing multiple packed sprites; this represents a sub-section within it.

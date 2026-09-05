@@ -36,6 +36,9 @@ namespace Opal.Hierarchy
     {
       base._Submit(canvas);
 
+      if (!Material.Global.Visible)
+        return;
+
       Color finalColor = ColorExtension.Multiply(Material.Global.SelfModulate, Material.Global.Modulate);
       
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
