@@ -30,6 +30,8 @@ namespace Opal.Hierarchy
     [Export]
     public TextureRegion CurrentFrame => CurrentAnimation?.Frames[_currentFrame];
 
+    public Vector2? Origin = null;
+
     public AnimatedSprite2D() { }
 
     public void PlayAnimation(string name, bool isLooping = false)
@@ -108,7 +110,8 @@ namespace Opal.Hierarchy
     {
       base._Submit(canvas);
 
-      if (CurrentAnimation == null || Material.Global.Visible == false) return;
+      if (CurrentAnimation == null || Material.Global.Visible == false)
+        return;
 
       Vector2 pos = Rounded ? Vector2.Floor(Transform.Global.Position) : Transform.Global.Position;
       Vector2 scale = Rounded ? Vector2.Floor(Transform.Global.Scale) : Transform.Global.Scale;
@@ -122,7 +125,7 @@ namespace Opal.Hierarchy
         Position = pos,
         Color = Material.Global.Modulate,
         Rotation = Transform.Global.Rotation,
-        Origin = new Vector2(CurrentFrame.Width / 2, CurrentFrame.Height / 2),
+        Origin = this.Origin == null ? new Vector2(CurrentFrame.Width / 2, CurrentFrame.Height / 2) : (Vector2)this.Origin,
         Scale = scale,
         Effects = Material.Global.SpriteEffects,
       };

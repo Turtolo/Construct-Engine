@@ -39,6 +39,13 @@ namespace Opal
       set => tracker.Set(ref mouseVisible, value);
     }
 
+    private bool hardwareModeSwitch;
+    public bool HardwareModeSwitch
+    {
+      get => hardwareModeSwitch;
+      set => tracker.Set(ref hardwareModeSwitch, value);
+    }
+
     public bool IsDirty => tracker.IsDirty;
 
     public void Apply()
@@ -47,6 +54,8 @@ namespace Opal
 
       Core.Canvas.RenderSize = RenderSize;
       //Core.Canvas.CanvasColor = CanvasColor;
+      
+      Core.Instance.Graphics.HardwareModeSwitch = HardwareModeSwitch;
 
       Core.Instance.IsMouseVisible = MouseVisible;
 

@@ -24,7 +24,7 @@ namespace Opal.IO
           if (value == null) return false;
 
           var t = f.FieldType;
-          return t.IsPrimitive || t == typeof(string) || t == typeof(Vector2);
+          return Supported(t);
         }).ToList();
 
       string directiory = Path.GetDirectoryName(fullPath);

@@ -24,6 +24,9 @@ namespace Opal.Hierarchy
     [Export]
     public int Frame { get; set; } = 0;
 
+    [Export]
+    public Vector2? Origin { get; set; } = null;
+
     public int FrameWidth
     {
       get
@@ -94,7 +97,7 @@ namespace Opal.Hierarchy
         Position = pos,
         Color = finalColor,
         Rotation = Transform.Global.Rotation,
-        Origin = new Vector2(sourceRect.Width / 2f, sourceRect.Height / 2f),
+        Origin = Origin == null ? new Vector2(sourceRect.Width / 2f, sourceRect.Height / 2f) : (Vector2)Origin,
         Scale = scale,
         Effects = Material.Global.SpriteEffects,
       };
